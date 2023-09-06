@@ -8,7 +8,7 @@
   min-height: 50px;
 }
 .copyright {
-  font-size: 8px;
+  font-size: 10px;
   color: #ffffff;
 }
 .social {
@@ -38,9 +38,10 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 90px;
-    padding-left: 30%;
-    padding-right: 30%;
+    width: 100%;
+    padding-top: 10px;
+    padding-left: 35%;
+    padding-right: 35%;
     order: -2;
   }
   .contact {
@@ -48,9 +49,18 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 160px;
-    padding-left: 30%;
-    padding-right: 30%;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 28%;
+    padding-right: 28%;
     order: -1;
+  }
+  .copyright {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
   }
 }

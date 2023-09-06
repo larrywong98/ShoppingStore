@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="copyright">
-        <p>@2022 All Rights Reserved.</p>
+        <span>@2022 All Rights Reserved.</span>
       </div>
       <div className="social">
         <a href="youtube">

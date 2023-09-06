@@ -1,5 +1,6 @@
 import react from "react";
 import {
+  Box,
   Button,
   TextField,
   InputAdornment,
@@ -44,12 +45,12 @@ const Header = () => {
             Sign In
           </Button>
         </div>
-        <div className="cart">
+        <Box className="cart">
           <IconButton size="small" color="inherit">
             <ShoppingCartIcon />
           </IconButton>
           <Typography color="inherit">$0.00</Typography>
-        </div>
+        </Box>
       </div>
     </div>
   );
