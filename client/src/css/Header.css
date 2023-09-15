@@ -8,20 +8,22 @@
 }
 .app-name {
   display: flex;
-  align-items: center;
   flex-direction: row;
-  justify-content: start;
+  align-items: center;
   color: #ffffff;
   height: 40px;
   padding-left: 5%;
 }
-.app-name p {
+.app-name h1 {
+  display: flex;
+  align-items: baseline;
   font-size: 20px;
 }
-.app-name span {
+.chuwa-display {
+  display: flex;
+  align-items: baseline;
   font-size: 8px;
-  padding-top: 10px;
-  padding-left: 3px;
+  padding-left: 5px;
 }
 
 .search-bar {
@@ -59,7 +61,7 @@
   justify-content: space-between;
   align-items: center;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 500px) {
   .search-bar {
     width: 100%;
   }
@@ -73,10 +75,19 @@
     flex-wrap: wrap;
     min-height: 100px;
   }
-  .app-name {
+  /* .app-name {
     padding-left: 5%;
   }
   .status {
     padding-right: 5%;
+  } */
+  .signin {
+    display: none;
+  }
+  .app-name-display {
+    display: none;
+  }
+  .chuwa-display {
+    padding-left: 0px;
   }
 }

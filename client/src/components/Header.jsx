@@ -16,8 +16,10 @@ const Header = () => {
   return (
     <div className="header">
       <div className="app-name">
-        <p>Management</p>
-        <span>Chuwa</span>
+        <h1>
+          M<span className="app-name-display">anagement</span>
+          <span className="chuwa-display">Chuwa</span>
+        </h1>
       </div>
       <div className="search-bar-wrap">
         <TextField
@@ -38,11 +40,11 @@ const Header = () => {
       </div>
       <div className="status">
         <div className="account">
-          <IconButton size="small" color="inherit">
-            <ManageAccountsIcon />
-          </IconButton>
           <Button href="/SignIn" color="inherit">
-            Sign In
+            <IconButton size="small" color="inherit">
+              <ManageAccountsIcon />
+            </IconButton>
+            <span className="signin">Sign In</span>
           </Button>
         </div>
         <Box className="cart">

@@ -4,8 +4,12 @@
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  background-color: #151828;
+  background-color: hsl(231, 31%, 12%);
+  width: 100%;
   min-height: 50px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 .copyright {
   font-size: 10px;
