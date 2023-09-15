@@ -1,4 +1,4 @@
-# ShoppingStore
+# Shopping Store
 
 A Shopping Website
 
