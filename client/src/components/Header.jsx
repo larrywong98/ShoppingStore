@@ -1,6 +1,4 @@
-import { TextField, Typography, IconButton } from "@mui/material";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { IconButton } from "@mui/material";
 import { StarFilled, ShoppingCart, User } from "@carbon/icons-react";
 import SearchIcon from "@mui/icons-material/Search";
 import "../css/Header.css";

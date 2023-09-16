@@ -1,10 +1,9 @@
-import react from "react";
-import "../css/Footer.css";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { IconButton } from "@mui/material";
 
+import "../css/Footer.css";
 const Footer = () => {
   return (
     <div className="footer">
