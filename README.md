@@ -15,9 +15,12 @@ npm install @mui/material @emotion/react @emotion/styled
 npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 npm install bootstrap
 npm install react-router
+npm install react-router-dom
 npm install redux
 npm install react-redux
 npm install @reduxjs/toolkit
+npm install antd
+npm install -S @carbon/icons-react
 
 server:
 npm i express

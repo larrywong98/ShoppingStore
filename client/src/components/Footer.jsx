@@ -8,30 +8,34 @@ import { IconButton } from "@mui/material";
 const Footer = () => {
   return (
     <div className="footer">
-      <div className="copyright">
-        <span>@2022 All Rights Reserved.</span>
-      </div>
-      <div className="social">
-        <a href="youtube">
-          <IconButton size="small" color="inherit">
-            <YouTubeIcon />
-          </IconButton>
-        </a>
-        <a href="twitter">
-          <IconButton size="small" color="inherit">
-            <TwitterIcon />
-          </IconButton>
-        </a>
-        <a href="facebook">
-          <IconButton size="small" color="inherit">
-            <FacebookIcon />
-          </IconButton>
-        </a>
-      </div>
-      <div className="contact">
-        <a href="/contact">Contact us</a>
-        <a href="/policy">Privacy Policies</a>
-        <a href="/help">Help</a>
+      <div className="footer-content">
+        <div className="copyright">
+          <span>@2022 All Rights Reserved.</span>
+        </div>
+        <div className="social">
+          {[
+            { icon: <YouTubeIcon />, link: "#youtube", class: "youtube" },
+            { icon: <TwitterIcon />, link: "#twitter", class: "twitter" },
+            { icon: <FacebookIcon />, link: "#facebook", class: "facebook" },
+          ].map((comp, index) => (
+            <a href={comp.link} key={index}>
+              <IconButton className={comp.class} color="inherit">
+                {comp.icon}
+              </IconButton>
+            </a>
+          ))}
+        </div>
+        <div className="footer-contact">
+          {[
+            { link: "/contact", desp: "Contact us", class: "contact" },
+            { link: "/policy", desp: "Privacy Policies", class: "policy" },
+            { link: "/help", desp: "Help", class: "help" },
+          ].map((comp, index) => (
+            <a className={comp.class} href={comp.link} key={index}>
+              {comp.desp}
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );
