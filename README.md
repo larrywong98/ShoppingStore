@@ -13,7 +13,7 @@ A Shopping Website
 client:
 npm install @mui/material @emotion/react @emotion/styled
 npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
-npm install bootstrap
+npm install react-bootstrap
 npm install react-router
 npm install react-router-dom
 npm install redux

@@ -9,7 +9,7 @@ const App = () => {
     <div className="App">
       <Header />
       {/* <h1 style={{ height: "1000px" }}>body</h1> */}
-      {/* <ProductPage /> */}
+      <ProductPage />
       {/* <ProductDetailPage /> */}
       <Footer />
     </div>
