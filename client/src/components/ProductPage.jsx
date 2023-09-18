@@ -1,21 +1,50 @@
 import "../css/ProductPage.css";
 import { Checkmark, CaretUp, CaretDown } from "@carbon/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Product from "./Product";
 
 const ProductPage = () => {
   const [selected, setSelected] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const productImageDirUrl = "http://127.0.0.1:4000/resources/";
+  const [currentPage, setCurrentPage] = useState(0);
+
+  //dispatch product slice
+  const [products, setProducts] = useState([]);
   const sortStatus = [
     { desp: "Last added" },
     { desp: "Price: low to high" },
     { desp: "Price: high to low" },
   ];
-
+  useEffect(() => {
+    (async () => {
+      const res = await fetch("http://127.0.0.1:4000/products", {
+        method: "get",
+      });
+      setProducts(await res.json());
+    })();
+    lastAdded();
+  }, []);
   const addProduct = () => {};
 
-  const lastAdded = () => {};
-  const priceLowtoHigh = () => {};
-  const priceHightoLow = () => {};
+  const lastAdded = () => {
+    let newProducts = [...products];
+    newProducts.sort((a, b) => {
+      if (parseInt(a.timestamp, 10) > parseInt(b.timestamp, 10)) return -1;
+      return 1;
+    });
+    setProducts(newProducts);
+  };
+  const priceLowtoHigh = () => {
+    let newProducts = [...products];
+    newProducts.sort((a, b) => a.price - b.price);
+    setProducts(newProducts);
+  };
+  const priceHightoLow = () => {
+    let newProducts = [...products];
+    newProducts.sort((a, b) => b.price - a.price);
+    setProducts(newProducts);
+  };
 
   const sortBySelection = (i) => {
     if (i === 0) lastAdded();
@@ -24,6 +53,18 @@ const ProductPage = () => {
 
     setSelected(i);
     setDropdownOpen(false);
+  };
+
+  const navigateToPage = (action) => {
+    if (action === "prev") {
+      setCurrentPage(Math.max(currentPage - 1, 0));
+    } else if (action === "next") {
+      setCurrentPage(
+        Math.min(currentPage + 1, Math.ceil(products.length / 10) - 1)
+      );
+    } else {
+      setCurrentPage(action);
+    }
   };
 
   return (
@@ -72,11 +113,40 @@ const ProductPage = () => {
         </div>
       </div>
       <div className="product-content">
-        {Array.from(Array(10)).map((_, index) => (
-          <div className="product-item">111</div>
-        ))}
+        {[...products]
+          .slice(currentPage * 10, currentPage * 10 + 10)
+          .map((product, index) => (
+            <Product
+              key={index}
+              imgPath={product.imgPath}
+              id={product.id}
+              desp={product.desp}
+              price={product.price}
+            />
+          ))}
       </div>
-      <div className="pagination"></div>
+      <div className="pagination-wrap">
+        <div className="nav-to-page"></div>
+        <nav className="nav-list">
+          <ul>
+            <li>
+              <button onClick={() => navigateToPage("prev")}>{"<<"}</button>
+            </li>
+            {Array(Math.ceil(products.length / 10))
+              .fill(0)
+              .map((page, index) => (
+                <li key={index}>
+                  <button onClick={() => navigateToPage(index)}>
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+            <li>
+              <button onClick={() => navigateToPage("next")}>{">>"}</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 };

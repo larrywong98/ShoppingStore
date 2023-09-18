@@ -60,8 +60,6 @@
   position: absolute;
   right: 0;
   bottom: 0;
-}
-.star-icon-login {
   color: #fce944;
 }
 .status {
@@ -79,13 +77,20 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 21px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
 }
 .cart {
-  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 13px;
+  color: #ffffff;
+}
+.cart button {
+  color: #ffffff;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
 }
 @media only screen and (max-width: 1000px) {
   .header {

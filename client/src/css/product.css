@@ -1,0 +1,96 @@
+.product-item {
+  width: 242px;
+  height: 303px;
+  padding: 7px 12px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  border: 1px solid #cccccc;
+}
+.product-info {
+  width: 100%;
+}
+.product-info p {
+  margin: 0;
+  color: #6b7280;
+}
+.product-info span {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+}
+.product-item-btn-group {
+  display: flex;
+  gap: 6px;
+}
+.add-btn-init {
+  width: 110px;
+  height: 26px;
+  border-radius: 4px;
+  border: none;
+  background: #036bfc;
+  font-weight: 600;
+  color: #ffffff;
+}
+.add-btn-showed {
+  width: 110px;
+  height: 26px;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  background: #036bfc;
+  border-radius: 4px;
+}
+.minus-one-btn {
+  position: relative;
+  border: none;
+  /* border: 1px solid red; */
+  background-color: rgba(255, 255, 255, 0);
+}
+.minus-one-btn svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.add-btn-showed-text {
+  display: flex;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #ffffff;
+}
+.add-one-btn {
+  position: relative;
+  border: none;
+  /* border: 1px solid red; */
+  background-color: rgba(255, 255, 255, 0);
+}
+.add-one-btn svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.edit-btn {
+  width: 102px;
+  height: 26px;
+  border-radius: 4px;
+  border: 1px solid #cccccc;
+  background: #ffffff;
+  color: #535353;
+}
+
+@media only screen and (max-width: 900px) {
+  .product-item {
+    margin: 0;
+    width: 88%;
+    height: auto;
+  }
+}

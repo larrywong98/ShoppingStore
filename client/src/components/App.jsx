@@ -2,7 +2,7 @@ import "../css/App.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import ProductPage from "./ProductPage";
-import ProductDetailPage from "./ProductDetailPage";
+// import ProductDetailPage from "./ProductDetailPage";
 
 const App = () => {
   return (

@@ -1,9 +1,21 @@
+import { useState } from "react";
 import { IconButton } from "@mui/material";
 import { StarFilled, ShoppingCart, User } from "@carbon/icons-react";
 import SearchIcon from "@mui/icons-material/Search";
 import "../css/Header.css";
 
 const Header = () => {
+  const [loggedin, setLoggedin] = useState(false);
+
+  const userLogin = () => {
+    //dispatch login or logout
+    setLoggedin(!loggedin);
+  };
+  const openCart = () => {
+    console.log("cart open");
+    //dispatch cart
+  };
+
   return (
     <div className="header">
       <div className="name-search">
@@ -22,15 +34,17 @@ const Header = () => {
       </div>
 
       <div className="status">
-        <div className="account">
+        <button className="account" onClick={() => userLogin()}>
           <div className="user-certificate">
             <User className="user-icon" width="30px" height="30px" />
-            <StarFilled className={"star-icon"} />
+            {loggedin ? <StarFilled className="star-icon" /> : <></>}
           </div>
-          <span className="signin">Sign In</span>
-        </div>
+          <span className="signin"> {loggedin ? "Sign Out" : "Sign In"}</span>
+        </button>
         <div className="cart">
-          <ShoppingCart width="30px" height="30px" />
+          <button onClick={() => openCart()}>
+            <ShoppingCart width="30px" height="30px" />
+          </button>
           <span className="total">$0.00</span>
         </div>
       </div>
