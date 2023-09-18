@@ -11,18 +11,21 @@ A Shopping Website
    npm start
 
 client:
-npm install @mui/material @emotion/react @emotion/styled
-npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
-npm install react-bootstrap
-npm install react-router
-npm install react-router-dom
-npm install redux
-npm install react-redux
-npm install @reduxjs/toolkit
-npm install antd
-npm install -S @carbon/icons-react
+npm i @mui/material @emotion/react @emotion/styled
+npm i @mui/icons-material @mui/material @emotion/styled @emotion/react
+npm i react-bootstrap
+npm i react-router
+npm i react-router-dom
+npm i redux
+npm i react-redux
+npm i @reduxjs/toolkit
+npm i antd
+npm i -S @carbon/icons-react
+npm i bootstrap@5.3.2
+npm i axios
 
 server:
 npm i express
 npm i nodemon
 npm i mongoose
+npm i dotenv
