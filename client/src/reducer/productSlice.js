@@ -1,31 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const productSlice = createSlice({
+const productSlice = createSlice({
   name: "product",
-  initialState: [],
+  initialState: { products: [] },
   reducers: {
     load: (state, action) => {
-      state = action.payload.products;
+      state.products = action.payload.products;
       return state;
     },
     lastAdded: (state) => {
-      let newProducts = [...state];
-      newProducts.sort((a, b) => {
+      state.products.sort((a, b) => {
         if (parseInt(a.timestamp, 10) > parseInt(b.timestamp, 10)) return -1;
         return 1;
       });
-      return newProducts;
+      return state;
     },
     priceLowtoHigh: (state) => {
-      let newProducts = [...state];
-      newProducts.sort((a, b) => a.price - b.price);
-      return newProducts;
+      state.products.sort((a, b) => a.price - b.price);
+      return state;
     },
     priceHightoLow: (state) => {
-      let newProducts = [...state];
-      newProducts.sort((a, b) => b.price - a.price);
-      // setProducts(newProducts);
-      return newProducts;
+      state.products.sort((a, b) => b.price - a.price);
+      return state;
     },
   },
 });
@@ -33,6 +29,7 @@ export const productSlice = createSlice({
 export const loadProducts = () => {
   return async (dispatch, getState) => {
     const products = await getProductsRequest();
+
     dispatch(load({ products: products }));
   };
 };

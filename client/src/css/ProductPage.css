@@ -129,6 +129,7 @@
 .pagination-wrap {
   margin-left: 60px;
   width: 90%;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: end;
@@ -161,12 +162,48 @@
   border: 1px solid #e0e3e4;
   /* border: 1px solid red; */
 }
+.pagination-item-inverse {
+  background-color: #036bfc;
+  color: #ffffff;
+}
+.pagination-item {
+  background-color: #ffffff;
+  color: #036bfc;
+}
 .nav-list ul li button {
   width: 100%;
   height: 100%;
-  color: #036bfc;
   background-color: transparent;
   border: none;
+}
+
+.nav-list ul li:hover {
+  border: 1px solid #bbbbbb;
+}
+
+.nav-to-page {
+  /* width: 20px; */
+  height: 42px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-to-page input {
+  width: 41px;
+  height: 42px;
+  text-align: center;
+  border: 1px solid #e0e3e4;
+  border-radius: 5px;
+}
+.nav-to-page input:hover {
+  border: 1px solid #bbbbbb;
+}
+.nav-to-page:focus {
+  outline: none;
+  border: 1px solid #cccccc;
+}
+.nav-to-page p {
+  margin: 0px 12px;
 }
 
 @media only screen and (max-width: 900px) {

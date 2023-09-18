@@ -3,17 +3,20 @@ import { IconButton } from "@mui/material";
 import { StarFilled, ShoppingCart, User } from "@carbon/icons-react";
 import SearchIcon from "@mui/icons-material/Search";
 import "../css/Header.css";
-
+import { useDispatch, useSelector } from "react-redux";
+import { toggleCart } from "../reducer/cartSlice";
 const Header = () => {
   const [loggedin, setLoggedin] = useState(false);
+  const dispatch = useDispatch();
+  const cartOpened = useSelector((state) => state.cartReducer.cartOpened);
 
   const userLogin = () => {
     //dispatch login or logout
     setLoggedin(!loggedin);
   };
-  const openCart = () => {
-    console.log("cart open");
+  const onToggleCart = () => {
     //dispatch cart
+    dispatch(toggleCart());
   };
 
   return (
@@ -42,7 +45,7 @@ const Header = () => {
           <span className="signin"> {loggedin ? "Sign Out" : "Sign In"}</span>
         </button>
         <div className="cart">
-          <button onClick={() => openCart()}>
+          <button onClick={() => onToggleCart()}>
             <ShoppingCart width="30px" height="30px" />
           </button>
           <span className="total">$0.00</span>
