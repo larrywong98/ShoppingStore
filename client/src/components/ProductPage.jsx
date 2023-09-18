@@ -1,55 +1,43 @@
 import "../css/ProductPage.css";
 import { Checkmark, CaretUp, CaretDown } from "@carbon/icons-react";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loadProducts,
+  lastAdded,
+  priceLowtoHigh,
+  priceHightoLow,
+} from "../reducer/productSlice";
 import Product from "./Product";
 
 const ProductPage = () => {
   const [selected, setSelected] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // const productImageDirUrl = "http://127.0.0.1:4000/resources/";
   const [currentPage, setCurrentPage] = useState(0);
 
   //dispatch product slice
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state);
+
   const sortStatus = [
     { desp: "Last added" },
     { desp: "Price: low to high" },
     { desp: "Price: high to low" },
   ];
+
   useEffect(() => {
-    (async () => {
-      const res = await fetch("http://127.0.0.1:4000/products", {
-        method: "get",
-      });
-      setProducts(await res.json());
-    })();
-    lastAdded();
+    // skeleton loading
+
+    dispatch(loadProducts());
+    // console.log(products);
+    dispatch(lastAdded());
   }, []);
   const addProduct = () => {};
 
-  const lastAdded = () => {
-    let newProducts = [...products];
-    newProducts.sort((a, b) => {
-      if (parseInt(a.timestamp, 10) > parseInt(b.timestamp, 10)) return -1;
-      return 1;
-    });
-    setProducts(newProducts);
-  };
-  const priceLowtoHigh = () => {
-    let newProducts = [...products];
-    newProducts.sort((a, b) => a.price - b.price);
-    setProducts(newProducts);
-  };
-  const priceHightoLow = () => {
-    let newProducts = [...products];
-    newProducts.sort((a, b) => b.price - a.price);
-    setProducts(newProducts);
-  };
-
   const sortBySelection = (i) => {
-    if (i === 0) lastAdded();
-    if (i === 1) priceLowtoHigh();
-    if (i === 2) priceHightoLow();
+    if (i === 0) dispatch(lastAdded());
+    if (i === 1) dispatch(priceLowtoHigh());
+    if (i === 2) dispatch(priceHightoLow());
 
     setSelected(i);
     setDropdownOpen(false);
