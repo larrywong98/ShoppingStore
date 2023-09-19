@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../css/product.css";
 
 const Product = (props) => {
   const [numberInCart, setNumberInCart] = useState(2);

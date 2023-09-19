@@ -1,4 +1,3 @@
-import "../css/ProductDetailPage.css";
 import { useEffect, useState } from "react";
 import { GrLinkPrevious } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
