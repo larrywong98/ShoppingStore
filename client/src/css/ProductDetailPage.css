@@ -1,0 +1,137 @@
+.product-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+.product-detail-page-header {
+  width: 90%;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 60px;
+}
+.product-detail-page-header button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+}
+.product-detail-content {
+  margin-top: 24px;
+  margin-left: 60px;
+  width: 90%;
+  gap: 92px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  padding: 42px 42px;
+}
+.product-detail-content img {
+  width: 662px;
+  height: 597px;
+}
+.product-detail {
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+  gap: 12px;
+  width: 600px;
+}
+.product-detail h2 {
+  font-size: 16px;
+  color: #6b7280;
+}
+.product-detail h1 {
+  font-size: 32px;
+  color: #535353;
+}
+.product-detail-price-stock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.product-detail-price-stock p {
+  padding: 0;
+  margin: 0;
+  font-size: 32px;
+  color: #111827;
+}
+.product-detail-price-stock span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 76px;
+  height: 30px;
+  background-color: rgba(234, 61, 47, 0.13);
+  border-radius: 4px;
+  color: #ea3d2f;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+}
+.product-detail-content-paragraph {
+  font-size: 16px;
+  color: #6b7280;
+}
+.product-detail-btn-group {
+  display: flex;
+  height: 40px;
+  gap: 20px;
+}
+.product-detail-btn-group button {
+  width: 133px;
+  border-radius: 4px;
+}
+.add-cart-btn {
+  background-color: #036bfc;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+}
+.edit-product {
+  border-radius: 4px;
+  color: #535353;
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+}
+@media only screen and (max-width: 900px) {
+  .product-page {
+    align-items: center;
+    gap: 20px;
+    padding-top: 31px;
+    padding-bottom: 42px;
+    margin-bottom: 0px;
+  }
+  .product-page-header {
+    width: 100%;
+    height: 104px;
+    margin-left: 0px;
+    padding-bottom: 0px;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .product-content {
+    width: 85%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 30px;
+    padding-bottom: 25px;
+    margin-left: 0;
+    justify-content: center;
+  }
+  .product-item {
+    margin: 0;
+    width: 88%;
+  }
+  .pagination {
+    position: static;
+    margin: 0;
+  }
+}

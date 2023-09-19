@@ -6,8 +6,11 @@ const Product = (props) => {
 
   return (
     <div className="product-item">
-      <div className="product-image"></div>
-      <img src={props.imgPath} alt="" />
+      <img
+        style={{ width: "100%", height: "100%" }}
+        src={props.imgPath}
+        alt=""
+      />
       <div className="product-info">
         <p>{props.desp}</p>
         <span>${props.price.toFixed(2)}</span>

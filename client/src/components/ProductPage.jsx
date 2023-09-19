@@ -29,6 +29,7 @@ const ProductPage = () => {
   useEffect(() => {
     // skeleton loading
     dispatch(loadProducts());
+
     dispatch(lastAdded());
   }, []);
   const addProduct = () => {};
@@ -128,11 +129,14 @@ const ProductPage = () => {
         </div>
       </div>
       <div className="product-content">
-        {[...products]
+        {products
           .slice(currentPage * 10, currentPage * 10 + 10)
           .map((product, index) => (
             <Product
               key={index}
+              volume={product.volume}
+              category={product.category}
+              content={product.content}
               imgPath={product.imgPath}
               id={product.id}
               desp={product.desp}
@@ -164,19 +168,12 @@ const ProductPage = () => {
             {Array(Math.ceil(products.length / 10))
               .fill(0)
               .map((page, index) => (
-                <li
-                  key={index}
-                  className={
-                    index === currentPage
-                      ? "pagination-item-inverse"
-                      : "pagination-item "
-                  }
-                >
+                <li key={index}>
                   <button
                     className={
                       index === currentPage
                         ? "pagination-item-inverse"
-                        : "pagination-item "
+                        : "pagination-item"
                     }
                     onClick={() => navigateToPage(index)}
                   >
@@ -186,7 +183,7 @@ const ProductPage = () => {
               ))}
             <li>
               <button
-                className="pagination-item "
+                className="pagination-item"
                 onClick={() => navigateToPage("next")}
               >
                 {">>"}

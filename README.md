@@ -23,6 +23,7 @@ npm i antd
 npm i -S @carbon/icons-react
 npm i bootstrap@5.3.2
 npm i axios
+npm install react-icons
 
 server:
 npm i express
