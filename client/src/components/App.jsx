@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { loadProducts } from "../reducer/productSlice";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import ProductPage from "./ProductPage";
@@ -13,13 +17,17 @@ import "../css/Footer.css";
 import "../css/Header.css";
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadProducts());
+  });
   return (
     <div className="App">
       <Header />
       {/* <h1 style={{ height: "1000px" }}>body</h1> */}
       {/* <ProductPage /> */}
-      {/* <ProductDetailPage /> */}
-      <ProductCreatePage />
+      <ProductDetailPage />
+      {/* <ProductCreatePage /> */}
       <Footer />
     </div>
   );
