@@ -9,6 +9,8 @@ import "../css/ProductCreatePage.css";
 import "../css/ProductDetailPage.css";
 import "../css/product.css";
 import "../css/ProductPage.css";
+import "../css/Footer.css";
+import "../css/Header.css";
 
 const App = () => {
   return (

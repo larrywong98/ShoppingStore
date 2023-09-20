@@ -3,7 +3,6 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { IconButton } from "@mui/material";
 
-import "../css/Footer.css";
 const Footer = () => {
   return (
     <div className="footer">

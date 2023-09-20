@@ -2,7 +2,6 @@ import { useState } from "react";
 import { IconButton } from "@mui/material";
 import { StarFilled, ShoppingCart, User } from "@carbon/icons-react";
 import SearchIcon from "@mui/icons-material/Search";
-import "../css/Header.css";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "../reducer/cartSlice";
 const Header = () => {

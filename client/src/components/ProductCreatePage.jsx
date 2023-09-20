@@ -2,69 +2,192 @@ import { GrLinkPrevious } from "react-icons/gr";
 import { BsFileEarmarkImage } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { CaretUp, CaretDown } from "@carbon/icons-react";
+import { loadProducts } from "../reducer/productSlice";
 
 const ProductCreatePage = () => {
-  const [uploadedFile, setUploadedFile] = useState();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState("http://");
+  const [selected, setSelected] = useState(0);
+  const [categories, setCategories] = useState([
+    "category1",
+    "category2",
+    "category3",
+    "mobile",
+    "desktop",
+  ]);
+
+  const [name, setName] = useState();
+  const [description, setDescription] = useState();
+  const [category, setCategory] = useState(categories[0]);
+  const [price, setPrice] = useState();
+  const [quantity, setQuantity] = useState();
+
   //dispatch product slice
   const dispatch = useDispatch();
+  // const products = useSelector((state) => state.productReducer.products);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // dispatch(loadProducts());
+    // const newCategories = products.map((product) => product.category);
+    // console.log(newCategories);
+    // setCategories(newCategories);
+  }, []);
 
-  const submit = () => {};
+  const changeName = (e) => {
+    setName(e.target.value);
+  };
+  const changeDescription = (e) => {
+    setDescription(e.target.value);
+  };
+  const changeCategory = (index) => {
+    setCategory(categories[index]);
+  };
+  const changeStock = (e) => {
+    setQuantity(e.target.value);
+  };
+  const changePrice = (e) => {
+    setPrice(e.target.value);
+  };
 
-  const handleUploadedFile = (e) => {
-    setUploadedFile(e.target.files[0]);
-    console.log(uploadedFile);
+  const submit = (e) => {
+    console.log(e.target);
+    let formData = new FormData();
+    formData.append("imgPath", previewUrl);
+    formData.append("desp", name);
+    formData.append("content", description);
+    formData.append("category", category);
+    formData.append("price", price);
+    formData.append("volume", quantity);
+    const url = "http://127.0.0.1:4000/product/create";
+    const options = {
+      method: "POST",
+      body: formData,
+    };
+    fetch(url, options);
+  };
+
+  const handleUploadedFile = async (e) => {
+    // console.log(e.target.files[0]);
+    let formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    // formData.append();
+
+    const url = "http://127.0.0.1:4000/uploadImage";
+    const options = {
+      method: "POST",
+      body: formData,
+      // "Content-Type": "multipart/form-data",
+    };
+    const response = await fetch(url, options);
+    const resJson = await response.json();
+    const fileName = resJson.name;
+    setPreviewUrl("http://127.0.0.1:4000/resources/" + fileName);
+    // setUploadedFile(e.target.files[0]);
+    setLoading(true);
   };
 
   return (
     <div className="product-create-page">
-      <form onSubmit={submit()}>
+      <form onSubmit={(e) => submit(e)}>
         <div className="product-create-page-header">
           <h1>Create Product</h1>
-          <button>
+          <button type="button">
             <GrLinkPrevious />
           </button>
         </div>
         <div className="product-create-content">
           <div className="product-create-name">
             <p>Product Name</p>
-            <input />
+            <input name="name" onChange={(e) => changeName(e)} />
           </div>
           <div className="product-create-desp">
             <p>Product Description</p>
-            <input />
+            <textarea
+              name="desp"
+              onChange={(e) => changeDescription(e)}
+            ></textarea>
           </div>
           <div className="product-create-category-price">
             <div className="product-create-category">
               <p>Category</p>
-              <input />
+              <button
+                type="button"
+                className="category-dropdown"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <span>{categories[selected]}</span>
+                {dropdownOpen ? (
+                  <CaretUp className="category-toggle-mark" />
+                ) : (
+                  <CaretDown className="category-toggle-mark" />
+                )}
+              </button>
+              <div
+                className={
+                  dropdownOpen
+                    ? "category-dropdown-list show-category-dropdown-list"
+                    : "category-dropdown-list"
+                }
+              >
+                <ul>
+                  {categories.map((value, index) => (
+                    <li key={index}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelected(index);
+                          changeCategory(index);
+                          setDropdownOpen(!dropdownOpen);
+                        }}
+                      >
+                        {value}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
             <div className="product-create-price">
               <p>Price</p>
-              <input />
+              <input name="price" onChange={(e) => changePrice(e)} />
             </div>
           </div>
           <div className="product-create-quantity-link">
             <div className="product-create-quantity">
               <p>In Stock Quantity</p>
-              <input />
+              <input name="quantity" onChange={(e) => changeStock(e)} />
             </div>
             <div className="product-create-link">
               <p>Add Image Link</p>
-              <input />
+              <div className="product-create-upload-link">
+                <p>
+                  {loading
+                    ? "..." + previewUrl.slice(22, 45) + "..."
+                    : previewUrl}
+                </p>
+                <span>
+                  <input
+                    type="file"
+                    name="file"
+                    className="product-create-upload-mask"
+                    onChange={(e) => handleUploadedFile(e)}
+                  />
+                  Upload
+                </span>
+              </div>
             </div>
           </div>
           <div className="product-create-image-preview">
-            <input
-              type="file"
-              className="product-create-image-preview-mask"
-              onChange={(e) => handleUploadedFile(e)}
-            />
-            <p>
-              <BsFileEarmarkImage className="product-upload-image" />
-              <span>Image Preview!</span>
-            </p>
+            {loading ? (
+              <img src={previewUrl} alt="" />
+            ) : (
+              <p>
+                <BsFileEarmarkImage className="product-upload-image" />
+                <span>Image Preview!</span>
+              </p>
+            )}
           </div>
           <div>
             <button className="add-product" type="submit">
