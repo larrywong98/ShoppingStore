@@ -189,7 +189,7 @@ const ProductCreatePage = () => {
               </p>
             )}
           </div>
-          <div>
+          <div className="add-product-wrap">
             <button className="add-product" type="submit">
               Add Product
             </button>
