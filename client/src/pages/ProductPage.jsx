@@ -105,7 +105,7 @@ const ProductPage = () => {
             <div
               className={
                 dropdownOpen
-                  ? styles["dropdown-content show"]
+                  ? styles["dropdown-content"] + " " + styles["show"]
                   : styles["dropdown-content"]
               }
             >

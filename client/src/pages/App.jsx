@@ -19,7 +19,7 @@ const App = () => {
   return (
     <div className={styles.App}>
       <Header />
-      {/* <ProductPage /> */}
+      <ProductPage />
       {/* <ProductDetailPage /> */}
       {/* <ProductCreatePage /> */}
       {/* <ErrorPage /> */}

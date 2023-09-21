@@ -128,9 +128,9 @@ const ProductCreatePage = () => {
               <div
                 className={
                   dropdownOpen
-                    ? styles[
-                        "category-dropdown-list show-category-dropdown-list"
-                      ]
+                    ? styles["category-dropdown-list"] +
+                      " " +
+                      styles["show-category-dropdown-list"]
                     : styles["category-dropdown-list"]
                 }
               >
