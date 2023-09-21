@@ -7,8 +7,8 @@ import {
   priceLowtoHigh,
   priceHightoLow,
 } from "../reducer/productSlice";
-import Product from "./Product";
-
+import Product from "../components/Product";
+import styles from "../css/ProductPage.module.css";
 const ProductPage = () => {
   const [selected, setSelected] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -83,38 +83,43 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="product-page">
-      <div className="product-page-header">
+    <div className={styles["product-page"]}>
+      <div className={styles["product-page-header"]}>
         <h1>Products</h1>
-        <div className="product-page-header-button">
-          <div className="dropdown" onMouseLeave={() => setDropdownOpen(false)}>
+        <div className={styles["product-page-header-button"]}>
+          <div
+            className={styles["dropdown"]}
+            onMouseLeave={() => setDropdownOpen(false)}
+          >
             <button
-              className="dropdown-btn"
+              className={styles["dropdown-btn"]}
               onMouseEnter={() => setDropdownOpen(true)}
             >
               <span>{sortStatus[selected].desp}</span>
               {dropdownOpen ? (
-                <CaretUp className="open-mark" />
+                <CaretUp className={styles["open-mark"]} />
               ) : (
-                <CaretDown className="open-mark" />
+                <CaretDown className={styles["open-mark"]} />
               )}
             </button>
             <div
               className={
-                dropdownOpen ? "dropdown-content show" : "dropdown-content"
+                dropdownOpen
+                  ? styles["dropdown-content show"]
+                  : styles["dropdown-content"]
               }
             >
               <ul>
                 {sortStatus.map(({ checked, desp }, index) => (
                   <button
-                    className="dropdown-item-btn"
+                    className={styles["dropdown-item-btn"]}
                     onClick={() => sortBySelection(index)}
                     key={index}
                   >
                     {selected === index ? (
-                      <Checkmark className="check" />
+                      <Checkmark className={styles["check"]} />
                     ) : (
-                      <div className="check"></div>
+                      <div className={styles["check"]}></div>
                     )}
                     {desp}
                   </button>
@@ -122,12 +127,15 @@ const ProductPage = () => {
               </ul>
             </div>
           </div>
-          <button className="add-product" onClick={() => addProduct()}>
-            <span className="add-product-name">Add Product</span>
+          <button
+            className={styles["add-product"]}
+            onClick={() => addProduct()}
+          >
+            <span className={styles["add-product-name"]}>Add Product</span>
           </button>
         </div>
       </div>
-      <div className="product-content">
+      <div className={styles["product-content"]}>
         {products
           .slice(currentPage * 10, currentPage * 10 + 10)
           .map((product, index) => (
@@ -143,8 +151,8 @@ const ProductPage = () => {
             />
           ))}
       </div>
-      <div className="pagination-wrap">
-        <div className="nav-to-page">
+      <div className={styles["pagination-wrap"]}>
+        <div className={styles["nav-to-page"]}>
           <p>Go to </p>
           <input
             value={pageValue}
@@ -154,11 +162,11 @@ const ProductPage = () => {
           />
           <p>Page</p>
         </div>
-        <nav className="nav-list">
+        <nav className={styles["nav-list"]}>
           <ul>
             <li>
               <button
-                className="pagination-item "
+                className={styles["pagination-item"]}
                 onClick={() => navigateToPage("prev")}
               >
                 {"<<"}
@@ -171,8 +179,8 @@ const ProductPage = () => {
                   <button
                     className={
                       index === currentPage
-                        ? "pagination-item-inverse"
-                        : "pagination-item"
+                        ? styles["pagination-item-inverse"]
+                        : styles["pagination-item"]
                     }
                     onClick={() => navigateToPage(index)}
                   >
@@ -182,7 +190,7 @@ const ProductPage = () => {
               ))}
             <li>
               <button
-                className="pagination-item"
+                className={styles["pagination-item"]}
                 onClick={() => navigateToPage("next")}
               >
                 {">>"}

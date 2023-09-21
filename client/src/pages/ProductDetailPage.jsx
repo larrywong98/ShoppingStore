@@ -3,6 +3,7 @@ import { GrLinkPrevious } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { loadProducts } from "../reducer/productSlice";
 
+import styles from "../css/ProductDetailPage.module.css";
 const ProductDetailPage = (props) => {
   //dispatch product slice
   const dispatch = useDispatch();
@@ -19,31 +20,31 @@ const ProductDetailPage = (props) => {
       {products.length === 0 ? (
         <></>
       ) : (
-        <div className="product-detail-page">
-          <div className="product-detail-page-header">
+        <div className={styles["product-detail-page"]}>
+          <div className={styles["product-detail-page-header"]}>
             <h1>Products Detail</h1>
             <button>
               <GrLinkPrevious />
             </button>
           </div>
-          <div className="product-detail-content">
+          <div className={styles["product-detail-content"]}>
             <img
               src={products.filter((value) => value.id === "1")[0].imgPath}
               alt=""
             />
-            <div className="product-detail">
+            <div className={styles["product-detail"]}>
               <h2>{products[0].category}</h2>
               <h1>{products[0].desp}</h1>
-              <div className="product-detail-price-stock">
+              <div className={styles["product-detail-price-stock"]}>
                 <p>${products[0].price}</p>
                 {products[0].volume === 0 ? <span>Out of Stock</span> : <></>}
               </div>
-              <p className="product-detail-content-paragraph">
+              <p className={styles["product-detail-content-paragraph"]}>
                 {products[0].content}
               </p>
-              <div className="product-detail-btn-group">
-                <button className="add-cart-btn">Add To Cart</button>
-                <button className="edit-product">Edit</button>
+              <div className={styles["product-detail-btn-group"]}>
+                <button className={styles["add-cart-btn"]}>Add To Cart</button>
+                <button className={styles["edit-product"]}>Edit</button>
               </div>
             </div>
           </div>

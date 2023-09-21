@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CaretUp, CaretDown } from "@carbon/icons-react";
 import { loadProducts } from "../reducer/productSlice";
 
+import styles from "../css/ProductCreatePage.module.css";
 const ProductCreatePage = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -89,46 +90,48 @@ const ProductCreatePage = () => {
   };
 
   return (
-    <div className="product-create-page">
+    <div className={styles["product-create-page"]}>
       <form onSubmit={(e) => submit(e)}>
-        <div className="product-create-page-header">
+        <div className={styles["product-create-page-header"]}>
           <h1>Create Product</h1>
           <button type="button">
             <GrLinkPrevious />
           </button>
         </div>
-        <div className="product-create-content">
-          <div className="product-create-name">
+        <div className={styles["product-create-content"]}>
+          <div className={styles["product-create-name"]}>
             <p>Product Name</p>
             <input name="name" onChange={(e) => changeName(e)} />
           </div>
-          <div className="product-create-desp">
+          <div className={styles["product-create-desp"]}>
             <p>Product Description</p>
             <textarea
               name="desp"
               onChange={(e) => changeDescription(e)}
             ></textarea>
           </div>
-          <div className="product-create-category-price">
-            <div className="product-create-category">
+          <div className={styles["product-create-category-price"]}>
+            <div className={styles["product-create-category"]}>
               <p>Category</p>
               <button
                 type="button"
-                className="category-dropdown"
+                className={styles["category-dropdown"]}
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 <span>{categories[selected]}</span>
                 {dropdownOpen ? (
-                  <CaretUp className="category-toggle-mark" />
+                  <CaretUp className={styles["category-toggle-mark"]} />
                 ) : (
-                  <CaretDown className="category-toggle-mark" />
+                  <CaretDown className={styles["category-toggle-mark"]} />
                 )}
               </button>
               <div
                 className={
                   dropdownOpen
-                    ? "category-dropdown-list show-category-dropdown-list"
-                    : "category-dropdown-list"
+                    ? styles[
+                        "category-dropdown-list show-category-dropdown-list"
+                      ]
+                    : styles["category-dropdown-list"]
                 }
               >
                 <ul>
@@ -149,19 +152,19 @@ const ProductCreatePage = () => {
                 </ul>
               </div>
             </div>
-            <div className="product-create-price">
+            <div className={styles["product-create-price"]}>
               <p>Price</p>
               <input name="price" onChange={(e) => changePrice(e)} />
             </div>
           </div>
-          <div className="product-create-quantity-link">
-            <div className="product-create-quantity">
+          <div className={styles["product-create-quantity-link"]}>
+            <div className={styles["product-create-quantity"]}>
               <p>In Stock Quantity</p>
               <input name="quantity" onChange={(e) => changeStock(e)} />
             </div>
-            <div className="product-create-link">
+            <div className={styles["product-create-link"]}>
               <p>Add Image Link</p>
-              <div className="product-create-upload-link">
+              <div className={styles["product-create-upload-link"]}>
                 <p>
                   {loading
                     ? "..." + previewUrl.slice(22, 45) + "..."
@@ -171,7 +174,7 @@ const ProductCreatePage = () => {
                   <input
                     type="file"
                     name="file"
-                    className="product-create-upload-mask"
+                    className={styles["product-create-upload-mask"]}
                     onChange={(e) => handleUploadedFile(e)}
                   />
                   Upload
@@ -179,18 +182,20 @@ const ProductCreatePage = () => {
               </div>
             </div>
           </div>
-          <div className="product-create-image-preview">
+          <div className={styles["product-create-image-preview"]}>
             {loading ? (
               <img src={previewUrl} alt="" />
             ) : (
               <p>
-                <BsFileEarmarkImage className="product-upload-image" />
+                <BsFileEarmarkImage
+                  className={styles["product-upload-image"]}
+                />
                 <span>Image Preview!</span>
               </p>
             )}
           </div>
-          <div className="add-product-wrap">
-            <button className="add-product" type="submit">
+          <div className={styles["add-product-wrap"]}>
+            <button className={styles["add-product"]} type="submit">
               Add Product
             </button>
           </div>

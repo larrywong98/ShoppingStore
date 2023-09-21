@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
-
+import styles from "../css/product.module.css";
 const Product = (props) => {
   const [numberInCart, setNumberInCart] = useState(2);
 
   return (
-    <div className="product-item">
+    <div className={styles["product-item"]}>
       <img
         style={{ width: "100%", height: "100%" }}
         src={props.imgPath}
         alt=""
       />
-      <div className="product-info">
+      <div className={styles["product-info"]}>
         <p>{props.desp}</p>
         <span>${props.price.toFixed(2)}</span>
       </div>
 
-      <div className="product-item-btn-group">
+      <div className={styles["product-item-btn-group"]}>
         {numberInCart > 0 ? (
-          <div className="add-btn-showed">
+          <div className={styles["add-btn-showed"]}>
             <button
-              className="minus-one-btn"
+              className={styles["minus-one-btn"]}
               onClick={() => {
                 setNumberInCart(numberInCart - 1);
               }}
@@ -39,9 +39,11 @@ const Product = (props) => {
                 />
               </svg>
             </button>
-            <span className="add-btn-showed-text">{numberInCart}</span>
+            <span className={styles["add-btn-showed-text"]}>
+              {numberInCart}
+            </span>
             <button
-              className="add-one-btn"
+              className={styles["add-one-btn"]}
               onClick={() => {
                 setNumberInCart(numberInCart + 1);
               }}
@@ -68,16 +70,16 @@ const Product = (props) => {
           </div>
         ) : (
           <button
-            className="add-btn-init"
+            className={styles["add-btn-init"]}
             onClick={() => {
               setNumberInCart(numberInCart + 1);
             }}
           >
-            <span className="add-btn-showed-text">Add</span>
+            <span className={styles["add-btn-showed-text"]}>Add</span>
           </button>
         )}
 
-        <button className="edit-btn">Edit</button>
+        <button className={styles["edit-btn"]}>Edit</button>
       </div>
     </div>
   );

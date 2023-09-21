@@ -2,35 +2,27 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loadProducts } from "../reducer/productSlice";
 
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import ProductPage from "./ProductPage";
 import ProductDetailPage from "./ProductDetailPage";
 import ProductCreatePage from "./ProductCreatePage";
 import ErrorPage from "./ErrorPage";
 
-import "../css/App.css";
-import "../css/ProductCreatePage.css";
-import "../css/ProductDetailPage.css";
-import "../css/product.css";
-import "../css/ProductPage.css";
-import "../css/Footer.css";
-import "../css/Header.css";
-import "../css/ErrorPage.css";
+import styles from "../css/App.module.css";
 
 const App = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadProducts());
-  });
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(loadProducts());
+  // });
   return (
-    <div className="App">
+    <div className={styles.App}>
       <Header />
-      {/* <h1 style={{ height: "1000px" }}>body</h1> */}
       {/* <ProductPage /> */}
       {/* <ProductDetailPage /> */}
       {/* <ProductCreatePage /> */}
-      <ErrorPage />
+      {/* <ErrorPage /> */}
       <Footer />
     </div>
   );

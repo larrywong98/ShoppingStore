@@ -1,9 +1,11 @@
+import styles from "../css/ErrorPage.module.css";
+
 const ErrorPage = () => {
   return (
-    <div className="error-page">
-      <div className="error-content">
+    <div className={styles["error-page"]}>
+      <div className={styles["error-content"]}>
         <svg
-          className="exclamation"
+          className={styles["exclamation"]}
           xmlns="http://www.w3.org/2000/svg"
           width="100"
           height="100"

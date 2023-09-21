@@ -223,6 +223,14 @@
   position: absolute;
   z-index: 1;
 }
+.add-product {
+  width: 133px;
+  height: 40px;
+  border-radius: 4px;
+  background: #036bfc;
+  border: none;
+  color: #ffffff;
+}
 
 @media only screen and (max-width: 600px) {
   .product-create-page form {

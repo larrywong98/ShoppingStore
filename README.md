@@ -23,7 +23,8 @@ npm i antd
 npm i -S @carbon/icons-react
 npm i bootstrap@5.3.2
 npm i axios
-npm install react-icons
+npm i react-icons
+npm i jwt-decode
 
 server:
 npm i express
