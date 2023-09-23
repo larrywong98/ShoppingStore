@@ -1,30 +1,39 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { loadProducts } from "../reducer/productSlice";
-
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import ProductPage from "./ProductPage";
-import ProductDetailPage from "./ProductDetailPage";
-import ProductCreatePage from "./ProductCreatePage";
-import ErrorPage from "./ErrorPage";
+import Welcome from "../components/Welcome";
+import AuthForm from "../components/AuthForm";
+import ProductsLayout from "../components/ProductsLayout";
+
+import Products from "./Products";
+import ProductDetail from "./ProductDetail";
+import ProductCreate from "./ProductCreate";
+import Error from "./Error";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import styles from "../css/App.module.css";
 
 const App = () => {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(loadProducts());
-  // });
   return (
-    <div className={styles.App}>
-      <Header />
-      <ProductPage />
-      {/* <ProductDetailPage /> */}
-      {/* <ProductCreatePage /> */}
-      {/* <ErrorPage /> */}
-      <Footer />
-    </div>
+    <Router>
+      <div className={styles.App}>
+        <Header />
+        <Routes>
+          <Route path="/">
+            <Route index element={<Welcome />} />
+            <Route path="signup" element={<AuthForm value="signup" />} />
+            <Route path="signin" element={<AuthForm value="signin" />} />
+            <Route path="products" element={<ProductsLayout />}>
+              <Route index element={<Products />} />
+              <Route path=":productId" element={<ProductDetail />} />
+              <Route path="create" element={<ProductCreate />} />
+            </Route>
+
+            <Route path="Error" element={<Error />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 };
 

@@ -17,7 +17,7 @@ const Footer = () => {
             { icon: <FacebookIcon />, link: "#facebook", class: "facebook" },
           ].map((comp, index) => (
             <a href={comp.link} key={index}>
-              <IconButton className={comp.class} color="inherit">
+              <IconButton className={styles[comp.class]} color="inherit">
                 {comp.icon}
               </IconButton>
             </a>
@@ -29,7 +29,7 @@ const Footer = () => {
             { link: "/policy", desp: "Privacy Policies", class: "policy" },
             { link: "/help", desp: "Help", class: "help" },
           ].map((comp, index) => (
-            <a className={comp.class} href={comp.link} key={index}>
+            <a className={styles[comp.class]} href={comp.link} key={index}>
               {comp.desp}
             </a>
           ))}

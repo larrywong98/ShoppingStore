@@ -62,6 +62,12 @@
   bottom: 0;
   color: #fce944;
 }
+.star-icon-logout {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #ffffff;
+}
 .status {
   display: flex;
   justify-content: center;

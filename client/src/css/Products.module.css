@@ -94,6 +94,10 @@
   height: 40px;
   color: #ffffff;
   background-color: #036bfc;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  align-items: center;
   border: none;
   border-radius: 5px;
 }

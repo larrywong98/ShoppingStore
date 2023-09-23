@@ -1,6 +1,6 @@
-import styles from "../css/ErrorPage.module.css";
+import styles from "../css/Error.module.css";
 
-const ErrorPage = () => {
+const Error = () => {
   return (
     <div className={styles["error-page"]}>
       <div className={styles["error-content"]}>
@@ -24,4 +24,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default Error;

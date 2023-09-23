@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { CaretUp, CaretDown } from "@carbon/icons-react";
 import { loadProducts } from "../reducer/productSlice";
 
-import styles from "../css/ProductCreatePage.module.css";
-const ProductCreatePage = () => {
+import styles from "../css/ProductCreate.module.css";
+import { Link } from "react-router-dom";
+const ProductCreate = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState("http://");
@@ -94,9 +95,9 @@ const ProductCreatePage = () => {
       <form onSubmit={(e) => submit(e)}>
         <div className={styles["product-create-page-header"]}>
           <h1>Create Product</h1>
-          <button type="button">
+          <Link to="/products" className={styles["back-icon"]}>
             <GrLinkPrevious />
-          </button>
+          </Link>
         </div>
         <div className={styles["product-create-content"]}>
           <div className={styles["product-create-name"]}>
@@ -205,4 +206,4 @@ const ProductCreatePage = () => {
   );
 };
 
-export default ProductCreatePage;
+export default ProductCreate;

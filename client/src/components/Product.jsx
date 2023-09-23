@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
-import styles from "../css/product.module.css";
+import styles from "../css/Product.module.css";
+import { useNavigate } from "react-router";
 const Product = (props) => {
   const [numberInCart, setNumberInCart] = useState(2);
-
+  const navigate = useNavigate();
+  const toDetailPage = (pageId, index) => {
+    let realid = pageId * 10 + index;
+    navigate(realid.toString());
+  };
   return (
     <div className={styles["product-item"]}>
       <img
         style={{ width: "100%", height: "100%" }}
         src={props.imgPath}
         alt=""
+        onClick={() => toDetailPage(props.pageId, props.index)}
       />
       <div className={styles["product-info"]}>
         <p>{props.desp}</p>

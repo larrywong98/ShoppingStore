@@ -1,5 +1,5 @@
 import { Checkmark, CaretUp, CaretDown } from "@carbon/icons-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loadProducts,
@@ -7,10 +7,11 @@ import {
   priceLowtoHigh,
   priceHightoLow,
 } from "../reducer/productSlice";
+import { Link, Outlet } from "react-router-dom";
 import Product from "../components/Product";
-import styles from "../css/ProductPage.module.css";
-const ProductPage = () => {
-  const [selected, setSelected] = useState(0);
+import styles from "../css/Products.module.css";
+const Products = ({ children }) => {
+  // const [selected, setSelected] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageValue, setPageValue] = useState(1);
@@ -18,27 +19,28 @@ const ProductPage = () => {
   //dispatch product slice
   const dispatch = useDispatch();
   const products = useSelector((state) => state.productReducer.products);
-
-  const sortStatus = [
-    { desp: "Last added" },
-    { desp: "Price: low to high" },
-    { desp: "Price: high to low" },
-  ];
+  const sortStatus = useSelector((state) =>
+    state.productReducer.sortStatus.slice(0, 3)
+  );
+  // memorize sort status
+  const selected = useSelector(
+    (state) => state.productReducer.sortStatus[3].selected
+  );
 
   useEffect(() => {
     // skeleton loading
-    dispatch(loadProducts());
-
-    dispatch(lastAdded());
+    console.log(selected);
+    if (products.length === 0) {
+      dispatch(loadProducts());
+    }
+    // dispatch(lastAdded());
   }, []);
-  const addProduct = () => {};
 
   const sortBySelection = (i) => {
     if (i === 0) dispatch(lastAdded());
     if (i === 1) dispatch(priceLowtoHigh());
     if (i === 2) dispatch(priceHightoLow());
 
-    setSelected(i);
     setDropdownOpen(false);
   };
 
@@ -127,12 +129,9 @@ const ProductPage = () => {
               </ul>
             </div>
           </div>
-          <button
-            className={styles["add-product"]}
-            onClick={() => addProduct()}
-          >
+          <Link to="create" className={styles["add-product"]}>
             <span className={styles["add-product-name"]}>Add Product</span>
-          </button>
+          </Link>
         </div>
       </div>
       <div className={styles["product-content"]}>
@@ -145,6 +144,8 @@ const ProductPage = () => {
               category={product.category}
               content={product.content}
               imgPath={product.imgPath}
+              index={index}
+              pageId={currentPage}
               id={product.id}
               desp={product.desp}
               price={product.price}
@@ -199,8 +200,10 @@ const ProductPage = () => {
           </ul>
         </nav>
       </div>
+      {/* {children} */}
+      <Outlet />
     </div>
   );
 };
 
-export default ProductPage;
+export default Products;

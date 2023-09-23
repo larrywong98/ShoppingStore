@@ -44,10 +44,9 @@ const Header = () => {
         <button className={styles["account"]} onClick={() => userLogin()}>
           <div className={styles["user-certificate"]}>
             <User className={styles["user-icon"]} width="30px" height="30px" />
-            {loggedin ? <StarFilled className="star-icon" /> : <></>}
+            {loggedin ? <StarFilled className={styles["star-icon"]} /> : <></>}
           </div>
           <span className={styles["signin"]}>
-            {" "}
             {loggedin ? "Sign Out" : "Sign In"}
           </span>
         </button>
