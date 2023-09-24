@@ -32,3 +32,4 @@ npm i nodemon
 npm i mongoose
 npm i dotenv
 npm i multer
+npm i md5
