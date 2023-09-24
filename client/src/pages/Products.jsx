@@ -29,11 +29,10 @@ const Products = ({ children }) => {
 
   useEffect(() => {
     // skeleton loading
-    console.log(selected);
-    if (products.length === 0) {
-      dispatch(loadProducts());
-    }
-    // dispatch(lastAdded());
+    // console.log(selected);
+    // if (products.length === 0) {
+    dispatch(loadProducts());
+    // }
   }, []);
 
   const sortBySelection = (i) => {

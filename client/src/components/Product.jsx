@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../css/Product.module.css";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 const Product = (props) => {
   const [numberInCart, setNumberInCart] = useState(2);
   const navigate = useNavigate();
@@ -85,7 +86,9 @@ const Product = (props) => {
           </button>
         )}
 
-        <button className={styles["edit-btn"]}>Edit</button>
+        <Link to={"edit/" + props.index} className={styles["edit-btn"]}>
+          Edit
+        </Link>
       </div>
     </div>
   );

@@ -85,6 +85,11 @@
   border: 1px solid #cccccc;
   background: #ffffff;
   color: #535353;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-size: 12px;
 }
 
 @media only screen and (max-width: 600px) {

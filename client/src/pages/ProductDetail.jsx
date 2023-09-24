@@ -15,11 +15,8 @@ const ProductDetail = (props) => {
   // const params = useParams();
 
   useEffect(() => {
-    console.log(productId);
-
     // dispatch(loadProducts());
     setLoading(false);
-    console.log(products);
   }, []);
   return (
     <>
@@ -48,7 +45,12 @@ const ProductDetail = (props) => {
             </p>
             <div className={styles["product-detail-btn-group"]}>
               <button className={styles["add-cart-btn"]}>Add To Cart</button>
-              <button className={styles["edit-product"]}>Edit</button>
+              <Link
+                to={"/products/edit/" + productId}
+                className={styles["edit-product"]}
+              >
+                Edit
+              </Link>
             </div>
           </div>
         </div>

@@ -41,6 +41,7 @@ export const loadProducts = () => {
   return async (dispatch, getState) => {
     const products = await getProductsRequest();
     dispatch(load({ products: products }));
+    dispatch(lastAdded());
   };
 };
 

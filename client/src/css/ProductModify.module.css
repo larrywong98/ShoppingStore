@@ -231,6 +231,9 @@
   border: none;
   color: #ffffff;
 }
+.empty-warning {
+  color: red;
+}
 
 @media only screen and (max-width: 600px) {
   .product-create-page form {
