@@ -7,6 +7,7 @@ import ProductsLayout from "../components/ProductsLayout";
 import Products from "./Products";
 import ProductDetail from "./ProductDetail";
 import ProductModify from "./ProductModify";
+import Success from "./Success";
 import Error from "./Error";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -34,7 +35,8 @@ const App = () => {
                 element={<ProductModify operation="edit" />}
               />
             </Route>
-            <Route path="Error" element={<Error />} />
+            <Route path="success" element={<Success />} />
+            <Route path="error" element={<Error />} />
           </Route>
         </Routes>
         <Footer />

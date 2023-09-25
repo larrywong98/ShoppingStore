@@ -3,7 +3,7 @@ import styles from "../css/Product.module.css";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 const Product = (props) => {
-  const [numberInCart, setNumberInCart] = useState(2);
+  const [numberInCart, setNumberInCart] = useState(0);
   const navigate = useNavigate();
   const toDetailPage = (pageId, index) => {
     let realid = pageId * 10 + index;
@@ -12,7 +12,7 @@ const Product = (props) => {
   return (
     <div className={styles["product-item"]}>
       <img
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "100%", cursor: "pointer" }}
         src={props.imgPath}
         alt=""
         onClick={() => toDetailPage(props.pageId, props.index)}

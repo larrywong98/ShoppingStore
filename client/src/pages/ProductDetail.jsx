@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 import { GrLinkPrevious } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loadProducts } from "../reducer/productSlice";
 
 import styles from "../css/ProductDetail.module.css";
 import { useParams } from "react-router";
 const ProductDetail = (props) => {
-  //dispatch product slice
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const products = useSelector((state) => state.productReducer.products);
   const productId = useParams().productId;
+  const currentProduct = products[productId] || {};
   // const params = useParams();
 
   useEffect(() => {
     // dispatch(loadProducts());
-    setLoading(false);
+    // console.log(currentProduct);
+    if (Object.keys(currentProduct).length === 0) {
+      navigate("/products");
+    }
   }, []);
   return (
     <>
@@ -28,20 +30,20 @@ const ProductDetail = (props) => {
           </Link>
         </div>
         <div className={styles["product-detail-content"]}>
-          <img src={products[productId].imgPath} alt="" />
+          <img src={currentProduct.imgPath} alt="" />
           <div className={styles["product-detail"]}>
-            <h2>{products[productId].category}</h2>
-            <h1>{products[productId].desp}</h1>
+            <h2>{currentProduct.category}</h2>
+            <h1>{currentProduct.desp}</h1>
             <div className={styles["product-detail-price-stock"]}>
-              <p>${products[productId].price}</p>
-              {products[productId].volume === productId ? (
+              <p>${currentProduct.price}</p>
+              {currentProduct.volume === productId ? (
                 <span>Out of Stock</span>
               ) : (
                 <></>
               )}
             </div>
             <p className={styles["product-detail-content-paragraph"]}>
-              {products[productId].content}
+              {currentProduct.content}
             </p>
             <div className={styles["product-detail-btn-group"]}>
               <button className={styles["add-cart-btn"]}>Add To Cart</button>

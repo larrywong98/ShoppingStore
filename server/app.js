@@ -40,10 +40,11 @@ app.post("/product/create", upload.single("file"), async (req, res) => {
       content: req.body.content,
       timestamp: Date.now().toString().slice(0, 10),
     });
-    await newProduct.save();
-    res.status(200).json("ok");
+    const success = await newProduct.save();
+    if (!success) res.status(200).json({ status: "create failed" });
+    res.status(200).json({ status: "ok" });
   } catch (err) {
-    res.status(500).json(err.message);
+    res.status(500).json({ status: err.message });
   }
 });
 
@@ -67,7 +68,7 @@ app.put("/product/edit/:productId", upload.single("file"), async (req, res) => {
     });
     res.status(200).json({ status: "ok" });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ status: err.message });
   }
 
   // console.log(newDoc);

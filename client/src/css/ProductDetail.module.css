@@ -42,7 +42,8 @@
   flex-direction: column;
   padding-top: 40px;
   gap: 12px;
-  width: 600px;
+  width: 428px;
+  /* border: 1px solid red; */
 }
 .product-detail h2 {
   font-size: 16px;
@@ -78,6 +79,7 @@
 .product-detail-content-paragraph {
   font-size: 16px;
   color: #6b7280;
+  /* border: 1px solid red; */
 }
 .product-detail-btn-group {
   display: flex;

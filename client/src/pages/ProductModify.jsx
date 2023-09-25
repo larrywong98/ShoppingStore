@@ -33,8 +33,8 @@ const ProductModify = (props) => {
   const [previewUrl, setPreviewUrl] = useState("http://");
   const [firstLoad, setFirstLoad] = useState(true);
 
-  //dispatch product slice
-  const dispatch = useDispatch();
+  // dispatch product slice
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     // edit populate fields
@@ -52,21 +52,21 @@ const ProductModify = (props) => {
     }
   }, []);
 
-  const changeName = (e) => {
-    setName(e.target.value);
-  };
-  const changeDescription = (e) => {
-    setDescription(e.target.value);
-  };
-  const changeCategory = (index) => {
-    setCategory(categories[index]);
-  };
-  const changeStock = (e) => {
-    setQuantity(e.target.value);
-  };
-  const changePrice = (e) => {
-    setPrice(e.target.value);
-  };
+  // const setName(e.target.value) = (e) => {
+  //   setName(e.target.value);
+  // };
+  // const  setDescription(e.target.value) = (e) => {
+  //   setDescription(e.target.value);
+  // };
+  // const  setCategory(categories[index]) = (index) => {
+  //   setCategory(categories[index]);
+  // };
+  // const setQuantity(e.target.value) = (e) => {
+  //   setQuantity(e.target.value);
+  // };
+  // const setPrice(e.target.value) = (e) => {
+  //   setPrice(e.target.value);
+  // };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -82,8 +82,6 @@ const ProductModify = (props) => {
       return;
     }
     var formData = new FormData();
-    console.log(products[productIndex]);
-
     formData.append("imgPath", previewUrl);
     formData.append("desp", name);
     formData.append("content", description);
@@ -97,8 +95,11 @@ const ProductModify = (props) => {
         method: "POST",
         data: formData,
       });
-      //handle error
-      console.log(response);
+      if (response.status === "ok") {
+        navigate("/success", { state: { message: "Create successfully !!!" } });
+      } else {
+        navigate("/error");
+      }
     } else if (props.operation === "edit") {
       formData.append("id", products[productIndex].id);
       let response = await requestData({
@@ -106,17 +107,17 @@ const ProductModify = (props) => {
         method: "PUT",
         data: formData,
       });
-      //handle error
-      console.log(response);
+      if (response.status === "ok") {
+        navigate("/success", { state: { message: "Edit successfully !!!" } });
+      } else {
+        navigate("/error");
+      }
     }
-    navigate("/products");
   };
 
   const handleUploadedFile = async (e) => {
-    // console.log(e.target.files[0]);
     let formData = new FormData();
     formData.append("file", e.target.files[0]);
-    // formData.append();
 
     const url = "http://127.0.0.1:4000/uploadImage";
     const options = {
@@ -128,7 +129,6 @@ const ProductModify = (props) => {
     const resJson = await response.json();
     const fileName = resJson.name;
     setPreviewUrl("http://127.0.0.1:4000/resources/" + fileName);
-    // setUploadedFile(e.target.files[0]);
     setLoading(true);
   };
 
@@ -145,7 +145,7 @@ const ProductModify = (props) => {
           <div className={styles["product-create-content"]}>
             <div className={styles["product-create-name"]}>
               <p>Product Name</p>
-              <input name="name" onChange={(e) => changeName(e)} />
+              <input name="name" onChange={(e) => setName(e.target.value)} />
               {name === "" && firstLoad === false ? (
                 <p className={styles["empty-warning"]}>Empty product name</p>
               ) : (
@@ -156,7 +156,7 @@ const ProductModify = (props) => {
               <p>Product Description</p>
               <textarea
                 name="desp"
-                onChange={(e) => changeDescription(e)}
+                onChange={(e) => setDescription(e.target.value)}
               ></textarea>
               {description === "" && firstLoad === false ? (
                 <p className={styles["empty-warning"]}>
@@ -197,7 +197,7 @@ const ProductModify = (props) => {
                           type="button"
                           onClick={() => {
                             setSelected(index);
-                            changeCategory(index);
+                            setCategory(categories[index]);
                             setDropdownOpen(!dropdownOpen);
                           }}
                         >
@@ -210,7 +210,10 @@ const ProductModify = (props) => {
               </div>
               <div className={styles["product-create-price"]}>
                 <p>Price</p>
-                <input name="price" onChange={(e) => changePrice(e)} />
+                <input
+                  name="price"
+                  onChange={(e) => setPrice(e.target.value)}
+                />
                 {price === "" && firstLoad === false ? (
                   <p className={styles["empty-warning"]}>Empty price</p>
                 ) : (
@@ -221,7 +224,10 @@ const ProductModify = (props) => {
             <div className={styles["product-create-quantity-link"]}>
               <div className={styles["product-create-quantity"]}>
                 <p>In Stock Quantity</p>
-                <input name="quantity" onChange={(e) => changeStock(e)} />
+                <input
+                  name="quantity"
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
                 {quantity === "" && firstLoad === false ? (
                   <p className={styles["empty-warning"]}>
                     Empty stock quantity
@@ -285,7 +291,11 @@ const ProductModify = (props) => {
           <div className={styles["product-create-content"]}>
             <div className={styles["product-create-name"]}>
               <p>Product Name</p>
-              <input name="name" value={name} onChange={(e) => changeName(e)} />
+              <input
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
               {name === "" && firstLoad === false ? (
                 <p className={styles["empty-warning"]}>Empty product name</p>
               ) : (
@@ -297,7 +307,7 @@ const ProductModify = (props) => {
               <textarea
                 name="desp"
                 value={description}
-                onChange={(e) => changeDescription(e)}
+                onChange={(e) => setDescription(e.target.value)}
               ></textarea>
               {description === "" && firstLoad === false ? (
                 <p className={styles["empty-warning"]}>
@@ -338,7 +348,7 @@ const ProductModify = (props) => {
                           type="button"
                           onClick={() => {
                             setSelected(index);
-                            changeCategory(index);
+                            setCategory(categories[index]);
                             setDropdownOpen(!dropdownOpen);
                           }}
                         >
@@ -354,7 +364,7 @@ const ProductModify = (props) => {
                 <input
                   name="price"
                   value={price}
-                  onChange={(e) => changePrice(e)}
+                  onChange={(e) => setPrice(e.target.value)}
                 />
                 {price === "" && firstLoad === false ? (
                   <p className={styles["empty-warning"]}>Empty price</p>
@@ -369,7 +379,7 @@ const ProductModify = (props) => {
                 <input
                   name="quantity"
                   value={quantity}
-                  onChange={(e) => changeStock(e)}
+                  onChange={(e) => setQuantity(e.target.value)}
                 />
                 {quantity === "" && firstLoad === false ? (
                   <p className={styles["empty-warning"]}>

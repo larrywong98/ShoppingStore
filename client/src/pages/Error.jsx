@@ -1,9 +1,10 @@
-import styles from "../css/Error.module.css";
+import styles from "../css/Status.module.css";
+import { Link } from "react-router-dom";
 
 const Error = () => {
   return (
-    <div className={styles["error-page"]}>
-      <div className={styles["error-content"]}>
+    <div className={styles["status-page"]}>
+      <div className={styles["status-content"]}>
         <svg
           className={styles["exclamation"]}
           xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +19,9 @@ const Error = () => {
           />
         </svg>
         <p>Oops, something went wrong!</p>
-        <button>Go Home</button>
+        <Link to="/products" className={styles["go-home-btn"]}>
+          Go Home
+        </Link>
       </div>
     </div>
   );
