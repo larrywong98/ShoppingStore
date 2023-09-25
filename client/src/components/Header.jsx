@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "../reducer/cartSlice";
 import styles from "../css/Header.module.css";
+import SearchBar from "./SearchBar";
 const Header = () => {
   const [loggedin, setLoggedin] = useState(false);
   const dispatch = useDispatch();
@@ -29,14 +30,7 @@ const Header = () => {
           </span>
         </div>
         <div className={styles["search-bar-wrap"]}>
-          <input
-            className={styles["search-bar"]}
-            type="text"
-            placeholder="Search"
-          />
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
+          <SearchBar />
         </div>
       </div>
 

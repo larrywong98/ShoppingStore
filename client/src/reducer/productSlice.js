@@ -4,6 +4,7 @@ const productSlice = createSlice({
   name: "product",
   initialState: {
     products: [],
+    initProducts: [],
     sortStatus: [
       { desp: "Last added" },
       { desp: "Price: low to high" },
@@ -14,6 +15,7 @@ const productSlice = createSlice({
   reducers: {
     load: (state, action) => {
       state.products = action.payload.products;
+      state.initProducts = action.payload.products;
       return state;
     },
     lastAdded: (state) => {
@@ -34,6 +36,22 @@ const productSlice = createSlice({
       state.sortStatus[3].selected = 2;
       return state;
     },
+    filterByInput: (state, action) => {
+      state.products = state.initProducts;
+      state.products = state.products.filter((product) =>
+        product.desp.toLowerCase().includes(action.payload.text.toLowerCase())
+      );
+      return state;
+    },
+    initProduct: (state) => {
+      state.products = state.initProducts;
+      state.products.sort((a, b) => {
+        if (parseInt(a.timestamp, 10) > parseInt(b.timestamp, 10)) return -1;
+        return 1;
+      });
+      state.sortStatus[3].selected = 0;
+      return state;
+    },
   },
 });
 
@@ -52,7 +70,13 @@ export const getProductsRequest = async () => {
   return await res.json();
 };
 
-export const { load, lastAdded, priceLowtoHigh, priceHightoLow } =
-  productSlice.actions;
+export const {
+  load,
+  lastAdded,
+  priceLowtoHigh,
+  priceHightoLow,
+  filterByInput,
+  initProduct,
+} = productSlice.actions;
 
 export default productSlice.reducer;
