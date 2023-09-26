@@ -18,7 +18,18 @@ const productSchema = new Schema(
   }
 );
 
+const cartSchema = new Schema(
+  {
+    name: String,
+    addedProducts: [{ id: String, added: Number }],
+  },
+  {
+    collection: "Cart",
+  }
+);
+
 const Product = mongoose.model("Product", productSchema);
+const Cart = mongoose.model("Cart", cartSchema);
 // const Employee = mongoose.model("Employee", employeeSchema);
 
 // const productImageDirUrl = "http://127.0.0.1:4000/resources/";
@@ -152,4 +163,4 @@ const Product = mongoose.model("Product", productSchema);
 //   console.log("Products added");
 // });
 
-export { Product };
+export { Product, Cart };

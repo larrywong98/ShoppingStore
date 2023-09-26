@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { Product } from "./models/schema.js";
+import { Product, Cart } from "./models/schema.js";
 import md5 from "md5";
 
 const app = express();
@@ -84,6 +84,11 @@ app.get("/products", async (req, res) => {
   const response = Product.find();
   const products = await response;
   res.json(products);
+});
+
+app.get("/cart/:name", async (req, res) => {
+  const cartData = await Cart.findOne({ name: req.params.name });
+  res.status(200).json(cartData);
 });
 
 app.listen(4000, () => {

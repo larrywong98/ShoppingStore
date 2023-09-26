@@ -2,26 +2,43 @@ import { Checkmark, CaretUp, CaretDown } from "@carbon/icons-react";
 import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  loadProducts,
   lastAdded,
   priceLowtoHigh,
   priceHightoLow,
 } from "../reducer/productSlice";
-import { Link, Outlet } from "react-router-dom";
+import loadProducts from "../services/loadProducts";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import Product from "../components/Product";
 import styles from "../css/Products.module.css";
+import { createSelector } from "@reduxjs/toolkit";
+import loadCart from "../services/loadCart";
+import { toggleLoading } from "../reducer/globalSlice";
 const Products = ({ children }) => {
   // const [selected, setSelected] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageValue, setPageValue] = useState(1);
+  const navigate = useNavigate();
+  const loading = useSelector((state) => state.globalReducer.loading);
 
   //dispatch product slice
   const dispatch = useDispatch();
   const products = useSelector((state) => state.productReducer.products);
-  const sortStatus = useSelector((state) =>
-    state.productReducer.sortStatus.slice(0, 3)
+  // const selectProducts = (state) => state.productReducer.sortStatus;
+  // const products = createSelector(selectProducts, (items) => items);
+
+  // const sortStatus = useSelector((state) =>
+  //   state.productReducer.sortStatus.slice(0, 3)
+  // );
+
+  // reselect improve performance
+  const initsort = useSelector((state) => state.productReducer.sortStatus);
+  const sortStatusSelector = createSelector(
+    (state) => state,
+    (items) => items.slice(0, 3)
   );
+  const sortStatus = sortStatusSelector(initsort);
+
   // memorize sort status
   const selected = useSelector(
     (state) => state.productReducer.sortStatus[3].selected
@@ -31,7 +48,17 @@ const Products = ({ children }) => {
     // skeleton loading
     // console.log(selected);
     // if (products.length === 0) {
+    dispatch(toggleLoading({ to: true }));
     dispatch(loadProducts());
+    dispatch(loadCart());
+    dispatch(toggleLoading({ to: false }));
+    // console.log(loading);
+
+    // console.log(sortStatusSelector(initsort));
+    // console.log(selected);
+    // if (products.length === 0) {
+    //   navigate("/products");
+    // }
     // }
   }, []);
 
@@ -134,22 +161,26 @@ const Products = ({ children }) => {
         </div>
       </div>
       <div className={styles["product-content"]}>
-        {products
-          .slice(currentPage * 10, currentPage * 10 + 10)
-          .map((product, index) => (
-            <Product
-              key={index}
-              volume={product.volume}
-              category={product.category}
-              content={product.content}
-              imgPath={product.imgPath}
-              index={index}
-              pageId={currentPage}
-              id={product.id}
-              desp={product.desp}
-              price={product.price}
-            />
-          ))}
+        {loading
+          ? Array(10)
+              .fill(0)
+              .map((value, index) => <Product key={index} />)
+          : products
+              .slice(currentPage * 10, currentPage * 10 + 10)
+              .map((product, index) => (
+                <Product
+                  key={index}
+                  volume={product.volume}
+                  category={product.category}
+                  content={product.content}
+                  imgPath={product.imgPath}
+                  index={index}
+                  pageId={currentPage}
+                  id={product.id}
+                  desp={product.desp}
+                  price={product.price}
+                />
+              ))}
       </div>
       <div className={styles["pagination-wrap"]}>
         <div className={styles["nav-to-page"]}>

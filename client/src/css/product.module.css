@@ -26,7 +26,8 @@
   gap: 6px;
 }
 .add-btn-init {
-  width: 110px;
+  /* width: 110px; */
+  width: 100%;
   height: 26px;
   border-radius: 4px;
   border: none;
@@ -34,29 +35,37 @@
   font-weight: 600;
   color: #ffffff;
 }
+.add-btn-init:hover {
+  box-shadow: 0 0 4px 0px #237cf8;
+  border: none;
+}
 .add-btn-showed {
-  width: 110px;
+  /* width: 110px; */
+  width: 100%;
   height: 26px;
-  padding: 6px 12px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border: none;
-  background: #036bfc;
+  background: #036bfcea;
   border-radius: 4px;
+  /* border: 1px solid red; */
 }
 .minus-one-btn {
-  position: relative;
+  display: flex;
+  align-items: center;
   border: none;
+  width: 30px;
+  height: 26px;
   /* border: 1px solid red; */
   background-color: rgba(255, 255, 255, 0);
+  border-radius: 4px;
 }
-.minus-one-btn svg {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+.minus-one-btn:hover {
+  background-color: #036bfc;
 }
+/* .minus-one-btn svg {
+} */
 
 .add-btn-showed-text {
   display: flex;
@@ -66,20 +75,24 @@
   color: #ffffff;
 }
 .add-one-btn {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
+  width: 30px;
+  height: 26px;
   /* border: 1px solid red; */
   background-color: rgba(255, 255, 255, 0);
+  border-radius: 4px;
 }
-.add-one-btn svg {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+.add-one-btn:hover {
+  background-color: #036bfc;
 }
+/* .add-one-btn svg {
+} */
 .edit-btn {
-  width: 102px;
+  /* width: 102px; */
+  width: 100%;
   height: 26px;
   border-radius: 4px;
   border: 1px solid #cccccc;
@@ -90,6 +103,10 @@
   align-items: center;
   text-decoration: none;
   font-size: 12px;
+}
+.edit-btn:hover {
+  box-shadow: 0 0 4px 0px #237cf8;
+  border: none;
 }
 
 @media only screen and (max-width: 600px) {

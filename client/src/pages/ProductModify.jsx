@@ -9,10 +9,14 @@ import { CaretUp, CaretDown } from "@carbon/icons-react";
 import styles from "../css/ProductModify.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { current } from "@reduxjs/toolkit";
+import loadProducts from "../services/loadProducts";
+import { toggleLoading } from "../reducer/globalSlice";
+import isNumeric from "../utils/isNumeric";
 
 const ProductModify = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+
   const [selected, setSelected] = useState(0);
   const [categories, setCategories] = useState([
     "category1",
@@ -23,7 +27,9 @@ const ProductModify = (props) => {
   ]);
   const productIndex = useParams().productIndex;
   const products = useSelector((state) => state.productReducer.products);
+  const loading = useSelector((state) => state.globalReducer.loading);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -37,20 +43,29 @@ const ProductModify = (props) => {
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    // edit populate fields
-    if (props.operation === "edit") {
-      let currentProduct = products[productIndex];
-      setName(currentProduct.desp);
-      setDescription(currentProduct.content);
-      setCategory(currentProduct.category);
-      setPrice(currentProduct.price);
-      setQuantity(currentProduct.volume);
-      setSelected(
-        categories.findIndex((category) => category === currentProduct.category)
-      );
-      setPreviewUrl(currentProduct.imgPath);
+    if (products.length === 0) {
+      dispatch(loadProducts());
+      return;
     }
-  }, []);
+    if (props.operation === "edit") {
+      if (!isNumeric(productIndex) || productIndex >= products.length) {
+        navigate("/error");
+      }
+      let currentProduct = products[productIndex];
+      setName(currentProduct?.desp);
+      setDescription(currentProduct?.content);
+      setCategory(currentProduct?.category);
+      setPrice(currentProduct?.price);
+      setQuantity(currentProduct?.volume);
+      setSelected(
+        categories.findIndex(
+          (category) => category === currentProduct?.category
+        )
+      );
+      setPreviewUrl(currentProduct?.imgPath);
+    }
+    dispatch(toggleLoading({ to: false }));
+  }, [products]);
 
   // const setName(e.target.value) = (e) => {
   //   setName(e.target.value);
@@ -129,7 +144,6 @@ const ProductModify = (props) => {
     const resJson = await response.json();
     const fileName = resJson.name;
     setPreviewUrl("http://127.0.0.1:4000/resources/" + fileName);
-    setLoading(true);
   };
 
   return (
@@ -281,145 +295,155 @@ const ProductModify = (props) => {
           </div>
         </form>
       ) : (
-        <form onSubmit={(e) => submit(e)}>
-          <div className={styles["product-create-page-header"]}>
-            <h1>Edit Product</h1>
-            <Link to="/products" className={styles["back-icon"]}>
-              <GrLinkPrevious />
-            </Link>
-          </div>
-          <div className={styles["product-create-content"]}>
-            <div className={styles["product-create-name"]}>
-              <p>Product Name</p>
-              <input
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              {name === "" && firstLoad === false ? (
-                <p className={styles["empty-warning"]}>Empty product name</p>
-              ) : (
-                <></>
-              )}
-            </div>
-            <div className={styles["product-create-desp"]}>
-              <p>Product Description</p>
-              <textarea
-                name="desp"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
-              {description === "" && firstLoad === false ? (
-                <p className={styles["empty-warning"]}>
-                  Empty product description
-                </p>
-              ) : (
-                <></>
-              )}
-            </div>
-            <div className={styles["product-create-category-price"]}>
-              <div className={styles["product-create-category"]}>
-                <p>Category</p>
-                <button
-                  type="button"
-                  className={styles["category-dropdown"]}
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                >
-                  <span>{categories[selected]}</span>
-                  {dropdownOpen ? (
-                    <CaretUp className={styles["category-toggle-mark"]} />
+        <>
+          {loading ? (
+            <></>
+          ) : (
+            <form onSubmit={(e) => submit(e)}>
+              <div className={styles["product-create-page-header"]}>
+                <h1>Edit Product</h1>
+                <Link to="/products" className={styles["back-icon"]}>
+                  <GrLinkPrevious />
+                </Link>
+              </div>
+              <div className={styles["product-create-content"]}>
+                <div className={styles["product-create-name"]}>
+                  <p>Product Name</p>
+                  <input
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  {name === "" && firstLoad === false ? (
+                    <p className={styles["empty-warning"]}>
+                      Empty product name
+                    </p>
                   ) : (
-                    <CaretDown className={styles["category-toggle-mark"]} />
+                    <></>
                   )}
-                </button>
-                <div
-                  className={
-                    dropdownOpen
-                      ? styles["category-dropdown-list"] +
-                        " " +
-                        styles["show-category-dropdown-list"]
-                      : styles["category-dropdown-list"]
-                  }
-                >
-                  <ul>
-                    {categories.map((value, index) => (
-                      <li key={index}>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelected(index);
-                            setCategory(categories[index]);
-                            setDropdownOpen(!dropdownOpen);
-                          }}
-                        >
-                          {value}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              </div>
-              <div className={styles["product-create-price"]}>
-                <p>Price</p>
-                <input
-                  name="price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-                {price === "" && firstLoad === false ? (
-                  <p className={styles["empty-warning"]}>Empty price</p>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </div>
-            <div className={styles["product-create-quantity-link"]}>
-              <div className={styles["product-create-quantity"]}>
-                <p>In Stock Quantity</p>
-                <input
-                  name="quantity"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                />
-                {quantity === "" && firstLoad === false ? (
-                  <p className={styles["empty-warning"]}>
-                    Empty stock quantity
-                  </p>
-                ) : (
-                  <></>
-                )}
-              </div>
-              <div className={styles["product-create-link"]}>
-                <p>Add Image Link</p>
-                <div className={styles["product-create-upload-link"]}>
-                  <p>{"..." + previewUrl.slice(22, 45) + "..."}</p>
-                  <span>
+                <div className={styles["product-create-desp"]}>
+                  <p>Product Description</p>
+                  <textarea
+                    name="desp"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  ></textarea>
+                  {description === "" && firstLoad === false ? (
+                    <p className={styles["empty-warning"]}>
+                      Empty product description
+                    </p>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className={styles["product-create-category-price"]}>
+                  <div className={styles["product-create-category"]}>
+                    <p>Category</p>
+                    <button
+                      type="button"
+                      className={styles["category-dropdown"]}
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
+                    >
+                      <span>{categories[selected]}</span>
+                      {dropdownOpen ? (
+                        <CaretUp className={styles["category-toggle-mark"]} />
+                      ) : (
+                        <CaretDown className={styles["category-toggle-mark"]} />
+                      )}
+                    </button>
+                    <div
+                      className={
+                        dropdownOpen
+                          ? styles["category-dropdown-list"] +
+                            " " +
+                            styles["show-category-dropdown-list"]
+                          : styles["category-dropdown-list"]
+                      }
+                    >
+                      <ul>
+                        {categories.map((value, index) => (
+                          <li key={index}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelected(index);
+                                setCategory(categories[index]);
+                                setDropdownOpen(!dropdownOpen);
+                              }}
+                            >
+                              {value}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={styles["product-create-price"]}>
+                    <p>Price</p>
                     <input
-                      type="file"
-                      name="file"
-                      className={styles["product-create-upload-mask"]}
-                      onChange={(e) => handleUploadedFile(e)}
+                      name="price"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
                     />
-                    Upload
-                  </span>
+                    {price === "" && firstLoad === false ? (
+                      <p className={styles["empty-warning"]}>Empty price</p>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
-                {previewUrl === "http://" && firstLoad === false ? (
-                  <p className={styles["empty-warning"]}>Empty Image Link</p>
-                ) : (
-                  <></>
-                )}
+                <div className={styles["product-create-quantity-link"]}>
+                  <div className={styles["product-create-quantity"]}>
+                    <p>In Stock Quantity</p>
+                    <input
+                      name="quantity"
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                    />
+                    {quantity === "" && firstLoad === false ? (
+                      <p className={styles["empty-warning"]}>
+                        Empty stock quantity
+                      </p>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                  <div className={styles["product-create-link"]}>
+                    <p>Add Image Link</p>
+                    <div className={styles["product-create-upload-link"]}>
+                      <p>{"..." + previewUrl.slice(22, 45) + "..."}</p>
+                      <span>
+                        <input
+                          type="file"
+                          name="file"
+                          className={styles["product-create-upload-mask"]}
+                          onChange={(e) => handleUploadedFile(e)}
+                        />
+                        Upload
+                      </span>
+                    </div>
+                    {previewUrl === "http://" && firstLoad === false ? (
+                      <p className={styles["empty-warning"]}>
+                        Empty Image Link
+                      </p>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </div>
+                <div className={styles["product-create-image-preview"]}>
+                  <img src={previewUrl} alt="" />
+                </div>
+                <div className={styles["add-product-wrap"]}>
+                  <button className={styles["add-product"]} type="submit">
+                    Edit Product
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className={styles["product-create-image-preview"]}>
-              <img src={previewUrl} alt="" />
-            </div>
-            <div className={styles["add-product-wrap"]}>
-              <button className={styles["add-product"]} type="submit">
-                Edit Product
-              </button>
-            </div>
-          </div>
-        </form>
+            </form>
+          )}
+        </>
       )}
     </div>
   );

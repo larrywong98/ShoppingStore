@@ -251,7 +251,7 @@
   .product-create-page-header h1 {
     font-size: 24px;
   }
-  .product-create-page-header button {
+  .back-icon {
     position: absolute;
     height: 40px;
     top: 0%;

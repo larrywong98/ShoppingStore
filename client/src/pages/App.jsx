@@ -11,6 +11,8 @@ import Success from "./Success";
 import Error from "./Error";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import Product from "../components/Product";
+
 import styles from "../css/App.module.css";
 
 const App = () => {
@@ -25,7 +27,7 @@ const App = () => {
             <Route path="signin" element={<AuthForm value="signin" />} /> */}
             <Route path="products" element={<ProductsLayout />}>
               <Route index element={<Products />} />
-              <Route path=":productId" element={<ProductDetail />} />
+              <Route path=":productIndex" element={<ProductDetail />} />
               <Route
                 path="create"
                 element={<ProductModify operation="create" />}
@@ -37,6 +39,8 @@ const App = () => {
             </Route>
             <Route path="success" element={<Success />} />
             <Route path="error" element={<Error />} />
+            <Route path="test" element={<Product />} />
+            <Route path="*" element={<Welcome />} />
           </Route>
         </Routes>
         <Footer />

@@ -4,12 +4,15 @@ import { StarFilled, ShoppingCart, User } from "@carbon/icons-react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "../reducer/cartSlice";
+import loadCart from "../services/loadCart";
 import styles from "../css/Header.module.css";
 import SearchBar from "./SearchBar";
 const Header = () => {
   const [loggedin, setLoggedin] = useState(false);
   const dispatch = useDispatch();
   const cartOpened = useSelector((state) => state.cartReducer.cartOpened);
+  const cartQuantity = useSelector((state) => state.cartReducer.cartQuantity);
+  const cart = useSelector((state) => state.cartReducer.cart);
 
   const userLogin = () => {
     //dispatch login or logout
@@ -18,6 +21,8 @@ const Header = () => {
   const onToggleCart = () => {
     //dispatch cart
     dispatch(toggleCart());
+    dispatch(loadCart());
+    console.log(cartQuantity);
   };
 
   return (
@@ -48,6 +53,11 @@ const Header = () => {
           <button onClick={() => onToggleCart()}>
             <ShoppingCart width="30px" height="30px" />
           </button>
+          {cartQuantity === 0 ? (
+            <></>
+          ) : (
+            <span className={styles["cartNumber"]}>{cartQuantity}</span>
+          )}
           <span className={styles["total"]}>$0.00</span>
         </div>
       </div>

@@ -29,7 +29,7 @@
   width: 90%;
   gap: 92px;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   background-color: #ffffff;
   padding: 42px 42px;
 }
@@ -46,10 +46,14 @@
   /* border: 1px solid red; */
 }
 .product-detail h2 {
+  width: 150px;
+  height: 30px;
   font-size: 16px;
   color: #6b7280;
 }
 .product-detail h1 {
+  width: 100%;
+  height: 30px;
   font-size: 32px;
   color: #535353;
 }
@@ -59,6 +63,8 @@
   gap: 12px;
 }
 .product-detail-price-stock p {
+  width: 100px;
+  height: 50px;
   padding: 0;
   margin: 0;
   font-size: 32px;
@@ -77,6 +83,8 @@
   font-size: 11px;
 }
 .product-detail-content-paragraph {
+  width: 100%;
+  height: 120px;
   font-size: 16px;
   color: #6b7280;
   /* border: 1px solid red; */
@@ -86,19 +94,18 @@
   height: 40px;
   gap: 20px;
 }
-.product-detail-btn-group button {
-  width: 133px;
-  border-radius: 4px;
-}
 .add-cart-btn {
+  width: 100%;
   background-color: #036bfc;
   color: #ffffff;
   font-size: 14px;
   font-weight: 700;
+  border-radius: 4px;
   border: none;
 }
 .edit-product {
-  width: 133px;
+  width: 100%;
+  /* width: 133px; */
   height: 40px;
   border-radius: 4px;
   color: #535353;
@@ -123,19 +130,21 @@
     position: relative;
     margin: 0;
   }
-  .product-detail-page-header button {
+  .back-icon {
     position: absolute;
     top: -3px;
     right: 10px;
   }
   .product-detail-content {
+    flex-direction: column;
     margin: 0;
+    gap: 20px;
     padding: 22px 16px 26px 16px;
     width: 95%;
   }
   .product-detail-content img {
     width: 100%;
-    height: 100%;
+    height: 308px;
   }
   .product-detail {
     padding: 0;
@@ -180,24 +189,25 @@
   }
   .product-detail-btn-group {
     display: flex;
+    justify-content: space-between;
     height: 40px;
     gap: 20px;
   }
-  .product-detail-btn-group button {
-    width: 133px;
-    border-radius: 4px;
-  }
+  /* 
   .add-cart-btn {
+    width: 100%;
     background-color: #036bfc;
     color: #ffffff;
     font-size: 14px;
     font-weight: 700;
+    border-radius: 4px;
     border: none;
   }
   .edit-product {
+    width: 100%;
     border-radius: 4px;
     color: #535353;
     border: 1px solid #cccccc;
     background-color: #ffffff;
-  }
+  } */
 }
