@@ -11,18 +11,18 @@ const requestData = async ({ url, method, data, headers }) => {
     method: method,
     body: data,
   };
-  // console.log("start request");
-  const response = await fetch(url, options);
-  // console.log("***********************");
-  // console.log(response);
-  if (!response.ok) {
-    const { error } = await response.json();
-    return { status: error };
-    // throw new Error(error.message);
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      const { error } = await response.json();
+      return { status: error };
+    }
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    return [];
   }
-  const result = await response.json();
-  // console.log(result);
-  return result;
 };
 
 export default requestData;

@@ -1,17 +1,20 @@
 import { load, lastAdded } from "../reducer/productSlice";
+import requestData from "./requestData";
 const loadProducts = () => {
   return async (dispatch, getState) => {
     const products = await getProductsRequest();
+    // console.log(products);
     dispatch(load({ products: products }));
     dispatch(lastAdded());
   };
 };
 
 const getProductsRequest = async () => {
-  const res = await fetch("http://127.0.0.1:4000/products", {
+  const response = await requestData({
+    url: "http://127.0.0.1:4000/products",
     method: "get",
   });
-  return await res.json();
+  return response;
 };
 
 export default loadProducts;

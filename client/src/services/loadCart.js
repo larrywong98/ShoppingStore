@@ -4,7 +4,8 @@ import { initCart } from "../reducer/cartSlice";
 const loadCart = () => {
   return async (dispatch, getState) => {
     const cart = await getCartRequest();
-    dispatch(initCart({ cart: cart.addedProducts }));
+    if (cart.length === 0) cart.push({ name: "", addedProducts: [] });
+    dispatch(initCart({ cart: cart[0].addedProducts }));
   };
 };
 

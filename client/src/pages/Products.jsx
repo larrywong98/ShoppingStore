@@ -13,8 +13,9 @@ import styles from "../css/Products.module.css";
 import { createSelector } from "@reduxjs/toolkit";
 import loadCart from "../services/loadCart";
 import { toggleLoading } from "../reducer/globalSlice";
+import isNumeric from "../utils/isNumeric";
+
 const Products = ({ children }) => {
-  // const [selected, setSelected] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageValue, setPageValue] = useState(1);
@@ -24,12 +25,6 @@ const Products = ({ children }) => {
   //dispatch product slice
   const dispatch = useDispatch();
   const products = useSelector((state) => state.productReducer.products);
-  // const selectProducts = (state) => state.productReducer.sortStatus;
-  // const products = createSelector(selectProducts, (items) => items);
-
-  // const sortStatus = useSelector((state) =>
-  //   state.productReducer.sortStatus.slice(0, 3)
-  // );
 
   // reselect improve performance
   const initsort = useSelector((state) => state.productReducer.sortStatus);
@@ -46,20 +41,10 @@ const Products = ({ children }) => {
 
   useEffect(() => {
     // skeleton loading
-    // console.log(selected);
-    // if (products.length === 0) {
     dispatch(toggleLoading({ to: true }));
     dispatch(loadProducts());
     dispatch(loadCart());
     dispatch(toggleLoading({ to: false }));
-    // console.log(loading);
-
-    // console.log(sortStatusSelector(initsort));
-    // console.log(selected);
-    // if (products.length === 0) {
-    //   navigate("/products");
-    // }
-    // }
   }, []);
 
   const sortBySelection = (i) => {
@@ -70,10 +55,6 @@ const Products = ({ children }) => {
     setDropdownOpen(false);
   };
 
-  function isNumeric(str) {
-    if (typeof str != "string") return false;
-    return !isNaN(str) && !isNaN(parseFloat(str));
-  }
   // only number type
   const customPageOnChange = (e) => {
     if (e.target.value === "") {

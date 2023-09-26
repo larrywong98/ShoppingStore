@@ -87,7 +87,7 @@ app.get("/products", async (req, res) => {
 });
 
 app.get("/cart/:name", async (req, res) => {
-  const cartData = await Cart.findOne({ name: req.params.name });
+  const cartData = await Cart.find({ name: req.params.name });
   res.status(200).json(cartData);
 });
 
