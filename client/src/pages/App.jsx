@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Product from "../components/Product";
 
 import styles from "../css/App.module.css";
+import UpdatePassword from "../components/UpdatePassword";
 
 const App = () => {
   return (
@@ -23,8 +24,9 @@ const App = () => {
         <Routes>
           <Route path="/">
             <Route index element={<Welcome />} />
-            {/* <Route path="signup" element={<AuthForm value="signup" />} />
-            <Route path="signin" element={<AuthForm value="signin" />} /> */}
+            <Route path="signup" element={<AuthForm authType="signup" />} />
+            <Route path="signin" element={<AuthForm authType="signin" />} />
+            <Route path="password/update" element={<UpdatePassword />} />
             <Route path="products" element={<ProductsLayout />}>
               <Route index element={<Products />} />
               <Route path=":productIndex" element={<ProductDetail />} />

@@ -34,12 +34,14 @@ const Product = (props) => {
     let realid = pageId * 10 + index;
     navigate(realid.toString());
   };
-  // const addOne = () => {
-  //   dispatch(addOneProduct({ id: props.id }));
-  // };
-  // const removeOne = () => {
-  //   dispatch(removeOneProduct({ id: props.id }));
-  // };
+  const addOne = () => {
+    if (numberInCart >= props.volume) return;
+    dispatch(addOneProduct({ id: props.id }));
+  };
+  const removeOne = () => {
+    if (numberInCart < 0) return;
+    dispatch(removeOneProduct({ id: props.id }));
+  };
   // useEffect(() => {
   //   console.log(cart);
   // }, [cart]);
@@ -145,10 +147,13 @@ const Product = (props) => {
                 <span className={styles["add-btn-showed-text"]}>Add</span>
               </button>
             )}
-
-            <Link to={"edit/" + props.index} className={styles["edit-btn"]}>
-              Edit
-            </Link>
+            {false ? (
+              <></>
+            ) : (
+              <Link to={"edit/" + props.index} className={styles["edit-btn"]}>
+                Edit
+              </Link>
+            )}
           </div>
         </div>
       )}

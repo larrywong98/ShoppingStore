@@ -134,15 +134,18 @@ const ProductModify = (props) => {
     let formData = new FormData();
     formData.append("file", e.target.files[0]);
 
-    const url = "http://127.0.0.1:4000/uploadImage";
-    const options = {
+    const response = await requestData({
+      url: "http://127.0.0.1:4000/image/upload",
       method: "POST",
-      body: formData,
-      // "Content-Type": "multipart/form-data",
-    };
-    const response = await fetch(url, options);
-    const resJson = await response.json();
-    const fileName = resJson.name;
+      data: formData,
+    });
+
+    if (response.length === 0) {
+      navigate("/error");
+      return;
+    }
+
+    const fileName = response.name;
     setPreviewUrl("http://127.0.0.1:4000/resources/" + fileName);
   };
 
@@ -254,9 +257,9 @@ const ProductModify = (props) => {
                 <p>Add Image Link</p>
                 <div className={styles["product-create-upload-link"]}>
                   <p>
-                    {loading
-                      ? "..." + previewUrl.slice(22, 45) + "..."
-                      : previewUrl}
+                    {previewUrl === "http://"
+                      ? previewUrl
+                      : "..." + previewUrl.slice(22, 45) + "..."}
                   </p>
                   <span>
                     <input
@@ -276,15 +279,15 @@ const ProductModify = (props) => {
               </div>
             </div>
             <div className={styles["product-create-image-preview"]}>
-              {loading ? (
-                <img src={previewUrl} alt="" />
-              ) : (
+              {previewUrl === "http://" ? (
                 <p>
                   <BsFileEarmarkImage
                     className={styles["product-upload-image"]}
                   />
                   <span>Image Preview!</span>
                 </p>
+              ) : (
+                <img src={previewUrl} alt="" />
               )}
             </div>
             <div className={styles["add-product-wrap"]}>

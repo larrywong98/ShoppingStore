@@ -116,6 +116,8 @@
   margin-top: 24px;
   margin-left: 60px;
   width: 90%;
+  min-height: 400px;
+  border-radius: 5px;
   gap: 19px;
   display: flex;
   flex-wrap: wrap;

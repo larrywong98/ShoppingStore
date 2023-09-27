@@ -3,6 +3,7 @@ const requestData = async ({ url, method, data, headers }) => {
   // const defaultHeaders = {
   //   "Content-Type": "application/json",
   // };
+  // console.log(data);
   const options = {
     headers: {
       // ...defaultHeaders,

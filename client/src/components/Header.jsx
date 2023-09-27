@@ -22,7 +22,7 @@ const Header = () => {
     //dispatch cart
     dispatch(toggleCart());
     dispatch(loadCart());
-    // console.log(cartQuantity);
+    // console.log(cart);
   };
 
   return (
