@@ -1,6 +1,7 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 //npm install http-proxy-middleware --save
-module.exports =function(app){
+
+ module.exports =function(app){
   app.use(
     '/api',
     createProxyMiddleware({
@@ -12,3 +13,4 @@ module.exports =function(app){
     })
   )
 }
+

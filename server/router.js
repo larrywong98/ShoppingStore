@@ -1,24 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-
-// const User = require("./config");
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/ShoppingDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
-const userSchema = new mongoose.Schema({
-  username: String,
-  email: String,
-  password: String,
-});
-const User = mongoose.model('User', userSchema);
-
-
-
+const User = require("./config");
 
 // npm install validator --save
 var validator = require("validator");
@@ -41,15 +24,15 @@ const validInput = (data) => {
         err.passwordConfirmation = "different passwords!"
     }
     return {
-        isValied: isEmpty(err), err
+        isValid: isEmpty(err), err
     }
 }
 
 
 router.post("/register", async (req, res) => {
     console.log(req.body);
-    const { isValied, err } = validInput(req.body);
-    if (!isValied) {
+    const { isValid, err } = validInput(req.body);
+    if (!isValid) {
         console.log(err);
         res.status(400).json(err);
     }

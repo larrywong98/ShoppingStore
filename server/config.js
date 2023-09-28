@@ -6,24 +6,16 @@ mongoose.connect('mongodb://localhost:27017/ShoppingDB', {
   useUnifiedTopology: true,
 });
 
-// const db = mongoose.connection;
-
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-// db.once('open', () => {
-//   console.log('Connected to MongoDB');
-// });
-
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
 const userSchema = new mongoose.Schema({
   username: String,
   email: {
     type: String,
-    unqiue: true,
+    unique: true,
   },
   password: String,
 });
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = { User };
+module.exports =  User ;
