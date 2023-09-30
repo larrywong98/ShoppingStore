@@ -21,6 +21,10 @@ const cartSlice = createSlice({
         .reduce((cur, acc) => acc + cur, 0);
       return state;
     },
+    clearCart: (state) => {
+      state = { cartOpened: false, cartQuantity: 0, cart: {} };
+      return state;
+    },
     addOneProduct: (state, action) => {
       let id = action.payload.id;
       const i = state.cart.findIndex((item) => item.id === id);
@@ -56,6 +60,7 @@ export const {
   calculateCartQuantity,
   addOneProduct,
   initCart,
+  clearCart,
   removeProducts,
   removeOneProduct,
 } = cartSlice.actions;

@@ -56,7 +56,7 @@ const UpdatePassword = () => {
           {confirmation ? (
             <>
               <Box sx={{ position: "absolute", top: "3%", right: "4%" }}>
-                <Link to="/welcome">
+                <Link to="/">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -117,7 +117,7 @@ const UpdatePassword = () => {
           ) : (
             <>
               <Box sx={{ position: "absolute", top: "3%", right: "4%" }}>
-                <Link to="/welcome">
+                <Link to="/">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"

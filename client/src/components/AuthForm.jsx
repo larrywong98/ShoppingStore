@@ -8,20 +8,60 @@ import {
   InputAdornment,
   Button,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "../reducer/userSlice";
 import requestData from "../services/requestData";
+import validator from "validator";
+import loadCart from "../services/loadCart";
 
 const AuthForm = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [pwdShow, setPwdShow] = useState(true);
   const [firstLoad, setFirstLoad] = useState(true);
+  const [unauthorized, setUnauthorized] = useState(false);
+  const user = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validateEmail = () => {
-    return true;
+    return validator.isEmail(username);
   };
+
+  useEffect(() => {
+    // (async () => {
+    //   if (localStorage.getItem("token") !== null) {
+    //     const response = await requestData({
+    //       url: "http://127.0.0.1:4000/api/signin",
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         authorization: "Bearer " + localStorage.getItem("token"),
+    //       },
+    //     });
+    //     if (response.status === "ok") {
+    //       dispatch(
+    //         signIn({
+    //           userId: response.id,
+    //           userName: response.name,
+    //           admin: response.admin,
+    //         })
+    //       );
+    //       dispatch(loadCart());
+    //       navigate("/products");
+    //     } else if (response.status === "unauthorized") {
+    //       // setFirstLoad(false);
+    //       // setUsername("");
+    //       // setPassword("");
+    //       setUnauthorized(true);
+    //     } else {
+    //       navigate("/error");
+    //     }
+    //   }
+    // })();
+  }, []);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -29,17 +69,55 @@ const AuthForm = (props) => {
       setFirstLoad(false);
       return;
     }
-    // console.log(e.target.email.value);
-    // console.log(e.target.password.value);
-    // console.log(username);
-    // console.log(password);
     if (props.authType === "signin") {
+      if (localStorage.getItem("token") === null) {
+        const response = await requestData({
+          url: "http://127.0.0.1:4000/api/token",
+          method: "POST",
+          data: JSON.stringify({ name: username, pwd: password }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.status === "ok") {
+          // localStorage.setItem("username", response.name);
+          localStorage.setItem("token", response.token);
+        } else if (response.status === "unauthorized") {
+          setUnauthorized(true);
+          return;
+        } else {
+          navigate("/error");
+          return;
+        }
+      }
+
       const response = await requestData({
         url: "http://127.0.0.1:4000/api/signin",
-        method: "GET",
-        data: JSON.stringify({ userName: username, pwd: password }),
-        // headers: { "Content-Type": "application/json" },
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: "Bearer " + localStorage.getItem("token"),
+        },
       });
+
+      if (response.status === "ok") {
+        dispatch(
+          signIn({
+            userId: response.id,
+            userName: response.name,
+            admin: response.admin,
+          })
+        );
+        dispatch(loadCart());
+        navigate("/success", {
+          state: { message: "Login Successfully !!!" },
+        });
+      } else if (response.status === "unauthorized") {
+        setFirstLoad(false);
+        setUsername("");
+        setPassword("");
+      } else {
+        navigate("/error");
+      }
     } else if (props.authType === "signup") {
       const response = await requestData({
         url: "http://127.0.0.1:4000/api/signup",
@@ -47,7 +125,7 @@ const AuthForm = (props) => {
         data: JSON.stringify({ userName: username, pwd: password }),
         headers: { "Content-Type": "application/json" },
       });
-      console.log(response);
+      // console.log(response);
       if (response.status === "ok") {
         navigate("/signin");
       } else {
@@ -76,7 +154,7 @@ const AuthForm = (props) => {
           }}
         >
           <Box sx={{ position: "absolute", top: "3%", right: "4%" }}>
-            <Link to="/welcome">
+            <Link to="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -226,7 +304,17 @@ const AuthForm = (props) => {
                   </Typography>
                 </Box>
               </Box>
-
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  color: "#FC5A44",
+                }}
+              >
+                <Typography variant="p" sx={{ fontSize: "14px" }}>
+                  {unauthorized ? "Wrong email or password" : ""}
+                </Typography>
+              </Box>
               <Button
                 variant="contained"
                 type="submit"
@@ -266,7 +354,7 @@ const AuthForm = (props) => {
               )}
 
               <Box>
-                <Link to="/signin/forget">
+                <Link to="/forget">
                   {props.authType === "signin" ? "Forget password?" : ""}
                 </Link>
               </Box>

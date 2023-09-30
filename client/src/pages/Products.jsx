@@ -14,6 +14,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import loadCart from "../services/loadCart";
 import { toggleLoading } from "../reducer/globalSlice";
 import isNumeric from "../utils/isNumeric";
+// import _ from "lodash";
 
 const Products = ({ children }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -38,12 +39,15 @@ const Products = ({ children }) => {
   const selected = useSelector(
     (state) => state.productReducer.sortStatus[3].selected
   );
+  const user = useSelector((state) => state.userReducer);
 
   useEffect(() => {
+    // if (!_.isEmpty(user))
+    // dispatch(loadCart());
     // skeleton loading
     dispatch(toggleLoading({ to: true }));
     dispatch(loadProducts());
-    dispatch(loadCart());
+    // dispatch(loadCart());
     dispatch(toggleLoading({ to: false }));
   }, []);
 
@@ -93,6 +97,7 @@ const Products = ({ children }) => {
 
   return (
     <div className={styles["product-page"]}>
+      {/* <div className={styles["blur-background"]}></div> */}
       <div className={styles["product-page-header"]}>
         <h1>Products</h1>
         <div className={styles["product-page-header-button"]}>
@@ -136,9 +141,13 @@ const Products = ({ children }) => {
               </ul>
             </div>
           </div>
-          <Link to="create" className={styles["add-product"]}>
-            <span className={styles["add-product-name"]}>Add Product</span>
-          </Link>
+          {user.admin ? (
+            <Link to="create" className={styles["add-product"]}>
+              <span className={styles["add-product-name"]}>Add Product</span>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className={styles["product-content"]}>

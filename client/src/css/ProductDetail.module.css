@@ -91,18 +91,17 @@
 }
 .product-detail-btn-group {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 40px;
   gap: 20px;
 }
-.add-cart-btn {
+.add-to-cart-wrap {
   width: 100%;
-  background-color: #036bfc;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 4px;
-  border: none;
+  height: 100%;
+  font-size: 16px;
 }
+
 .edit-product {
   width: 100%;
   /* width: 133px; */

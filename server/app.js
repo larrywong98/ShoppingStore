@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
-import { Product, Cart } from "./models/schema.js";
-import md5 from "md5";
+import { Product, Cart, User } from "./models/schema.js";
+import jwt from "jsonwebtoken";
+import { md5Token } from "./utils/generateMD5.js";
+import { auth } from "./utils/auth.js";
 
 const app = express();
 app.use(cors());
@@ -16,22 +18,66 @@ app.get("/", (req, res) => {
   res.json("Home page");
 });
 
-const generateString = () => {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  const charactersLength = characters.length;
-  for (let i = 0; i < 10; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+app.get("/api/password/update", async (req, res) => {
+  res.json({ status: "ok" });
+});
+
+app.post("/api/token", async (req, res) => {
+  try {
+    const { name, pwd } = req.body;
+    const user = await User.findOne({ userName: name, password: pwd });
+    if (!user) {
+      res.json({ status: "unauthorized" });
+      return;
+    }
+    const payload = {
+      user: {
+        id: user.userId,
+        name: user.userName,
+        password: user.password,
+        admin: user.admin,
+      },
+    };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "30d",
+    });
+    res.json({ status: "ok", name: name, token: token });
+  } catch (err) {
+    res.json({ status: err.message });
   }
-  return result;
-};
+});
+
+app.post("/api/signin", auth, (req, res) => {
+  res.json({
+    status: "ok",
+    id: req.user.id,
+    name: req.user.name,
+    admin: req.user.admin,
+  });
+});
+app.post("/api/signup", async (req, res) => {
+  // console.log(req.body);
+  try {
+    const newUser = User({
+      userId: md5Token,
+      userName: req.body.userName,
+      password: req.body.pwd,
+      admin: false,
+    });
+    const success = await newUser.save();
+    if (!success) res.status(200).json({ status: "create failed" });
+    res.status(200).json({ status: "ok" });
+  } catch (err) {
+    res.status(500).json({ status: err.message });
+  }
+});
+
 app.post("/product/create", upload.single("file"), async (req, res) => {
   // console.log(req.body);
   // console.log(req.file);
   try {
     const newProduct = new Product({
-      id: md5(generateString()),
+      id: md5Token,
       imgPath: req.body.imgPath,
       volume: parseInt(req.body.volume),
       category: req.body.category,
@@ -74,7 +120,7 @@ app.put("/product/edit/:productId", upload.single("file"), async (req, res) => {
   // console.log(newDoc);
 });
 
-app.post("/uploadImage", upload.single("file"), (req, res) => {
+app.post("/image/upload", upload.single("file"), (req, res) => {
   // console.log(req.body);
   // console.log(req.file);
   res.json({ name: req.file.filename });
@@ -86,9 +132,31 @@ app.get("/products", async (req, res) => {
   res.json(products);
 });
 
-app.get("/cart/:name", async (req, res) => {
-  const cartData = await Cart.find({ name: req.params.name });
+app.get("/cart/:userId", async (req, res) => {
+  const cartData = await Cart.find({ userId: req.params.userId });
+  // console.log(req.params.userId);
   res.status(200).json(cartData);
+});
+
+app.put("/api/cart/save", async (req, res) => {
+  let newCart = req.body.cart.map((product) => {
+    return { id: product.id, added: product.added };
+  });
+  let filter = { userId: req.body.id };
+  let update = { addedProducts: newCart };
+  let options = { upsert: true, new: true, setDefaultsOnInsert: true };
+  const response = await Cart.findOneAndUpdate(filter, update, options);
+  console.log(response);
+});
+
+app.delete("/api/cart/checkout", async (req, res) => {
+  // console.log(req.body);
+  req.body.forEach(async (product) => {
+    let filter = { id: product.id };
+    let update = { $inc: { volume: -product.added } };
+    const response = await Product.findOneAndUpdate(filter, update);
+    res.json({ status: "ok" });
+  });
 });
 
 app.listen(4000, () => {

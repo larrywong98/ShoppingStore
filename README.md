@@ -25,6 +25,9 @@ npm i bootstrap@5.3.2
 npm i axios
 npm i react-icons
 npm i jwt-decode
+npm i validator
+npm i lodash
+npm i redux-persist
 
 server:
 npm i express
@@ -33,3 +36,4 @@ npm i mongoose
 npm i dotenv
 npm i multer
 npm i md5
+npm i jsonwebtoken

@@ -1,27 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
+
 import { StarFilled, ShoppingCart, User } from "@carbon/icons-react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleCart } from "../reducer/cartSlice";
+import { toggleCart, clearCart } from "../reducer/cartSlice";
 import loadCart from "../services/loadCart";
 import styles from "../css/Header.module.css";
 import SearchBar from "./SearchBar";
+import { signOut } from "../reducer/userSlice";
+import { useNavigate } from "react-router";
+import saveCart from "../services/saveCart";
+import CartComp from "./CartComp";
 const Header = () => {
-  const [loggedin, setLoggedin] = useState(false);
+  const loggedIn = useSelector((state) => state.userReducer.signedIn);
+  // const [loggedIn, setloggedIn] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartOpened = useSelector((state) => state.cartReducer.cartOpened);
   const cartQuantity = useSelector((state) => state.cartReducer.cartQuantity);
   const cart = useSelector((state) => state.cartReducer.cart);
+  const user = useSelector((state) => state.userReducer);
 
   const userLogin = () => {
-    //dispatch login or logout
-    setLoggedin(!loggedin);
+    if (loggedIn === false) {
+      navigate("/signin");
+    } else {
+      localStorage.clear();
+      saveCart({ id: user.userId, cart: cart });
+      // console.log(cart);
+      dispatch(signOut());
+      dispatch(clearCart());
+      navigate("/success", { state: { message: "Log out Successfully !!!" } });
+    }
   };
   const onToggleCart = () => {
+    if (user.signedIn === false) {
+      navigate("/signin");
+      return;
+    }
+    console.log(cartOpened);
     //dispatch cart
     dispatch(toggleCart());
-    dispatch(loadCart());
     // console.log(cart);
   };
 
@@ -43,10 +63,10 @@ const Header = () => {
         <button className={styles["account"]} onClick={() => userLogin()}>
           <div className={styles["user-certificate"]}>
             <User className={styles["user-icon"]} width="30px" height="30px" />
-            {loggedin ? <StarFilled className={styles["star-icon"]} /> : <></>}
+            {loggedIn ? <StarFilled className={styles["star-icon"]} /> : <></>}
           </div>
           <span className={styles["signin"]}>
-            {loggedin ? "Sign Out" : "Sign In"}
+            {loggedIn ? "Sign Out" : "Sign In"}
           </span>
         </button>
         <div className={styles["cart"]}>
@@ -56,11 +76,20 @@ const Header = () => {
           {cartQuantity === 0 ? (
             <></>
           ) : (
-            <span className={styles["cartNumber"]}>{cartQuantity}</span>
+            <span className={styles["cart-number"]}>{cartQuantity}</span>
           )}
           <span className={styles["total"]}>$0.00</span>
         </div>
       </div>
+      {cartOpened ? (
+        <div className={styles["show-cart"]}>
+          <div className={styles["cart-wrap"]}>
+            <CartComp />
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

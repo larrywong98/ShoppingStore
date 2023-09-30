@@ -8,12 +8,16 @@ import loadCart from "../services/loadCart";
 import skStyle from "../css/Skeleton.module.css";
 import { toggleLoading } from "../reducer/globalSlice";
 import { createSelector } from "@reduxjs/toolkit";
+import saveCart from "../services/saveCart";
+import AddToCart from "./AddToCart";
 
 const Product = (props) => {
   // const [numberInCart, setNumberInCart] = useState(0);
   // const [loading, setLoading] = useState(true);
   const loading = useSelector((state) => state.globalReducer.loading);
+  const cartOpened = useSelector((state) => state.cartReducer.cartOpened);
   const cart = useSelector((state) => state.cartReducer.cart);
+  const user = useSelector((state) => state.userReducer);
   const numberInCartSelector = createSelector(
     (state) => state,
     (items) => {
@@ -31,20 +35,35 @@ const Product = (props) => {
   const dispatch = useDispatch();
 
   const toDetailPage = (pageId, index) => {
+    if (cartOpened === true) {
+      return;
+    }
     let realid = pageId * 10 + index;
     navigate(realid.toString());
   };
   const addOne = () => {
+    if (user.signedIn === false) {
+      navigate("/signin");
+      return;
+    }
     if (numberInCart >= props.volume) return;
     dispatch(addOneProduct({ id: props.id }));
+    // saveCart({ id: user.userId, cart: cart });
   };
   const removeOne = () => {
+    if (user.signedIn === false) {
+      navigate("/signin");
+      return;
+    }
     if (numberInCart < 0) return;
     dispatch(removeOneProduct({ id: props.id }));
+    // saveCart({ id: user.userId, cart: cart });
   };
   // useEffect(() => {
-  //   console.log(cart);
-  // }, [cart]);
+  //   if (user.signedIn === false) {
+  //     navigate("/signin");
+  //   }
+  // }, []);
   return (
     <>
       {loading ? (
@@ -91,11 +110,12 @@ const Product = (props) => {
           </div>
 
           <div className={styles["product-item-btn-group"]}>
-            {numberInCart > 0 ? (
+            <AddToCart id={props.id} />
+            {/* {numberInCart > 0 ? (
               <div className={styles["add-btn-showed"]}>
                 <button
                   className={styles["minus-one-btn"]}
-                  onClick={() => dispatch(removeOneProduct({ id: props.id }))}
+                  onClick={() => removeOne()}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +137,7 @@ const Product = (props) => {
                 </span>
                 <button
                   className={styles["add-one-btn"]}
-                  onClick={() => dispatch(addOneProduct({ id: props.id }))}
+                  onClick={() => addOne()}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -142,17 +162,17 @@ const Product = (props) => {
             ) : (
               <button
                 className={styles["add-btn-init"]}
-                onClick={() => dispatch(addOneProduct({ id: props.id }))}
+                onClick={() => addOne()}
               >
                 <span className={styles["add-btn-showed-text"]}>Add</span>
               </button>
-            )}
-            {false ? (
-              <></>
-            ) : (
+            )} */}
+            {user.admin ? (
               <Link to={"edit/" + props.index} className={styles["edit-btn"]}>
                 Edit
               </Link>
+            ) : (
+              <></>
             )}
           </div>
         </div>

@@ -28,6 +28,7 @@ const ProductModify = (props) => {
   const productIndex = useParams().productIndex;
   const products = useSelector((state) => state.productReducer.products);
   const loading = useSelector((state) => state.globalReducer.loading);
+  const user = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -43,10 +44,13 @@ const ProductModify = (props) => {
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    if (products.length === 0) {
-      dispatch(loadProducts());
-      return;
-    }
+    // if (!user.signedIn) {
+    //   navigate("/signin");
+    // }
+    // if (!user.admin) {
+    //   navigate("/error");
+    // }
+    dispatch(toggleLoading({ to: true }));
     if (props.operation === "edit") {
       if (!isNumeric(productIndex) || productIndex >= products.length) {
         navigate("/error");
@@ -65,7 +69,7 @@ const ProductModify = (props) => {
       setPreviewUrl(currentProduct?.imgPath);
     }
     dispatch(toggleLoading({ to: false }));
-  }, [products]);
+  }, []);
 
   // const setName(e.target.value) = (e) => {
   //   setName(e.target.value);

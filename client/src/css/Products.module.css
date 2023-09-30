@@ -113,6 +113,7 @@
   text-transform: none;
 }
 .product-content {
+  position: relative;
   margin-top: 24px;
   margin-left: 60px;
   width: 90%;
@@ -185,7 +186,15 @@
   background-color: #036bfc;
   color: #ffffff;
 }
-
+/* .blur-background {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  width: 100%;
+  height: calc(100% + 200px);
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+} */
 @media only screen and (max-width: 600px) {
   .product-page {
     align-items: center;
