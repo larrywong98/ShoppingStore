@@ -19,6 +19,7 @@ const Header = () => {
   const navigate = useNavigate();
   const cartOpened = useSelector((state) => state.cartReducer.cartOpened);
   const cartQuantity = useSelector((state) => state.cartReducer.cartQuantity);
+  const cartTotal = useSelector((state) => state.cartReducer.cartTotal);
   const cart = useSelector((state) => state.cartReducer.cart);
   const user = useSelector((state) => state.userReducer);
 
@@ -78,7 +79,7 @@ const Header = () => {
           ) : (
             <span className={styles["cart-number"]}>{cartQuantity}</span>
           )}
-          <span className={styles["total"]}>$0.00</span>
+          <span className={styles["total"]}>${cartTotal.toFixed(2)}</span>
         </div>
       </div>
       {cartOpened ? (

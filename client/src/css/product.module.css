@@ -27,6 +27,10 @@
   font-size: 10px;
   gap: 6px;
 }
+.add-to-cart-btn {
+  width: 100%;
+  height: 26px;
+}
 
 .edit-btn {
   /* width: 102px; */

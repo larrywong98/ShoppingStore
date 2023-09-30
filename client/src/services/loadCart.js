@@ -5,7 +5,6 @@ import { store } from "../reducer/store";
 const loadCart = () => {
   return async (dispatch, getState) => {
     const cart = await getCartRequest();
-    console.log(cart);
     if (cart.length === 0) cart.push({ addedProducts: [] });
     dispatch(initCart({ cart: cart[0].addedProducts }));
   };

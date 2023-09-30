@@ -150,13 +150,20 @@ app.put("/api/cart/save", async (req, res) => {
 });
 
 app.delete("/api/cart/checkout", async (req, res) => {
-  // console.log(req.body);
-  req.body.forEach(async (product) => {
-    let filter = { id: product.id };
-    let update = { $inc: { volume: -product.added } };
-    const response = await Product.findOneAndUpdate(filter, update);
+  try {
+    req.body.cart.forEach(async (product) => {
+      let filter = { id: product.id };
+      let update = { $inc: { volume: -product.added } };
+      await Product.findOneAndUpdate(filter, update);
+    });
+    await Cart.findOneAndUpdate(
+      { userId: req.body.userId },
+      { addedProducts: [] }
+    );
     res.json({ status: "ok" });
-  });
+  } catch (err) {
+    res.json({ status: "not ok" });
+  }
 });
 
 app.listen(4000, () => {
