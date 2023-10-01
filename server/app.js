@@ -141,7 +141,7 @@ app.put("/api/cart/save", async (req, res) => {
   let update = { addedProducts: newCart };
   let options = { upsert: true, new: true, setDefaultsOnInsert: true };
   const response = await Cart.findOneAndUpdate(filter, update, options);
-  console.log(response);
+  // console.log(response);
 });
 
 app.delete("/api/cart/checkout", async (req, res) => {

@@ -25,6 +25,7 @@ const Header = () => {
     (products, cart) => {
       if (cart.length === 0) return 0;
       return cart.reduce((acc, cur) => {
+        if (products.length === 0) return 0;
         const price = products.find((product) => product.id === cur.id).price;
         return acc + cur.added * price;
       }, 0);
@@ -37,7 +38,7 @@ const Header = () => {
   }, [subtotal, taxRate]);
 
   const discountPrice = useMemo(() => {
-    if (discount === undefined) return 0;
+    if (discount === undefined || discount === "") return 0;
     if (discount.charAt(0) === "*") {
       return subtotal * (1 - parseFloat(discount.slice(1)));
     } else if (discount.charAt(0) === "-") {
