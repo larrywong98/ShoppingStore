@@ -1,4 +1,4 @@
-import { createSlice, createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const globalSlice = createSlice({
   name: "global",

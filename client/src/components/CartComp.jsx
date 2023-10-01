@@ -4,14 +4,13 @@ import {
   clearCart,
   removeProducts,
   toggleCart,
-  updateTotal,
+  setDiscount,
 } from "../reducer/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import AddToCart from "./AddToCart";
 import { createSelector } from "@reduxjs/toolkit";
-import { useCallback, useEffect, useState } from "react";
-import requestData from "../services/requestData";
+import { useMemo, useState } from "react";
+import checkoutCart from "../services/checkoutCart";
 
 const CartComp = () => {
   const navigate = useNavigate();
@@ -19,8 +18,9 @@ const CartComp = () => {
   const products = useSelector((state) => state.productReducer.products);
   const cartQuantity = useSelector((state) => state.cartReducer.cartQuantity);
   const cart = useSelector((state) => state.cartReducer.cart);
+  const cartOpened = useSelector((state) => state.cartReducer.cartOpened);
   const userId = useSelector((state) => state.userReducer.userId);
-  const [discount, setDiscount] = useState(0);
+  const discount = useSelector((state) => state.cartReducer.discount);
   const [discountText, setDiscountText] = useState("");
   const getProductInfo = createSelector(
     [(state) => state, (state, currentId) => currentId],
@@ -46,54 +46,39 @@ const CartComp = () => {
   );
   const subtotal = calculateSubtotal(products, cart);
   const taxRate = 0.1;
-  const tax = subtotal * taxRate;
-  const total = subtotal + tax - discount;
-  useEffect(() => {
-    console.log(total);
-    dispatch(updateTotal({ total: total }));
-  }, [total]);
+  const tax = useMemo(() => {
+    return subtotal * taxRate;
+  }, [subtotal, taxRate]);
 
-  const checkDiscountCode = useCallback(() => {
-    const discountCode = { google90: "90%", apple: "-20" };
-    if (!(discountText in discountCode)) return;
-    setDiscount(0);
-    const currentDiscount = discountCode[discountText];
-    if (currentDiscount.includes("%")) {
-      setDiscount(
-        (subtotal *
-          parseInt(currentDiscount.slice(0, currentDiscount.length - 1), 10)) /
-          100
-      );
-    } else if (currentDiscount.includes("-")) {
-      setDiscount(parseFloat(currentDiscount.slice(1, currentDiscount.length)));
+  const discountPrice = useMemo(() => {
+    if (discount === undefined || discount === "") return 0;
+    if (discount.charAt(0) === "*") {
+      return subtotal * (1 - parseFloat(discount.slice(1)));
+    } else if (discount.charAt(0) === "-") {
+      return parseFloat(discount.slice(1));
     }
-  }, [discountText, subtotal]);
+  }, [discount, subtotal]);
+  const total = subtotal - discountPrice + tax;
+
+  const checkDiscountCode = () => {
+    const discountCode = { percent90: "*0.8", coupon20: "-20" };
+    if (!(discountText in discountCode)) return;
+    let currentDiscount = discountCode[discountText];
+    dispatch(setDiscount({ discount: currentDiscount }));
+  };
 
   const checkout = async () => {
     dispatch(toggleCart());
     dispatch(clearCart());
-    const response = await requestData({
-      url: "http://127.0.0.1:4000/api/cart/checkout",
-      method: "delete",
-      data: JSON.stringify({ userId: userId, cart: cart }),
-      headers: { "Content-Type": "application/json" },
-    });
-    if (response.status === "ok") {
-      navigate("/success", { state: { message: "Product Purchased !!!" } });
-    } else {
-      navigate("/error");
-    }
+    checkoutCart(userId, cart, navigate);
   };
-  // useEffect(() => {
-  //   checkDiscountCode();
-  // }, [checkDiscountCode]);
 
   const remove = (index) => {
     dispatch(removeProducts({ id: cart[index].id }));
   };
   return (
     <>
-      <div className={styles["blur-background"]}></div>
+      <div className={cartOpened && styles["overlay"]}></div>
       <div className={styles["cart"]}>
         <div className={styles["cart-header"]}>
           <div className={styles["cart-header-head"]}>
@@ -168,10 +153,12 @@ const CartComp = () => {
             <ul>
               <li>${subtotal.toFixed(2)}</li>
               <li>${tax.toFixed(2)}</li>
-              {discount !== 0 ? (
-                <li className={styles["discount"]}>-${discount}</li>
+              {discountPrice !== 0 ? (
+                <li className={styles["discount"]}>
+                  -${discountPrice.toFixed(2)}
+                </li>
               ) : (
-                <li>${discount}</li>
+                <li>${discountPrice.toFixed(2)}</li>
               )}
 
               <li>${total.toFixed(2)}</li>

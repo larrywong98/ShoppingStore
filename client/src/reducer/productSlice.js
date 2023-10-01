@@ -5,12 +5,7 @@ const productSlice = createSlice({
   initialState: {
     products: [],
     initProducts: [],
-    sortStatus: [
-      { desp: "Last added" },
-      { desp: "Price: low to high" },
-      { desp: "Price: high to low" },
-      { selected: 0 },
-    ],
+    selected: 0,
   },
   reducers: {
     load: (state, action) => {
@@ -23,17 +18,17 @@ const productSlice = createSlice({
         if (parseInt(a.timestamp, 10) > parseInt(b.timestamp, 10)) return -1;
         return 1;
       });
-      state.sortStatus[3].selected = 0;
+      state.selected = 0;
       return state;
     },
     priceLowtoHigh: (state) => {
       state.products.sort((a, b) => a.price - b.price);
-      state.sortStatus[3].selected = 1;
+      state.selected = 1;
       return state;
     },
     priceHightoLow: (state) => {
       state.products.sort((a, b) => b.price - a.price);
-      state.sortStatus[3].selected = 2;
+      state.selected = 2;
       return state;
     },
     filterByInput: (state, action) => {
@@ -49,7 +44,7 @@ const productSlice = createSlice({
         if (parseInt(a.timestamp, 10) > parseInt(b.timestamp, 10)) return -1;
         return 1;
       });
-      state.sortStatus[3].selected = 0;
+      state.selected = 0;
       return state;
     },
   },

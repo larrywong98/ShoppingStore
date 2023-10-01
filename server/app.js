@@ -56,7 +56,6 @@ app.post("/api/signin", auth, (req, res) => {
   });
 });
 app.post("/api/signup", async (req, res) => {
-  // console.log(req.body);
   try {
     const newUser = User({
       userId: md5Token,
@@ -73,8 +72,6 @@ app.post("/api/signup", async (req, res) => {
 });
 
 app.post("/product/create", upload.single("file"), async (req, res) => {
-  // console.log(req.body);
-  // console.log(req.file);
   try {
     const newProduct = new Product({
       id: md5Token,
@@ -112,12 +109,10 @@ app.put("/product/edit/:productId", upload.single("file"), async (req, res) => {
     let newDoc = await Product.findOneAndUpdate(filter, update, {
       new: true,
     });
-    res.status(200).json({ status: "ok" });
+    res.json({ status: "ok" });
   } catch (err) {
-    res.status(500).send({ status: err.message });
+    res.json({ status: err.message });
   }
-
-  // console.log(newDoc);
 });
 
 app.post("/image/upload", upload.single("file"), (req, res) => {

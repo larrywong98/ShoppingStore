@@ -3,7 +3,6 @@ import requestData from "./requestData";
 const loadProducts = () => {
   return async (dispatch, getState) => {
     const products = await getProductsRequest();
-    // console.log(products);
     dispatch(load({ products: products }));
     dispatch(lastAdded());
   };

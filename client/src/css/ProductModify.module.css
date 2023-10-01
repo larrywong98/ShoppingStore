@@ -1,7 +1,6 @@
 .product-create-page {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   background-color: #f9fafb;
   gap: 24px;
@@ -13,7 +12,6 @@
   height: 44px;
   display: flex;
   justify-content: space-between;
-  /* margin-left: 60px; */
 }
 .back-icon {
   display: flex;
@@ -32,7 +30,6 @@
 
 .product-create-content {
   margin-top: 24px;
-  /* margin-left: 60px; */
   width: 660px;
   gap: 19px;
   display: flex;
@@ -78,12 +75,9 @@
 .category-toggle-mark {
   width: 20px;
   height: 100%;
-  /* border: 1px solid red; */
 }
 .category-dropdown-list {
   display: none;
-  /* display: flex; */
-
   align-items: center;
   position: absolute;
   background-color: #ffffff;
@@ -103,13 +97,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* border: 1px solid red; */
   gap: 5px;
   padding: 0;
   margin: 0;
 }
 .category-dropdown-list ul li {
-  /* border: 1px solid red; */
   width: 278px;
   height: 40px;
   list-style-type: none;
@@ -159,7 +151,6 @@
   font-size: 18px;
 }
 .product-create-upload-link input {
-  /* border: 1px solid red; */
   border: none;
   outline: none;
 }
@@ -183,13 +174,11 @@
   cursor: pointer;
   opacity: 0;
   position: absolute;
-  /* border: 1px solid red; */
 }
 
 .product-create-image {
   width: 388px;
   height: 200px;
-  /* border: 1px solid red; */
 }
 .product-upload-image {
   width: 40px;
@@ -207,7 +196,6 @@
   flex-direction: column;
   gap: 11px;
   background-color: transparent;
-  /* border: 1px dashed #cccccc; */
   border: none;
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%2300000024' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
   width: 388px;
@@ -219,7 +207,6 @@
   height: 200px;
   cursor: pointer;
   opacity: 0;
-  /* border: 1px solid red; */
   position: absolute;
   z-index: 1;
 }
@@ -306,14 +293,12 @@
     font-size: 18px;
   }
   .product-create-upload-link input {
-    /* border: 1px solid red; */
     width: 278px;
   }
 
   .product-create-image {
     width: 388px;
     height: 200px;
-    /* border: 1px solid red; */
   }
   .product-upload-image {
     width: 40px;

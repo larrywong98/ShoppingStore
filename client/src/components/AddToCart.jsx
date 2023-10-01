@@ -29,16 +29,14 @@ const AddToCart = (props) => {
     }
     if (numberInCart >= props.volume) return;
     dispatch(addOneProduct({ id: props.id }));
-    // saveCart({ id: user.userId, cart: cart });
   };
   const removeOne = () => {
-    if (user.signedIn === false) {
-      navigate("/signin");
-      return;
-    }
+    // if (user.signedIn === false) {
+    //   navigate("/signin");
+    //   return;
+    // }
     if (numberInCart < 0) return;
     dispatch(removeOneProduct({ id: props.id }));
-    // saveCart({ id: user.userId, cart: cart });
   };
   return (
     <>

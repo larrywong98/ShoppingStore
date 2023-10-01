@@ -1,12 +1,13 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import Welcome from "../components/Welcome";
 import AuthForm from "../components/AuthForm";
+import Product from "../components/Product";
+import UpdatePassword from "../components/UpdatePassword";
 import ProductsLayout from "../components/ProductsLayout";
-
 import Products from "./Products";
 import ProductDetail from "./ProductDetail";
 import ProductModify from "./ProductModify";
+import ProtectedRoute from "./ProtectedRoute";
 import Success from "./Success";
 import Error from "./Error";
 import {
@@ -15,12 +16,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
-import Product from "../components/Product";
-
 import styles from "../css/App.module.css";
-import UpdatePassword from "../components/UpdatePassword";
-import ProtectedRoute from "./ProtectedRoute";
 
 const App = () => {
   return (
@@ -30,6 +26,7 @@ const App = () => {
         <Routes>
           <Route path="/">
             <Route index element={<Navigate to="/products" />} />
+            <Route path="home" element={<Navigate to="/products" />} />
             <Route path="signup" element={<AuthForm authType="signup" />} />
             <Route path="signin" element={<AuthForm authType="signin" />} />
             <Route path="forget" element={<UpdatePassword />} />

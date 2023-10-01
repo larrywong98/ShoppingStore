@@ -7,6 +7,13 @@ const saveCart = async (cart) => {
     data: JSON.stringify(cart),
     headers: { "Content-Type": "application/json" },
   });
+  if (response.status === "ok") {
+    console.log("ok");
+    return "ok";
+  } else {
+    console.log("save cart failed");
+    return "failed";
+  }
 };
 
 export default saveCart;

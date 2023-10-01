@@ -1,12 +1,6 @@
 const requestData = async ({ url, method, data, headers }) => {
-  // console.log(url, method, data, headers);
-  // const defaultHeaders = {
-  //   "Content-Type": "application/json",
-  // };
-  // console.log(data);
   const options = {
     headers: {
-      // ...defaultHeaders,
       ...headers,
     },
     method: method,

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { GrLinkPrevious } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -36,7 +36,7 @@ const ProductDetail = (props) => {
             </Link>
           </div>
           <div className={styles["product-detail-content"]}>
-            <img className={skStyles["loading-animation"]} />
+            <img className={skStyles["loading-animation"]} alt="" />
             <div className={styles["product-detail"]}>
               <h2 className={skStyles["loading-animation"]}> </h2>
               <h1 className={skStyles["loading-animation"]}> </h1>
@@ -80,7 +80,7 @@ const ProductDetail = (props) => {
               <h1>{currentProduct.desp}</h1>
               <div className={styles["product-detail-price-stock"]}>
                 <p>${currentProduct.price}</p>
-                {currentProduct.volume === productIndex ? (
+                {currentProduct.volume === 0 ? (
                   <span>Out of Stock</span>
                 ) : (
                   <></>

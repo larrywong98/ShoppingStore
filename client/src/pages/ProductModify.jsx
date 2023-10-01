@@ -1,21 +1,18 @@
 import { GrLinkPrevious } from "react-icons/gr";
 import { BsFileEarmarkImage } from "react-icons/bs";
+import { CaretUp, CaretDown } from "@carbon/icons-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { createSelector } from "@reduxjs/toolkit";
-import requestData from "../services/requestData";
-import { CaretUp, CaretDown } from "@carbon/icons-react";
-
-import styles from "../css/ProductModify.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { current } from "@reduxjs/toolkit";
-import loadProducts from "../services/loadProducts";
 import { toggleLoading } from "../reducer/globalSlice";
 import isNumeric from "../utils/isNumeric";
+import createProduct from "../services/createProduct";
+import editProduct from "../services/editProduct";
+import uploadImageFile from "../services/uploadImageFile";
+import styles from "../css/ProductModify.module.css";
 
 const ProductModify = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // const [loading, setLoading] = useState(false);
 
   const [selected, setSelected] = useState(0);
   const [categories, setCategories] = useState([
@@ -28,7 +25,6 @@ const ProductModify = (props) => {
   const productIndex = useParams().productIndex;
   const products = useSelector((state) => state.productReducer.products);
   const loading = useSelector((state) => state.globalReducer.loading);
-  const user = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -40,16 +36,7 @@ const ProductModify = (props) => {
   const [previewUrl, setPreviewUrl] = useState("http://");
   const [firstLoad, setFirstLoad] = useState(true);
 
-  // dispatch product slice
-  // const dispatch = useDispatch();
-
   useEffect(() => {
-    // if (!user.signedIn) {
-    //   navigate("/signin");
-    // }
-    // if (!user.admin) {
-    //   navigate("/error");
-    // }
     dispatch(toggleLoading({ to: true }));
     if (props.operation === "edit") {
       if (!isNumeric(productIndex) || productIndex >= products.length) {
@@ -70,22 +57,6 @@ const ProductModify = (props) => {
     }
     dispatch(toggleLoading({ to: false }));
   }, []);
-
-  // const setName(e.target.value) = (e) => {
-  //   setName(e.target.value);
-  // };
-  // const  setDescription(e.target.value) = (e) => {
-  //   setDescription(e.target.value);
-  // };
-  // const  setCategory(categories[index]) = (index) => {
-  //   setCategory(categories[index]);
-  // };
-  // const setQuantity(e.target.value) = (e) => {
-  //   setQuantity(e.target.value);
-  // };
-  // const setPrice(e.target.value) = (e) => {
-  //   setPrice(e.target.value);
-  // };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -109,47 +80,17 @@ const ProductModify = (props) => {
     formData.append("volume", quantity);
 
     if (props.operation === "create") {
-      let response = await requestData({
-        url: "http://127.0.0.1:4000/product/create",
-        method: "POST",
-        data: formData,
-      });
-      if (response.status === "ok") {
-        navigate("/success", { state: { message: "Create successfully !!!" } });
-      } else {
-        navigate("/error");
-      }
+      createProduct(formData, navigate);
     } else if (props.operation === "edit") {
       formData.append("id", products[productIndex].id);
-      let response = await requestData({
-        url: "http://127.0.0.1:4000/product/edit/" + products[productIndex].id,
-        method: "PUT",
-        data: formData,
-      });
-      if (response.status === "ok") {
-        navigate("/success", { state: { message: "Edit successfully !!!" } });
-      } else {
-        navigate("/error");
-      }
+      editProduct(formData, products[productIndex].id, navigate);
     }
   };
 
   const handleUploadedFile = async (e) => {
     let formData = new FormData();
     formData.append("file", e.target.files[0]);
-
-    const response = await requestData({
-      url: "http://127.0.0.1:4000/image/upload",
-      method: "POST",
-      data: formData,
-    });
-
-    if (response.length === 0) {
-      navigate("/error");
-      return;
-    }
-
-    const fileName = response.name;
+    const fileName = await uploadImageFile(formData, navigate);
     setPreviewUrl("http://127.0.0.1:4000/resources/" + fileName);
   };
 

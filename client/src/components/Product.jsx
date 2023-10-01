@@ -1,69 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "../css/Product.module.css";
 import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { addOneProduct, removeOneProduct } from "../reducer/cartSlice";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import loadCart from "../services/loadCart";
 import skStyle from "../css/Skeleton.module.css";
-import { toggleLoading } from "../reducer/globalSlice";
-import { createSelector } from "@reduxjs/toolkit";
-import saveCart from "../services/saveCart";
 import AddToCart from "./AddToCart";
 
 const Product = (props) => {
-  // const [numberInCart, setNumberInCart] = useState(0);
-  // const [loading, setLoading] = useState(true);
   const loading = useSelector((state) => state.globalReducer.loading);
-  const cartOpened = useSelector((state) => state.cartReducer.cartOpened);
-  const cart = useSelector((state) => state.cartReducer.cart);
   const user = useSelector((state) => state.userReducer);
-  const numberInCartSelector = createSelector(
-    (state) => state,
-    (items) => {
-      if (Object.keys(items).length === 0) return 0;
-      const inCart = items.filter((item) => item.id === props.id);
-      if (inCart.length === 1) {
-        return inCart[0].added;
-      }
-      return 0;
-    }
-  );
-  const numberInCart = numberInCartSelector(cart);
-  // const [numberInCart, setNumberInCart] = useState(0);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const toDetailPage = (pageId, index) => {
-    if (cartOpened === true) {
-      return;
-    }
     let realid = pageId * 10 + index;
     navigate(realid.toString());
   };
-  const addOne = () => {
-    if (user.signedIn === false) {
-      navigate("/signin");
-      return;
-    }
-    if (numberInCart >= props.volume) return;
-    dispatch(addOneProduct({ id: props.id }));
-    // saveCart({ id: user.userId, cart: cart });
-  };
-  const removeOne = () => {
-    if (user.signedIn === false) {
-      navigate("/signin");
-      return;
-    }
-    if (numberInCart < 0) return;
-    dispatch(removeOneProduct({ id: props.id }));
-    // saveCart({ id: user.userId, cart: cart });
-  };
-  // useEffect(() => {
-  //   if (user.signedIn === false) {
-  //     navigate("/signin");
-  //   }
-  // }, []);
   return (
     <>
       {loading ? (

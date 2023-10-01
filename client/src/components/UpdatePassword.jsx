@@ -6,10 +6,10 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import requestData from "../services/requestData";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import updatePwd from "../services/updatePwd";
 
 const UpdatePassword = () => {
   const [username, setUsername] = useState("");
@@ -23,14 +23,9 @@ const UpdatePassword = () => {
       setFirstLoad(false);
       return;
     }
-    const response = await requestData({
-      url: "http://127.0.0.1:4000/api/password/update",
-      method: "get",
-    });
-    if (response.status === "ok") {
+    const status = await updatePwd(navigate);
+    if (status === "ok") {
       setConfirmation(true);
-    } else {
-      navigate("/error");
     }
   };
   return (
@@ -40,8 +35,6 @@ const UpdatePassword = () => {
         sx={{
           width: { xs: "98%", md: "600px" },
           height: { xs: "500px", md: "500px" },
-          // backgroundColor: "grey",
-          // border: "1px solid red",
           padding: "16px",
         }}
       >
@@ -50,7 +43,6 @@ const UpdatePassword = () => {
           sx={{
             position: "relative",
             height: { xs: "80%", md: "400px" },
-            // border: "1px solid red",
           }}
         >
           {confirmation ? (

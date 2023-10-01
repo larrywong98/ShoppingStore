@@ -1,5 +1,5 @@
 import { Checkmark, CaretUp, CaretDown } from "@carbon/icons-react";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   lastAdded,
@@ -7,47 +7,32 @@ import {
   priceHightoLow,
 } from "../reducer/productSlice";
 import loadProducts from "../services/loadProducts";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Product from "../components/Product";
 import styles from "../css/Products.module.css";
-import { createSelector } from "@reduxjs/toolkit";
-import loadCart from "../services/loadCart";
 import { toggleLoading } from "../reducer/globalSlice";
 import isNumeric from "../utils/isNumeric";
-// import _ from "lodash";
 
 const Products = ({ children }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageValue, setPageValue] = useState(1);
-  const navigate = useNavigate();
+
   const loading = useSelector((state) => state.globalReducer.loading);
-
-  //dispatch product slice
-  const dispatch = useDispatch();
   const products = useSelector((state) => state.productReducer.products);
-
-  // reselect improve performance
-  const initsort = useSelector((state) => state.productReducer.sortStatus);
-  const sortStatusSelector = createSelector(
-    (state) => state,
-    (items) => items.slice(0, 3)
-  );
-  const sortStatus = sortStatusSelector(initsort);
-
-  // memorize sort status
-  const selected = useSelector(
-    (state) => state.productReducer.sortStatus[3].selected
-  );
+  const selected = useSelector((state) => state.productReducer.selected);
   const user = useSelector((state) => state.userReducer);
 
+  const dispatch = useDispatch();
+  const sortStatus = [
+    { desp: "Last added" },
+    { desp: "Price: low to high" },
+    { desp: "Price: high to low" },
+  ];
+
   useEffect(() => {
-    // if (!_.isEmpty(user))
-    // dispatch(loadCart());
-    // skeleton loading
     dispatch(toggleLoading({ to: true }));
     dispatch(loadProducts());
-    // dispatch(loadCart());
     dispatch(toggleLoading({ to: false }));
   }, []);
 
@@ -55,7 +40,6 @@ const Products = ({ children }) => {
     if (i === 0) dispatch(lastAdded());
     if (i === 1) dispatch(priceLowtoHigh());
     if (i === 2) dispatch(priceHightoLow());
-
     setDropdownOpen(false);
   };
 
@@ -97,7 +81,6 @@ const Products = ({ children }) => {
 
   return (
     <div className={styles["product-page"]}>
-      {/* <div className={styles["blur-background"]}></div> */}
       <div className={styles["product-page-header"]}>
         <h1>Products</h1>
         <div className={styles["product-page-header-button"]}>
@@ -124,7 +107,7 @@ const Products = ({ children }) => {
               }
             >
               <ul>
-                {sortStatus.map(({ checked, desp }, index) => (
+                {sortStatus.map(({ desp }, index) => (
                   <button
                     className={styles["dropdown-item-btn"]}
                     onClick={() => sortBySelection(index)}

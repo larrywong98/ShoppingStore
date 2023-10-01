@@ -114,14 +114,6 @@
 .show-cart {
   z-index: 2;
 }
-/* .blur-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vh;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-} */
 .cart-wrap {
   width: 542px;
   height: fit-content;
@@ -136,7 +128,6 @@
     padding: 0;
   }
   .name-search {
-    /* border: 1px solid red; */
     width: 100%;
     height: 88px;
     gap: 0;

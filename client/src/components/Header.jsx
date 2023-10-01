@@ -1,35 +1,59 @@
-import { useEffect, useState } from "react";
-import { IconButton } from "@mui/material";
-
+import { useMemo } from "react";
 import { StarFilled, ShoppingCart, User } from "@carbon/icons-react";
-import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCart, clearCart } from "../reducer/cartSlice";
-import loadCart from "../services/loadCart";
 import styles from "../css/Header.module.css";
 import SearchBar from "./SearchBar";
 import { signOut } from "../reducer/userSlice";
 import { useNavigate } from "react-router";
 import saveCart from "../services/saveCart";
 import CartComp from "./CartComp";
+import { createSelector } from "@reduxjs/toolkit";
 const Header = () => {
   const loggedIn = useSelector((state) => state.userReducer.signedIn);
-  // const [loggedIn, setloggedIn] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartOpened = useSelector((state) => state.cartReducer.cartOpened);
   const cartQuantity = useSelector((state) => state.cartReducer.cartQuantity);
-  const cartTotal = useSelector((state) => state.cartReducer.cartTotal);
   const cart = useSelector((state) => state.cartReducer.cart);
   const user = useSelector((state) => state.userReducer);
+  const products = useSelector((state) => state.productReducer.products);
+  const discount = useSelector((state) => state.cartReducer.discount);
 
-  const userLogin = () => {
+  const calculateSubtotal = createSelector(
+    [(state) => state, (state, cart) => cart],
+    (products, cart) => {
+      if (cart.length === 0) return 0;
+      return cart.reduce((acc, cur) => {
+        const price = products.find((product) => product.id === cur.id).price;
+        return acc + cur.added * price;
+      }, 0);
+    }
+  );
+  const subtotal = calculateSubtotal(products, cart);
+  const taxRate = 0.1;
+  const tax = useMemo(() => {
+    return subtotal * taxRate;
+  }, [subtotal, taxRate]);
+
+  const discountPrice = useMemo(() => {
+    if (discount === undefined) return 0;
+    if (discount.charAt(0) === "*") {
+      return subtotal * (1 - parseFloat(discount.slice(1)));
+    } else if (discount.charAt(0) === "-") {
+      return parseFloat(discount.slice(1));
+    }
+  }, [discount, subtotal]);
+  const total = useMemo(() => {
+    return subtotal - discountPrice + tax;
+  }, [subtotal, discountPrice, tax]);
+
+  const userLogin = async () => {
     if (loggedIn === false) {
       navigate("/signin");
     } else {
       localStorage.clear();
       saveCart({ id: user.userId, cart: cart });
-      // console.log(cart);
       dispatch(signOut());
       dispatch(clearCart());
       navigate("/success", { state: { message: "Log out Successfully !!!" } });
@@ -40,10 +64,7 @@ const Header = () => {
       navigate("/signin");
       return;
     }
-    console.log(cartOpened);
-    //dispatch cart
     dispatch(toggleCart());
-    // console.log(cart);
   };
 
   return (
@@ -79,7 +100,7 @@ const Header = () => {
           ) : (
             <span className={styles["cart-number"]}>{cartQuantity}</span>
           )}
-          <span className={styles["total"]}>${cartTotal.toFixed(2)}</span>
+          <span className={styles["total"]}>${total.toFixed(2)}</span>
         </div>
       </div>
       {cartOpened ? (
