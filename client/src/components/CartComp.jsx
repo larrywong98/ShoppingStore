@@ -70,6 +70,7 @@ const CartComp = () => {
     if (!(discountText in discountCode)) return;
     let currentDiscount = discountCode[discountText];
     dispatch(setDiscount({ discount: currentDiscount }));
+    setDiscountText("");
   };
 
   const checkout = async () => {
