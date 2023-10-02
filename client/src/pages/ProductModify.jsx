@@ -10,6 +10,7 @@ import createProduct from "../services/createProduct";
 import editProduct from "../services/editProduct";
 import uploadImageFile from "../services/uploadImageFile";
 import styles from "../css/ProductModify.module.css";
+import deleteProduct from "../services/deleteProduct";
 
 const ProductModify = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -25,6 +26,7 @@ const ProductModify = (props) => {
   const productIndex = useParams().productIndex;
   const products = useSelector((state) => state.productReducer.products);
   const loading = useSelector((state) => state.globalReducer.loading);
+  const cart = useSelector((state) => state.cartReducer.cart);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -92,6 +94,18 @@ const ProductModify = (props) => {
     formData.append("file", e.target.files[0]);
     const fileName = await uploadImageFile(formData, navigate);
     setPreviewUrl("http://127.0.0.1:4000/resources/" + fileName);
+  };
+
+  const deleteOnClick = (e) => {
+    e.preventDefault();
+    // if (
+    //   cart.filter((product) => product.id === products[productIndex].id)
+    //     .length > 0
+    // ) {
+    //   navigate("/Error");
+    //   return;
+    // }
+    deleteProduct(products[productIndex].id, navigate);
   };
 
   return (
@@ -383,9 +397,15 @@ const ProductModify = (props) => {
                 <div className={styles["product-create-image-preview"]}>
                   <img src={previewUrl} alt="" />
                 </div>
-                <div className={styles["add-product-wrap"]}>
+                <div className={styles["product-btn-wrap"]}>
                   <button className={styles["add-product"]} type="submit">
                     Edit Product
+                  </button>
+                  <button
+                    className={styles["delete-product"]}
+                    onClick={(e) => deleteOnClick(e)}
+                  >
+                    Delete Product
                   </button>
                 </div>
               </div>

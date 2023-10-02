@@ -23,10 +23,10 @@ const Header = () => {
   const calculateSubtotal = createSelector(
     [(state) => state, (state, cart) => cart],
     (products, cart) => {
-      if (cart.length === 0) return 0;
+      if (cart.length === 0 || products.length === 0) return 0;
       return cart.reduce((acc, cur) => {
-        if (products.length === 0) return 0;
-        const price = products.find((product) => product.id === cur.id).price;
+        const price =
+          products.find((product) => product.id === cur.id)?.price || 0;
         return acc + cur.added * price;
       }, 0);
     }
@@ -46,7 +46,7 @@ const Header = () => {
     }
   }, [discount, subtotal]);
   const total = useMemo(() => {
-    return subtotal - discountPrice + tax;
+    return Math.max(subtotal - discountPrice + tax, 0);
   }, [subtotal, discountPrice, tax]);
 
   const userLogin = async () => {

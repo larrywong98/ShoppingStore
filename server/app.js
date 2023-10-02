@@ -2,8 +2,10 @@ import express from "express";
 import cors from "cors";
 import { Product, Cart, User } from "./models/schema.js";
 import jwt from "jsonwebtoken";
-import { md5Token } from "./utils/generateMD5.js";
+import { generateMD5 } from "./utils/generateMD5.js";
 import { auth } from "./utils/auth.js";
+import multer from "multer";
+import md5 from "md5";
 
 const app = express();
 app.use(cors());
@@ -11,7 +13,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-import multer from "multer";
 const upload = multer({ dest: "public/resources/" });
 
 app.get("/", (req, res) => {
@@ -58,7 +59,7 @@ app.post("/api/signin", auth, (req, res) => {
 app.post("/api/signup", async (req, res) => {
   try {
     const newUser = User({
-      userId: md5Token,
+      userId: md5(generateMD5()),
       userName: req.body.userName,
       password: req.body.pwd,
       admin: false,
@@ -74,7 +75,7 @@ app.post("/api/signup", async (req, res) => {
 app.post("/product/create", upload.single("file"), async (req, res) => {
   try {
     const newProduct = new Product({
-      id: md5Token,
+      id: md5(generateMD5()),
       imgPath: req.body.imgPath,
       volume: parseInt(req.body.volume),
       category: req.body.category,
@@ -134,9 +135,12 @@ app.get("/cart/:userId", async (req, res) => {
 });
 
 app.put("/api/cart/save", async (req, res) => {
-  let newCart = req.body.cart.map((product) => {
-    return { id: product.id, added: product.added };
-  });
+  const products = (await Product.find()).map((product) => product.id);
+  let newCart = req.body.cart
+    .filter((product) => products.includes(product.id))
+    .map((product) => {
+      return { id: product.id, added: product.added };
+    });
   let filter = { userId: req.body.id };
   let update = { addedProducts: newCart };
   let options = { upsert: true, new: true, setDefaultsOnInsert: true };
@@ -155,6 +159,20 @@ app.delete("/api/cart/checkout", async (req, res) => {
       { userId: req.body.userId },
       { addedProducts: [] }
     );
+    res.json({ status: "ok" });
+  } catch (err) {
+    res.json({ status: "not ok" });
+  }
+});
+
+app.delete("/api/product/delete/:id", async (req, res) => {
+  try {
+    const deletedDoc = await Product.findOneAndDelete({ id: req.params.id });
+    // {$pull : {"someArray.0.someNestedArray" : {"name":"delete me"}}}
+    // const deletedAdded = await Cart.update({
+    //   $pull: { addedProducts: { $elemMatch: { $eq: req.params.id } } },
+    // });
+    // console.log(deletedAdded);
     res.json({ status: "ok" });
   } catch (err) {
     res.json({ status: "not ok" });

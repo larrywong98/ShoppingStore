@@ -221,7 +221,18 @@
 .empty-warning {
   color: red;
 }
-
+.product-btn-wrap {
+  display: flex;
+  gap: 10px;
+}
+.delete-product {
+  width: 133px;
+  height: 40px;
+  border-radius: 4px;
+  background: rgb(255, 28, 28);
+  border: none;
+  color: #ffffff;
+}
 @media only screen and (max-width: 600px) {
   .product-create-page form {
     display: flex;
@@ -309,9 +320,9 @@
     display: flex;
     justify-content: center;
   }
-  .add-product-wrap {
+  .product-btn-wrap {
     width: 100%;
-    display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 }

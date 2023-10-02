@@ -1,4 +1,3 @@
-import md5 from "md5";
 const generateMD5 = () => {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -9,5 +8,5 @@ const generateMD5 = () => {
   }
   return result;
 };
-const md5Token = md5(generateMD5());
-export { md5Token };
+
+export { generateMD5 };

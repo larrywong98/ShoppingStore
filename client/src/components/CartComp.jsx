@@ -27,9 +27,11 @@ const CartComp = () => {
     (items, currentId) => {
       const currentProduct = items.find((item) => item.id === currentId);
       return {
-        imgPath: currentProduct.imgPath,
-        desp: currentProduct.desp,
-        price: currentProduct.price,
+        imgPath:
+          currentProduct?.imgPath ||
+          "http://127.0.0.1:4000/resources/unavailable.png",
+        desp: currentProduct?.desp || "Item is unavailable",
+        price: currentProduct?.price || 0,
       };
     }
   );
@@ -37,9 +39,10 @@ const CartComp = () => {
   const calculateSubtotal = createSelector(
     [(state) => state, (state, cart) => cart],
     (products, cart) => {
-      if (cart.length === 0) return 0;
+      if (cart.length === 0 || products.length === 0) return 0;
       return cart.reduce((acc, cur) => {
-        const price = products.find((product) => product.id === cur.id).price;
+        const price =
+          products.find((product) => product.id === cur.id)?.price || 0;
         return acc + cur.added * price;
       }, 0);
     }
@@ -58,7 +61,9 @@ const CartComp = () => {
       return parseFloat(discount.slice(1));
     }
   }, [discount, subtotal]);
-  const total = subtotal - discountPrice + tax;
+  const total = useMemo(() => {
+    return Math.max(subtotal - discountPrice + tax, 0);
+  }, [subtotal, discountPrice, tax]);
 
   const checkDiscountCode = () => {
     const discountCode = { percent90: "*0.8", coupon20: "-20" };
