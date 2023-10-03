@@ -1,9 +1,11 @@
 import requestData from "./requestData";
+import { UPLOAD_IMAGE_PATH } from "./routes";
 
 const uploadImageFile = async (formData, navigate) => {
   const response = await requestData({
-    url: "http://127.0.0.1:4000/image/upload",
+    url: UPLOAD_IMAGE_PATH,
     method: "POST",
+    headers: { authorization: "Bearer " + localStorage.getItem("token") },
     data: formData,
   });
 

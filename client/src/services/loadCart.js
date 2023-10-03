@@ -1,6 +1,7 @@
 import requestData from "./requestData";
 import { initCart } from "../reducer/cartSlice";
 import { store } from "../reducer/store";
+import { CART_PATH } from "./routes";
 
 const loadCart = () => {
   return async (dispatch, getState) => {
@@ -13,8 +14,9 @@ const loadCart = () => {
 const getCartRequest = async () => {
   const user = store.getState().userReducer;
   const response = await requestData({
-    url: "http://127.0.0.1:4000/cart/" + user.userId,
+    url: `${CART_PATH}/${user.userId}`,
     method: "get",
+    headers: { authorization: "Bearer " + localStorage.getItem("token") },
   });
   return response;
 };

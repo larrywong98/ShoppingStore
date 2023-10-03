@@ -1,6 +1,5 @@
-import { useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+
 const ProductsLayout = ({ children }) => {
   return (
     <>

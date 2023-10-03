@@ -1,11 +1,15 @@
 import requestData from "./requestData";
+import { SAVE_CART_PATH } from "./routes";
 
 const saveCart = async (cart) => {
   const response = await requestData({
-    url: "http://127.0.0.1:4000/api/cart/save",
+    url: SAVE_CART_PATH,
     method: "PUT",
     data: JSON.stringify(cart),
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + localStorage.getItem("token"),
+    },
   });
   if (response.status === "ok") {
     console.log("ok");

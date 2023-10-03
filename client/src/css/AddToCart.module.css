@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   border: none;
-  background: #036bfcea;
+  background: #5048e5ea;
   border-radius: 4px;
 }
 .minus-one-btn {
@@ -18,7 +18,7 @@
   border-radius: 4px;
 }
 .minus-one-btn:hover {
-  background-color: #036bfc;
+  background-color: #5048e5;
 }
 .add-btn-showed-text {
   display: flex;
@@ -26,6 +26,19 @@
   font-size: inherit;
   font-weight: 600;
   color: #ffffff;
+  background-color: transparent;
+}
+.edit-btn-showed-text {
+  display: flex;
+  justify-content: center;
+  font-size: inherit;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  outline: none;
+  width: 100%;
 }
 .add-one-btn {
   display: flex;
@@ -38,7 +51,7 @@
   border-radius: 4px;
 }
 .add-one-btn:hover {
-  background-color: #036bfc;
+  background-color: #5048e5;
 }
 
 .add-btn-init {
@@ -46,11 +59,11 @@
   height: 100%;
   border-radius: 4px;
   border: none;
-  background: #036bfc;
+  background: #5048e5;
   font-weight: 600;
   color: #ffffff;
 }
 .add-btn-init:hover {
-  box-shadow: 0 0 4px 0px #237cf8;
+  box-shadow: 0 0 4px 0px #413ca8;
   border: none;
 }

@@ -53,10 +53,10 @@ const Header = () => {
     if (loggedIn === false) {
       navigate("/signin");
     } else {
-      localStorage.clear();
       saveCart({ id: user.userId, cart: cart });
       dispatch(signOut());
       dispatch(clearCart());
+      localStorage.clear();
       navigate("/success", { state: { message: "Log out Successfully !!!" } });
     }
   };

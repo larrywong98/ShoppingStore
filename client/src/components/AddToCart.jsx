@@ -1,8 +1,15 @@
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "@reduxjs/toolkit";
-import { addOneProduct, removeOneProduct } from "../reducer/cartSlice";
+import {
+  addMultipleProduct,
+  addOneProduct,
+  removeOneProduct,
+  removeProducts,
+} from "../reducer/cartSlice";
 import styles from "../css/AddToCart.module.css";
+import isNumeric from "../utils/isNumeric";
+import { useEffect, useMemo, useState } from "react";
 
 const AddToCart = (props) => {
   const cart = useSelector((state) => state.cartReducer.cart);
@@ -19,6 +26,7 @@ const AddToCart = (props) => {
     }
   );
   const numberInCart = numberInCartSelector(cart);
+  const [showNumber, setShowNumber] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,6 +45,34 @@ const AddToCart = (props) => {
     // }
     if (numberInCart < 0) return;
     dispatch(removeOneProduct({ id: props.id }));
+  };
+
+  useEffect(() => {
+    setShowNumber(numberInCart);
+  }, [numberInCart]);
+
+  const numberOnKeyUp = (e) => {
+    if (e.key === "Enter") {
+      let inputNumber;
+      if (showNumber === "") {
+        inputNumber = 0;
+      } else {
+        if (!isNumeric(showNumber)) return;
+        inputNumber = Math.max(Math.min(parseInt(showNumber), props.volume), 0);
+      }
+      // console.log(parseInt(showNumber), props.volume, inputNumber);
+      setShowNumber(`${inputNumber}`);
+      if (inputNumber === 0) {
+        dispatch(removeProducts({ id: props.id }));
+        return;
+      }
+      dispatch(
+        addMultipleProduct({
+          id: props.id,
+          added: inputNumber,
+        })
+      );
+    }
   };
   return (
     <>
@@ -61,7 +97,14 @@ const AddToCart = (props) => {
               />
             </svg>
           </button>
-          <span className={styles["add-btn-showed-text"]}>{numberInCart}</span>
+          {/* <span className={styles["add-btn-showed-text"]}>{numberInCart}</span> */}
+          <input
+            className={styles["edit-btn-showed-text"]}
+            value={showNumber}
+            maxLength="3"
+            onChange={(e) => setShowNumber(e.target.value)}
+            onKeyUp={(e) => numberOnKeyUp(e)}
+          />
           <button className={styles["add-one-btn"]} onClick={() => addOne()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -98,13 +98,6 @@ const ProductModify = (props) => {
 
   const deleteOnClick = (e) => {
     e.preventDefault();
-    // if (
-    //   cart.filter((product) => product.id === products[productIndex].id)
-    //     .length > 0
-    // ) {
-    //   navigate("/Error");
-    //   return;
-    // }
     deleteProduct(products[productIndex].id, navigate);
   };
 

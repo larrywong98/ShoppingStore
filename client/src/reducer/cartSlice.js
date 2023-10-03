@@ -66,6 +66,22 @@ const cartSlice = createSlice({
       state.discount = action.payload.discount;
       return state;
     },
+    addMultipleProduct: (state, action) => {
+      let newCart = [];
+      state.cartQuantity -= state.cart.find(
+        (product) => product.id === action.payload.id
+      ).added;
+      newCart = state.cart.map((product) => {
+        if (product.id === action.payload.id) {
+          return { id: product.id, added: action.payload.added };
+        }
+        return product;
+      });
+      state.cartQuantity += action.payload.added;
+      // }
+      state.cart = newCart;
+      return state;
+    },
   },
 });
 
@@ -79,5 +95,6 @@ export const {
   removeOneProduct,
   updateTotal,
   setDiscount,
+  addMultipleProduct,
 } = cartSlice.actions;
 export default cartSlice.reducer;

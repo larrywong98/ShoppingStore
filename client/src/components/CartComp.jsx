@@ -32,6 +32,7 @@ const CartComp = () => {
           "http://127.0.0.1:4000/resources/unavailable.png",
         desp: currentProduct?.desp || "Item is unavailable",
         price: currentProduct?.price || 0,
+        volume: currentProduct?.volume || 0,
       };
     }
   );
@@ -48,7 +49,9 @@ const CartComp = () => {
     }
   );
   const subtotal = calculateSubtotal(products, cart);
+
   const taxRate = 0.1;
+
   const tax = useMemo(() => {
     return subtotal * taxRate;
   }, [subtotal, taxRate]);
@@ -61,6 +64,7 @@ const CartComp = () => {
       return parseFloat(discount.slice(1));
     }
   }, [discount, subtotal]);
+
   const total = useMemo(() => {
     return Math.max(subtotal - discountPrice + tax, 0);
   }, [subtotal, discountPrice, tax]);
@@ -82,6 +86,19 @@ const CartComp = () => {
   const remove = (index) => {
     dispatch(removeProducts({ id: cart[index].id }));
   };
+
+  const toDetailsPage = (productId) => {
+    const productIndex = products.findIndex(
+      (product) => product.id === productId
+    );
+    if (productIndex === -1) {
+      navigate("/products");
+    } else {
+      navigate(`/products/${productIndex}`);
+    }
+    dispatch(toggleCart());
+  };
+
   return (
     <>
       <div className={cartOpened && styles["overlay"]}></div>
@@ -120,6 +137,8 @@ const CartComp = () => {
               <div className={styles["cart-product"]} key={index}>
                 <img
                   src={getProductInfo(products, current.id).imgPath}
+                  style={{ width: "120px", height: "120px" }}
+                  onClick={() => toDetailsPage(current.id)}
                   alt=""
                 />
                 <div className={styles["cart-product-info"]}>
@@ -129,7 +148,10 @@ const CartComp = () => {
                   </div>
                   <div className={styles["cart-product-btn"]}>
                     <div className={styles["add-to-cart-wrap"]}>
-                      <AddToCart id={current.id} />
+                      <AddToCart
+                        id={current.id}
+                        volume={getProductInfo(products, current.id).volume}
+                      />
                     </div>
                     <button onClick={() => remove(index)}>Remove</button>
                   </div>

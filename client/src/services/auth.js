@@ -1,10 +1,11 @@
 import { signIn } from "../reducer/userSlice";
 import loadCart from "./loadCart";
 import requestData from "./requestData";
+import { SIGNIN_PATH, SIGNUP_PATH, TOKEN_PATH } from "./routes";
 
 const getJwtToken = async (username, password, navigate) => {
   const response = await requestData({
-    url: "http://127.0.0.1:4000/api/token",
+    url: TOKEN_PATH,
     method: "POST",
     data: JSON.stringify({ name: username, pwd: password }),
     headers: { "Content-Type": "application/json" },
@@ -21,7 +22,7 @@ const getJwtToken = async (username, password, navigate) => {
 
 const signInRequest = async (dispatch, navigate) => {
   const response = await requestData({
-    url: "http://127.0.0.1:4000/api/signin",
+    url: SIGNIN_PATH,
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -51,15 +52,20 @@ const signInRequest = async (dispatch, navigate) => {
 
 const signUpRequest = async (username, password, navigate) => {
   const response = await requestData({
-    url: "http://127.0.0.1:4000/api/signup",
+    url: SIGNUP_PATH,
     method: "POST",
     data: JSON.stringify({ userName: username, pwd: password }),
     headers: { "Content-Type": "application/json" },
   });
+  // console.log(response.status);
   if (response.status === "ok") {
     navigate("/signin");
+    return "ok";
+  } else if (response.status === "exist") {
+    return "exist";
   } else {
     navigate("/error");
+    return "error";
   }
 };
 

@@ -1,5 +1,6 @@
 import { load, lastAdded } from "../reducer/productSlice";
 import requestData from "./requestData";
+import { PRODUCT_PATH } from "./routes";
 const loadProducts = () => {
   return async (dispatch, getState) => {
     const products = await getProductsRequest();
@@ -10,8 +11,9 @@ const loadProducts = () => {
 
 const getProductsRequest = async () => {
   const response = await requestData({
-    url: "http://127.0.0.1:4000/products",
+    url: PRODUCT_PATH,
     method: "get",
+    headers: { authorization: "Bearer " + localStorage.getItem("token") },
   });
   return response;
 };

@@ -53,7 +53,9 @@ const ProductDetail = (props) => {
               <div className={styles["product-detail-btn-group"]}>
                 <button
                   className={
-                    styles["add-cart-btn"] + " " + skStyles["loading-animation"]
+                    styles["add-to-cart-wrap"] +
+                    " " +
+                    skStyles["loading-animation"]
                   }
                 ></button>
                 <button

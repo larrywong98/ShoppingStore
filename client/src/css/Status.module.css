@@ -36,6 +36,9 @@
   align-items: center;
   text-decoration: none;
 }
+.go-home-btn:hover {
+  background-color: #8648e5;
+}
 
 @media only screen and (max-width: 600px) {
   .status-page {

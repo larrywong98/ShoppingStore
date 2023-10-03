@@ -19,6 +19,7 @@ const AuthForm = (props) => {
   const [pwdShow, setPwdShow] = useState(true);
   const [firstLoad, setFirstLoad] = useState(true);
   const [unauthorized, setUnauthorized] = useState(false);
+  const [userExist, setUserExist] = useState(false);
   const user = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ const AuthForm = (props) => {
 
   const submit = async (e) => {
     e.preventDefault();
+    setUserExist(false);
+    setUnauthorized(false);
+
     if (validateEmail() === false || password === "") {
       setFirstLoad(false);
       return;
@@ -44,18 +48,22 @@ const AuthForm = (props) => {
         const status = await getJwtToken(username, password, navigate);
         if (status === "unauthorized") {
           setUnauthorized(true);
-          return;
+          // return;
         }
       }
       const status = await signInRequest(dispatch, navigate);
       if (status === "unauthorized") {
         setFirstLoad(false);
-        setUsername("");
-        setPassword("");
       }
     } else if (props.authType === "signup") {
-      signUpRequest(username, password, navigate);
+      const status = await signUpRequest(username, password, navigate);
+      if (status === "exist") {
+        setUserExist(true);
+      }
     }
+    // console.log(username, password);
+    setUsername("");
+    setPassword("");
   };
   return (
     <div>
@@ -126,7 +134,7 @@ const AuthForm = (props) => {
                 flexDirection: "column",
                 width: "100%",
                 gap: "30px",
-                color: "#6B7280",
+                // color: "#6B7280",
               }}
             >
               <Box
@@ -148,7 +156,9 @@ const AuthForm = (props) => {
                   value={username}
                   sx={{ height: "56px" }}
                   inputProps={{
-                    style: { WebkitBoxShadow: "0 0 0 1000px white inset" },
+                    style: {
+                      WebkitBoxShadow: "0 0 0 1000px white inset",
+                    },
                   }}
                 />
                 <Box
@@ -187,6 +197,10 @@ const AuthForm = (props) => {
                   value={password}
                   sx={{
                     height: "56px",
+                    "&:hover": {
+                      // outline: "1px solid red",
+                      // border: "none",
+                    },
                   }}
                   inputProps={{
                     style: { WebkitBoxShadow: "0 0 0 1000px white inset" },
@@ -219,23 +233,17 @@ const AuthForm = (props) => {
                   }}
                 >
                   <Typography variant="p" sx={{ fontSize: "14px" }}>
-                    {!firstLoad && password === ""
+                    {userExist
+                      ? "User already exists"
+                      : unauthorized
+                      ? "Wrong email or password"
+                      : !firstLoad && password === ""
                       ? "Invalid Password Input"
                       : ""}
                   </Typography>
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "end",
-                  color: "#FC5A44",
-                }}
-              >
-                <Typography variant="p" sx={{ fontSize: "14px" }}>
-                  {unauthorized ? "Wrong email or password" : ""}
-                </Typography>
-              </Box>
+
               <Button
                 variant="contained"
                 type="submit"
@@ -243,6 +251,10 @@ const AuthForm = (props) => {
                   width: "100%",
                   height: "47px",
                   textTransform: "none",
+                  backgroundColor: "#5048e5",
+                  "&:hover": {
+                    backgroundColor: "#8648e5",
+                  },
                 }}
               >
                 {props.authType === "signin" ? "Sign In" : "Create account"}
@@ -263,19 +275,23 @@ const AuthForm = (props) => {
               {props.authType === "signin" ? (
                 <Box>
                   <Typography variant="span">Don't have an account?</Typography>
-                  <Link to="/signup">Sign up</Link>
+                  <Link to="/signup" style={{ color: "#5048e5" }}>
+                    Sign up
+                  </Link>
                 </Box>
               ) : (
                 <Box>
                   <Typography variant="span">
                     Already have an account?&nbsp;
                   </Typography>
-                  <Link to="/signin">Sign in</Link>
+                  <Link to="/signin" style={{ color: "#5048e5" }}>
+                    Sign in
+                  </Link>
                 </Box>
               )}
 
               <Box>
-                <Link to="/forget">
+                <Link to="/forget" style={{ color: "#5048e5" }}>
                   {props.authType === "signin" ? "Forget password?" : ""}
                 </Link>
               </Box>

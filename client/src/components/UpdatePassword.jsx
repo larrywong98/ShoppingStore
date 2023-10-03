@@ -212,6 +212,10 @@ const UpdatePassword = () => {
                       width: "100%",
                       height: "47px",
                       textTransform: "none",
+                      backgroundColor: "#5048e5",
+                      "&:hover": {
+                        backgroundColor: "#8648e5",
+                      },
                     }}
                   >
                     Update password

@@ -12,9 +12,21 @@ const Footer = () => {
         </div>
         <div className={styles["social"]}>
           {[
-            { icon: <YouTubeIcon />, link: "#youtube", class: "youtube" },
-            { icon: <TwitterIcon />, link: "#twitter", class: "twitter" },
-            { icon: <FacebookIcon />, link: "#facebook", class: "facebook" },
+            {
+              icon: <YouTubeIcon />,
+              link: "https://www.youtube.com",
+              class: "youtube",
+            },
+            {
+              icon: <TwitterIcon />,
+              link: "https://www.twitter.com",
+              class: "twitter",
+            },
+            {
+              icon: <FacebookIcon />,
+              link: "https://www.facebook.com",
+              class: "facebook",
+            },
           ].map((comp, index) => (
             <a href={comp.link} key={index}>
               <IconButton className={styles[comp.class]} color="inherit">

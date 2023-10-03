@@ -1,9 +1,8 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AuthForm from "../components/AuthForm";
-import Product from "../components/Product";
 import UpdatePassword from "../components/UpdatePassword";
-import ProductsLayout from "../components/ProductsLayout";
+// import ProductsLayout from "../components/ProductsLayout";
 import Products from "./Products";
 import ProductDetail from "./ProductDetail";
 import ProductModify from "./ProductModify";
@@ -30,7 +29,7 @@ const App = () => {
             <Route path="signup" element={<AuthForm authType="signup" />} />
             <Route path="signin" element={<AuthForm authType="signin" />} />
             <Route path="forget" element={<UpdatePassword />} />
-            <Route path="products" element={<ProductsLayout />}>
+            <Route path="products">
               <Route index element={<Products />} />
               <Route
                 path=":productIndex"
@@ -59,7 +58,7 @@ const App = () => {
             </Route>
             <Route path="success" element={<Success />} />
             <Route path="error" element={<Error />} />
-            <Route path="test" element={<Product />} />
+            {/* <Route path="test" element={<Product />} /> */}
             <Route path="*" element={<Error />} />
           </Route>
         </Routes>
