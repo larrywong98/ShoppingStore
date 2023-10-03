@@ -94,7 +94,7 @@ const CartComp = () => {
     if (productIndex === -1) {
       navigate("/products");
     } else {
-      navigate(`/products/${productIndex}`);
+      navigate(`/products/get/${productIndex}`);
     }
     dispatch(toggleCart());
   };

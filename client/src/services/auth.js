@@ -59,7 +59,7 @@ const signUpRequest = async (username, password, navigate) => {
   });
   // console.log(response.status);
   if (response.status === "ok") {
-    navigate("/signin");
+    navigate("/success", { state: { message: "Sign Up Successful" } });
     return "ok";
   } else if (response.status === "exist") {
     return "exist";

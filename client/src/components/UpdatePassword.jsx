@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import updatePwd from "../services/updatePwd";
 
+// forget password page with email success page
 const UpdatePassword = () => {
   const [username, setUsername] = useState("");
   const [firstLoad, setFirstLoad] = useState(true);

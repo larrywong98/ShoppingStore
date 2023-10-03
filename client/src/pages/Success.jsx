@@ -2,19 +2,20 @@ import { Link, useLocation } from "react-router-dom";
 import styles from "../css/Status.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 
+// check icon animation
 const AnimatedCheckIcon = ({ initial = true, isVisible }) => {
   return (
     <AnimatePresence initial={initial}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
-        width="100px"
-        height="100px"
-        color="#5048e5"
+        // width="100px"
+        // height="100px"
+        // color="#5048e5"
         viewBox="0 0 24 24"
         strokeWidth="3"
         stroke="currentColor"
-        className="CheckIcon"
+        className={styles["check-icon"]}
       >
         <motion.path
           initial={{ pathLength: 0 }}
@@ -34,9 +35,10 @@ const AnimatedCheckIcon = ({ initial = true, isVisible }) => {
   );
 };
 
+// Success with message
 const Success = () => {
   const location = useLocation();
-  const { message } = location.state;
+  const { message } = location?.state || { message: "Success" };
   return (
     <div className={styles["status-page"]}>
       <div className={styles["status-content"]}>

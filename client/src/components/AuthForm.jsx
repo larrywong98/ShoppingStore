@@ -7,7 +7,7 @@ import {
   InputAdornment,
   Button,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import validator from "validator";
@@ -27,12 +27,13 @@ const AuthForm = (props) => {
   const validateEmail = () => {
     return validator.isEmail(username);
   };
-
-  useEffect(() => {
-    if (user.signedIn === true) {
-      navigate("/products");
-    }
-  }, []);
+  const initState = () => {
+    setUsername("");
+    setPassword("");
+    setUnauthorized(false);
+    setUserExist(false);
+    setFirstLoad(true);
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -48,12 +49,12 @@ const AuthForm = (props) => {
         const status = await getJwtToken(username, password, navigate);
         if (status === "unauthorized") {
           setUnauthorized(true);
-          // return;
         }
       }
       const status = await signInRequest(dispatch, navigate);
       if (status === "unauthorized") {
         setFirstLoad(false);
+        setUnauthorized(true);
       }
     } else if (props.authType === "signup") {
       const status = await signUpRequest(username, password, navigate);
@@ -61,7 +62,6 @@ const AuthForm = (props) => {
         setUserExist(true);
       }
     }
-    // console.log(username, password);
     setUsername("");
     setPassword("");
   };
@@ -134,7 +134,6 @@ const AuthForm = (props) => {
                 flexDirection: "column",
                 width: "100%",
                 gap: "30px",
-                // color: "#6B7280",
               }}
             >
               <Box
@@ -150,6 +149,7 @@ const AuthForm = (props) => {
                   Email
                 </Typography>
                 <OutlinedInput
+                  error={!firstLoad && !validateEmail() ? true : false}
                   id="email"
                   name="email"
                   onChange={(e) => setUsername(e.target.value)}
@@ -190,6 +190,7 @@ const AuthForm = (props) => {
                   Password
                 </Typography>
                 <OutlinedInput
+                  error={!firstLoad && password === "" ? true : false}
                   id="password"
                   name="password"
                   type={pwdShow ? "password" : "text"}
@@ -197,10 +198,6 @@ const AuthForm = (props) => {
                   value={password}
                   sx={{
                     height: "56px",
-                    "&:hover": {
-                      // outline: "1px solid red",
-                      // border: "none",
-                    },
                   }}
                   inputProps={{
                     style: { WebkitBoxShadow: "0 0 0 1000px white inset" },
@@ -212,7 +209,6 @@ const AuthForm = (props) => {
                           backgroundColor: "transparent",
                           textDecoration: "underline",
                           color: "#6B7280",
-                          // fontSize: "14px",
                           textTransform: "none",
                         }}
                         onClick={() => setPwdShow(!pwdShow)}
@@ -222,6 +218,7 @@ const AuthForm = (props) => {
                     </InputAdornment>
                   }
                 />
+
                 <Box
                   sx={{
                     display: "flex",
@@ -275,7 +272,11 @@ const AuthForm = (props) => {
               {props.authType === "signin" ? (
                 <Box>
                   <Typography variant="span">Don't have an account?</Typography>
-                  <Link to="/signup" style={{ color: "#5048e5" }}>
+                  <Link
+                    to="/signup"
+                    onClick={initState}
+                    style={{ color: "#5048e5" }}
+                  >
                     Sign up
                   </Link>
                 </Box>
@@ -284,7 +285,11 @@ const AuthForm = (props) => {
                   <Typography variant="span">
                     Already have an account?&nbsp;
                   </Typography>
-                  <Link to="/signin" style={{ color: "#5048e5" }}>
+                  <Link
+                    to="/signin"
+                    onClick={initState}
+                    style={{ color: "#5048e5" }}
+                  >
                     Sign in
                   </Link>
                 </Box>

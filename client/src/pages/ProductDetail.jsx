@@ -9,6 +9,7 @@ import { toggleLoading } from "../reducer/globalSlice";
 import isNumeric from "../utils/isNumeric";
 import AddToCart from "../components/AddToCart";
 
+// ProductDetail Page with Skeleton Loading
 const ProductDetail = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,9 +21,7 @@ const ProductDetail = (props) => {
 
   useEffect(() => {
     dispatch(toggleLoading({ to: true }));
-    if (!isNumeric(productIndex) || productIndex >= products.length) {
-      navigate("/error");
-    }
+
     dispatch(toggleLoading({ to: false }));
   }, []);
   return (

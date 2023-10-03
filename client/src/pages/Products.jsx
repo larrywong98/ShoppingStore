@@ -7,17 +7,17 @@ import {
   priceHightoLow,
 } from "../reducer/productSlice";
 import loadProducts from "../services/loadProducts";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Product from "../components/Product";
 import styles from "../css/Products.module.css";
 import { toggleLoading } from "../reducer/globalSlice";
 import isNumeric from "../utils/isNumeric";
 
+// Products Page
 const Products = ({ children }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageValue, setPageValue] = useState(1);
-
   const loading = useSelector((state) => state.globalReducer.loading);
   const products = useSelector((state) => state.productReducer.products);
   const selected = useSelector((state) => state.productReducer.selected);
@@ -36,6 +36,7 @@ const Products = ({ children }) => {
     dispatch(toggleLoading({ to: false }));
   }, []);
 
+  // Sort selection
   const sortBySelection = (i) => {
     if (i === 0) dispatch(lastAdded());
     if (i === 1) dispatch(priceLowtoHigh());
@@ -52,6 +53,8 @@ const Products = ({ children }) => {
       setPageValue(e.target.value);
     }
   };
+
+  // Pagination custom input
   const customToPage = (e) => {
     if (e.key === "Enter") {
       if (e.target.value === "") {
@@ -65,6 +68,7 @@ const Products = ({ children }) => {
     }
   };
 
+  // Pagination button
   const navigateToPage = (action) => {
     if (action === "prev") {
       setCurrentPage(Math.max(currentPage - 1, 0));
@@ -134,26 +138,30 @@ const Products = ({ children }) => {
         </div>
       </div>
       <div className={styles["product-content"]}>
-        {loading
-          ? Array(10)
-              .fill(0)
-              .map((value, index) => <Product key={index} />)
-          : products
-              .slice(currentPage * 10, currentPage * 10 + 10)
-              .map((product, index) => (
-                <Product
-                  key={index}
-                  volume={product.volume}
-                  category={product.category}
-                  content={product.content}
-                  imgPath={product.imgPath}
-                  index={index}
-                  pageId={currentPage}
-                  id={product.id}
-                  desp={product.desp}
-                  price={product.price}
-                />
-              ))}
+        {products.length === 0 ? (
+          <div className={styles["no-product"]}>No Products</div>
+        ) : loading ? (
+          Array(10)
+            .fill(0)
+            .map((value, index) => <Product key={index} />)
+        ) : (
+          products
+            .slice(currentPage * 10, currentPage * 10 + 10)
+            .map((product, index) => (
+              <Product
+                key={index}
+                volume={product.volume}
+                category={product.category}
+                content={product.content}
+                imgPath={product.imgPath}
+                index={index}
+                pageId={currentPage}
+                id={product.id}
+                desp={product.desp}
+                price={product.price}
+              />
+            ))
+        )}
       </div>
       <div className={styles["pagination-wrap"]}>
         <div className={styles["nav-to-page"]}>
@@ -203,8 +211,6 @@ const Products = ({ children }) => {
           </ul>
         </nav>
       </div>
-      {/* {children} */}
-      <Outlet />
     </div>
   );
 };

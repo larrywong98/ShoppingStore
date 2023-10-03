@@ -9,7 +9,7 @@ import {
 } from "../reducer/cartSlice";
 import styles from "../css/AddToCart.module.css";
 import isNumeric from "../utils/isNumeric";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 const AddToCart = (props) => {
   const cart = useSelector((state) => state.cartReducer.cart);
@@ -39,10 +39,6 @@ const AddToCart = (props) => {
     dispatch(addOneProduct({ id: props.id }));
   };
   const removeOne = () => {
-    // if (user.signedIn === false) {
-    //   navigate("/signin");
-    //   return;
-    // }
     if (numberInCart < 0) return;
     dispatch(removeOneProduct({ id: props.id }));
   };

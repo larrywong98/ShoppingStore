@@ -125,6 +125,15 @@
   background-color: #ffffff;
   padding: 26px 18px 25px 19px;
 }
+.no-product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 40px;
+  font-weight: 600;
+  color: #5048e5;
+}
 .pagination-wrap {
   display: flex;
   align-items: center;

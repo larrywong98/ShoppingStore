@@ -2,7 +2,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AuthForm from "../components/AuthForm";
 import UpdatePassword from "../components/UpdatePassword";
-// import ProductsLayout from "../components/ProductsLayout";
 import Products from "./Products";
 import ProductDetail from "./ProductDetail";
 import ProductModify from "./ProductModify";
@@ -17,6 +16,7 @@ import {
 } from "react-router-dom";
 import styles from "../css/App.module.css";
 
+// routes
 const App = () => {
   return (
     <Router>
@@ -27,12 +27,19 @@ const App = () => {
             <Route index element={<Navigate to="/products" />} />
             <Route path="home" element={<Navigate to="/products" />} />
             <Route path="signup" element={<AuthForm authType="signup" />} />
-            <Route path="signin" element={<AuthForm authType="signin" />} />
+            <Route
+              path="signin"
+              element={
+                <ProtectedRoute>
+                  <AuthForm authType="signin" />
+                </ProtectedRoute>
+              }
+            />
             <Route path="forget" element={<UpdatePassword />} />
             <Route path="products">
               <Route index element={<Products />} />
               <Route
-                path=":productIndex"
+                path="get/:productIndex"
                 element={
                   <ProtectedRoute>
                     <ProductDetail />

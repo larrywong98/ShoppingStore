@@ -10,15 +10,14 @@ import saveCart from "../services/saveCart";
 import CartComp from "./CartComp";
 import { createSelector } from "@reduxjs/toolkit";
 const Header = () => {
-  const loggedIn = useSelector((state) => state.userReducer.signedIn);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const cartOpened = useSelector((state) => state.cartReducer.cartOpened);
   const cartQuantity = useSelector((state) => state.cartReducer.cartQuantity);
   const cart = useSelector((state) => state.cartReducer.cart);
+  const discount = useSelector((state) => state.cartReducer.discount);
   const user = useSelector((state) => state.userReducer);
   const products = useSelector((state) => state.productReducer.products);
-  const discount = useSelector((state) => state.cartReducer.discount);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const calculateSubtotal = createSelector(
     [(state) => state, (state, cart) => cart],
@@ -49,8 +48,9 @@ const Header = () => {
     return Math.max(subtotal - discountPrice + tax, 0);
   }, [subtotal, discountPrice, tax]);
 
-  const userLogin = async () => {
-    if (loggedIn === false) {
+  // login initialize
+  const toggleLogin = async () => {
+    if (user.signedIn === false) {
       navigate("/signin");
     } else {
       saveCart({ id: user.userId, cart: cart });
@@ -60,6 +60,7 @@ const Header = () => {
       navigate("/success", { state: { message: "Log out Successfully !!!" } });
     }
   };
+  // open cart
   const onToggleCart = () => {
     if (user.signedIn === false) {
       navigate("/signin");
@@ -83,13 +84,17 @@ const Header = () => {
       </div>
 
       <div className={styles["status"]}>
-        <button className={styles["account"]} onClick={() => userLogin()}>
+        <button className={styles["account"]} onClick={() => toggleLogin()}>
           <div className={styles["user-certificate"]}>
             <User className={styles["user-icon"]} width="30px" height="30px" />
-            {loggedIn ? <StarFilled className={styles["star-icon"]} /> : <></>}
+            {user.signedIn ? (
+              <StarFilled className={styles["star-icon"]} />
+            ) : (
+              <></>
+            )}
           </div>
           <span className={styles["signin"]}>
-            {loggedIn ? "Sign Out" : "Sign In"}
+            {user.signedIn ? "Sign Out" : "Sign In"}
           </span>
         </button>
         <div className={styles["cart"]}>

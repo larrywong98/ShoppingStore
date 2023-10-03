@@ -12,7 +12,7 @@ const Product = (props) => {
   const navigate = useNavigate();
   const toDetailPage = (pageId, index) => {
     let realid = pageId * 10 + index;
-    navigate(realid.toString());
+    navigate("get/" + realid.toString());
   };
   return (
     <>

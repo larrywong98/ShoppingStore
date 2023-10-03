@@ -1,6 +1,7 @@
 import styles from "../css/Status.module.css";
 import { Link } from "react-router-dom";
 
+// Error Page
 const Error = () => {
   return (
     <div className={styles["status-page"]}>

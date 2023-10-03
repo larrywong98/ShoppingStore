@@ -12,6 +12,7 @@ import uploadImageFile from "../services/uploadImageFile";
 import styles from "../css/ProductModify.module.css";
 import deleteProduct from "../services/deleteProduct";
 
+// Product create and edit page
 const ProductModify = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -38,12 +39,10 @@ const ProductModify = (props) => {
   const [previewUrl, setPreviewUrl] = useState("http://");
   const [firstLoad, setFirstLoad] = useState(true);
 
+  // Populate form data
   useEffect(() => {
     dispatch(toggleLoading({ to: true }));
     if (props.operation === "edit") {
-      if (!isNumeric(productIndex) || productIndex >= products.length) {
-        navigate("/error");
-      }
       let currentProduct = products[productIndex];
       setName(currentProduct?.desp);
       setDescription(currentProduct?.content);
@@ -60,6 +59,7 @@ const ProductModify = (props) => {
     dispatch(toggleLoading({ to: false }));
   }, []);
 
+  // Submit new form information
   const submit = async (e) => {
     e.preventDefault();
     if (
@@ -89,6 +89,7 @@ const ProductModify = (props) => {
     }
   };
 
+  // upload image file
   const handleUploadedFile = async (e) => {
     let formData = new FormData();
     formData.append("file", e.target.files[0]);
@@ -96,6 +97,7 @@ const ProductModify = (props) => {
     setPreviewUrl("http://127.0.0.1:4000/resources/" + fileName);
   };
 
+  // Delete product
   const deleteOnClick = (e) => {
     e.preventDefault();
     deleteProduct(products[productIndex].id, navigate);
