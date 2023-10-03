@@ -22,6 +22,8 @@ const CartComp = () => {
   const userId = useSelector((state) => state.userReducer.userId);
   const discount = useSelector((state) => state.cartReducer.discount);
   const [discountText, setDiscountText] = useState("");
+
+  // use cart id to find product info
   const getProductInfo = createSelector(
     [(state) => state, (state, currentId) => currentId],
     (items, currentId) => {

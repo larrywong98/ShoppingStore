@@ -19,10 +19,12 @@ const ProductModify = (props) => {
   const [selected, setSelected] = useState(0);
   const [categories, setCategories] = useState([
     "category1",
-    "category2",
-    "category3",
+    "tablet",
+    "laptop",
     "mobile",
     "desktop",
+    "accessory",
+    "other",
   ]);
   const productIndex = useParams().productIndex;
   const products = useSelector((state) => state.productReducer.products);
