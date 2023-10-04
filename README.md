@@ -28,6 +28,10 @@ npm i jwt-decode
 npm i validator
 npm i lodash
 npm i redux-persist
+<<<<<<< HEAD
+=======
+npm i @emailjs/browser
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
 
 server:
 npm i express

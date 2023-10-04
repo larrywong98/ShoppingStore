@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@carbon/icons-react": "^11.27.0",
+<<<<<<< HEAD
+=======
+    "@emailjs/browser": "^3.11.0",
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.9",
@@ -17,6 +21,10 @@
     "bootstrap": "^5.3.2",
     "framer-motion": "^10.16.4",
     "lodash": "^4.17.21",
+<<<<<<< HEAD
+=======
+    "md5": "^2.3.0",
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",

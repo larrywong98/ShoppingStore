@@ -41,13 +41,19 @@ const store = configureStore(
         },
       }),
   },
+<<<<<<< HEAD
 
+=======
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
   applyMiddleware(thunk)
 );
 const persistor = persistStore(store);
 
+<<<<<<< HEAD
 store.subscribe(() => {
   // console.log(store.getState());
 });
 
+=======
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
 export { store, persistor };

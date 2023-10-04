@@ -7,11 +7,19 @@ import {
   InputAdornment,
   Button,
 } from "@mui/material";
+<<<<<<< HEAD
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import validator from "validator";
 import { getJwtToken, signInRequest, signUpRequest } from "../services/auth";
+=======
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getJwtToken, signInRequest, signUpRequest } from "../services/auth";
+import validateEmail from "../utils/validateEmail";
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
 
 const AuthForm = (props) => {
   const [username, setUsername] = useState("");
@@ -24,9 +32,12 @@ const AuthForm = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+<<<<<<< HEAD
   const validateEmail = () => {
     return validator.isEmail(username);
   };
+=======
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
   const initState = () => {
     setUsername("");
     setPassword("");
@@ -34,13 +45,25 @@ const AuthForm = (props) => {
     setUserExist(false);
     setFirstLoad(true);
   };
+<<<<<<< HEAD
 
+=======
+  useEffect(() => {
+    if (user.signedIn) {
+      navigate("/products");
+    }
+  }, []);
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
   const submit = async (e) => {
     e.preventDefault();
     setUserExist(false);
     setUnauthorized(false);
 
+<<<<<<< HEAD
     if (validateEmail() === false || password === "") {
+=======
+    if (validateEmail(username) === false || password === "") {
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
       setFirstLoad(false);
       return;
     }
@@ -149,7 +172,11 @@ const AuthForm = (props) => {
                   Email
                 </Typography>
                 <OutlinedInput
+<<<<<<< HEAD
                   error={!firstLoad && !validateEmail() ? true : false}
+=======
+                  error={!firstLoad && !validateEmail(username) ? true : false}
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
                   id="email"
                   name="email"
                   onChange={(e) => setUsername(e.target.value)}
@@ -172,7 +199,11 @@ const AuthForm = (props) => {
                   }}
                 >
                   <Typography variant="p" sx={{ fontSize: "14px" }}>
+<<<<<<< HEAD
                     {!firstLoad && !validateEmail()
+=======
+                    {!firstLoad && !validateEmail(username)
+>>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
                       ? "Invalid Email Input"
                       : ""}
                   </Typography>
