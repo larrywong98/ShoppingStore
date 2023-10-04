@@ -64,7 +64,10 @@ const Product = (props) => {
               <AddToCart id={props.id} volume={props.volume} />
             </div>
             {user.admin ? (
-              <Link to={"edit/" + props.index} className={styles["edit-btn"]}>
+              <Link
+                to={"edit/" + (props.pageId * 10 + props.index)}
+                className={styles["edit-btn"]}
+              >
                 Edit
               </Link>
             ) : (
