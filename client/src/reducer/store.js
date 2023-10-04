@@ -41,13 +41,8 @@ const store = configureStore(
         },
       }),
   },
-
   applyMiddleware(thunk)
 );
 const persistor = persistStore(store);
-
-store.subscribe(() => {
-  // console.log(store.getState());
-});
 
 export { store, persistor };
