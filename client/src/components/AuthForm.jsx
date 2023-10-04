@@ -10,8 +10,8 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import validator from "validator";
 import { getJwtToken, signInRequest, signUpRequest } from "../services/auth";
+import validateEmail from "../utils/validateEmail";
 
 const AuthForm = (props) => {
   const [username, setUsername] = useState("");
@@ -24,9 +24,6 @@ const AuthForm = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const validateEmail = () => {
-    return validator.isEmail(username);
-  };
   const initState = () => {
     setUsername("");
     setPassword("");
@@ -44,7 +41,7 @@ const AuthForm = (props) => {
     setUserExist(false);
     setUnauthorized(false);
 
-    if (validateEmail() === false || password === "") {
+    if (validateEmail(username) === false || password === "") {
       setFirstLoad(false);
       return;
     }
@@ -153,7 +150,7 @@ const AuthForm = (props) => {
                   Email
                 </Typography>
                 <OutlinedInput
-                  error={!firstLoad && !validateEmail() ? true : false}
+                  error={!firstLoad && !validateEmail(username) ? true : false}
                   id="email"
                   name="email"
                   onChange={(e) => setUsername(e.target.value)}
@@ -176,7 +173,7 @@ const AuthForm = (props) => {
                   }}
                 >
                   <Typography variant="p" sx={{ fontSize: "14px" }}>
-                    {!firstLoad && !validateEmail()
+                    {!firstLoad && !validateEmail(username)
                       ? "Invalid Email Input"
                       : ""}
                   </Typography>

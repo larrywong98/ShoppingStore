@@ -5,7 +5,7 @@ const AUTH_PATH = API_PATH + "/user";
 const TOKEN_PATH = AUTH_PATH + "/token";
 const SIGNIN_PATH = AUTH_PATH + "/signin";
 const SIGNUP_PATH = AUTH_PATH + "/signup";
-const UPDATE_PWD_PATH = AUTH_PATH + "/password/update";
+const RESET_PWD_PATH = AUTH_PATH + "/reset";
 
 const PRODUCT_PATH = API_PATH + "/product";
 const CREATE_PRODUCT_PATH = PRODUCT_PATH + "/new";
@@ -23,7 +23,7 @@ export {
   TOKEN_PATH,
   SIGNIN_PATH,
   SIGNUP_PATH,
-  UPDATE_PWD_PATH,
+  RESET_PWD_PATH,
   PRODUCT_PATH,
   CREATE_PRODUCT_PATH,
   EDIT_PRODUCT_PATH,

@@ -7,8 +7,19 @@ import md5 from "md5";
 
 const router = express.Router();
 
-router.get("/password/update", async (req, res) => {
-  res.json({ status: "ok" });
+router.put("/reset", async (req, res) => {
+  try {
+    let filter = { userName: req.body.username };
+    let update = { password: req.body.password };
+    const response = await User.findOneAndUpdate(filter, update);
+    if (response) {
+      res.json({ status: "ok" });
+    } else {
+      res.json({ status: "not ok" });
+    }
+  } catch (err) {
+    res.json({ status: "not ok" });
+  }
 });
 
 router.post("/token", async (req, res) => {

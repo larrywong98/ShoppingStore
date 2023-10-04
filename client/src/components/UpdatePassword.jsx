@@ -9,25 +9,46 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import updatePwd from "../services/updatePwd";
+import emailjs from "@emailjs/browser";
+import validateEmail from "../utils/validateEmail";
+import { useDispatch } from "react-redux";
+import { setUpdatePwdName } from "../reducer/userSlice";
+import { generateMD5 } from "../utils/generateMD5";
+import md5 from "md5";
 
 // forget password page with email success page
 const UpdatePassword = () => {
   const [username, setUsername] = useState("");
   const [firstLoad, setFirstLoad] = useState(true);
+  const [error, setError] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    const response = await emailjs.sendForm(
+      "service_1qbtjn6",
+      "template_r80lvt9",
+      e.target,
+      "9956vAL6uIAW9zoeP"
+    );
+    // console.log(response.text);
+    if (response.text === "OK") {
+      setConfirmation(true);
+    } else {
+      navigate("/error");
+    }
+  };
   const submit = async (e) => {
     e.preventDefault();
-    if (username === "") {
+    if (!validateEmail(username)) {
+      setUsername("");
       setFirstLoad(false);
       return;
     }
-    const status = await updatePwd(navigate);
-    if (status === "ok") {
-      setConfirmation(true);
-    }
+    dispatch(setUpdatePwdName({ name: username }));
+    sendEmail(e);
   };
   return (
     <div>
@@ -182,6 +203,7 @@ const UpdatePassword = () => {
                       Email
                     </Typography>
                     <OutlinedInput
+                      error={error}
                       id="email"
                       name="email"
                       onChange={(e) => setUsername(e.target.value)}
@@ -190,6 +212,14 @@ const UpdatePassword = () => {
                       inputProps={{
                         style: { WebkitBoxShadow: "0 0 0 1000px white inset" },
                       }}
+                    />
+                    <input
+                      name="reset_url"
+                      style={{ display: "none" }}
+                      value={
+                        "http://127.0.0.1:3000/reset/" + md5(generateMD5())
+                      }
+                      readOnly
                     />
                     <Box
                       sx={{

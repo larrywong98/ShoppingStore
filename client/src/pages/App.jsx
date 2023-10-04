@@ -15,6 +15,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import styles from "../css/App.module.css";
+import ResetPassword from "../components/ResetPassword";
 
 // routes
 const App = () => {
@@ -36,6 +37,14 @@ const App = () => {
               }
             />
             <Route path="forget" element={<UpdatePassword />} />
+            <Route
+              path="reset/:id"
+              element={
+                <ProtectedRoute>
+                  <ResetPassword />
+                </ProtectedRoute>
+              }
+            />
             <Route path="products">
               <Route index element={<Products />} />
               <Route

@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import isNumeric from "../utils/isNumeric";
-import { useState } from "react";
 
 // validate url
 const urlErrorHandle = (location, products) => {
@@ -20,17 +19,19 @@ const ProtectedRoute = ({ children }) => {
   const user = useSelector((state) => state.userReducer);
   const products = useSelector((state) => state.productReducer.products);
   const location = useLocation();
-  // const [firstLoad, setFirstLoad] = useState(true);
+
+  // reset link validation
+  if (
+    location.pathname.includes("reset") &&
+    location.pathname.split("/").slice(-1)[0].length === 32
+  ) {
+    return <>{children}</>;
+  }
 
   // haven't signed in
   if (!location.pathname.includes("signin") && user.signedIn === false) {
     return <Navigate to="/signin" />;
   }
-
-  // // already signed in
-  // if (location.pathname.includes("signin") && user.signedIn === true) {
-  //   return <Navigate to="/products" />;
-  // }
 
   // not admin
   if (
