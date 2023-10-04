@@ -1,4 +1,4 @@
-import mongoose from "../config/connect.js";
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
