@@ -9,36 +9,17 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-import updatePwd from "../services/updatePwd";
-=======
 import emailjs from "@emailjs/browser";
 import validateEmail from "../utils/validateEmail";
 import { useDispatch } from "react-redux";
 import { setUpdatePwdName } from "../reducer/userSlice";
 import { generateMD5 } from "../utils/generateMD5";
 import md5 from "md5";
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
 
 // forget password page with email success page
 const UpdatePassword = () => {
   const [username, setUsername] = useState("");
   const [firstLoad, setFirstLoad] = useState(true);
-<<<<<<< HEAD
-  const [confirmation, setConfirmation] = useState(false);
-  const navigate = useNavigate();
-
-  const submit = async (e) => {
-    e.preventDefault();
-    if (username === "") {
-      setFirstLoad(false);
-      return;
-    }
-    const status = await updatePwd(navigate);
-    if (status === "ok") {
-      setConfirmation(true);
-    }
-=======
   const [error, setError] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
   const navigate = useNavigate();
@@ -68,7 +49,6 @@ const UpdatePassword = () => {
     }
     dispatch(setUpdatePwdName({ name: username }));
     sendEmail(e);
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
   };
   return (
     <div>
@@ -223,10 +203,7 @@ const UpdatePassword = () => {
                       Email
                     </Typography>
                     <OutlinedInput
-<<<<<<< HEAD
-=======
                       error={error}
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
                       id="email"
                       name="email"
                       onChange={(e) => setUsername(e.target.value)}
@@ -236,8 +213,6 @@ const UpdatePassword = () => {
                         style: { WebkitBoxShadow: "0 0 0 1000px white inset" },
                       }}
                     />
-<<<<<<< HEAD
-=======
                     <input
                       name="reset_url"
                       style={{ display: "none" }}
@@ -246,7 +221,6 @@ const UpdatePassword = () => {
                       }
                       readOnly
                     />
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
                     <Box
                       sx={{
                         display: "flex",

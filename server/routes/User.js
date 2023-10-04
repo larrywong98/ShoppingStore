@@ -7,10 +7,6 @@ import md5 from "md5";
 
 const router = express.Router();
 
-<<<<<<< HEAD
-router.get("/password/update", async (req, res) => {
-  res.json({ status: "ok" });
-=======
 router.put("/reset", async (req, res) => {
   try {
     let filter = { userName: req.body.username };
@@ -24,7 +20,6 @@ router.put("/reset", async (req, res) => {
   } catch (err) {
     res.json({ status: "not ok" });
   }
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
 });
 
 router.post("/token", async (req, res) => {

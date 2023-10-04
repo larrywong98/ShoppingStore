@@ -29,10 +29,7 @@ const signInRequest = async (dispatch, navigate) => {
       authorization: "Bearer " + localStorage.getItem("token"),
     },
   });
-<<<<<<< HEAD
-=======
 
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
   if (response.status === "ok") {
     dispatch(
       signIn({
@@ -42,13 +39,7 @@ const signInRequest = async (dispatch, navigate) => {
       })
     );
     dispatch(loadCart());
-<<<<<<< HEAD
-    navigate("/success", {
-      state: { message: "Login Successfully !!!" },
-    });
-=======
     navigate("/success", { state: { message: "Login Successful" } });
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
     return "ok";
   } else if (response.status === "unauthorized") {
     return "unauthorized";

@@ -12,15 +12,8 @@ const saveCart = async (cart) => {
     },
   });
   if (response.status === "ok") {
-<<<<<<< HEAD
-    console.log("ok");
     return "ok";
   } else {
-    console.log("save cart failed");
-=======
-    return "ok";
-  } else {
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
     return "failed";
   }
 };

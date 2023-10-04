@@ -43,9 +43,5 @@ const userSchema = new Schema(
 const Product = mongoose.model("Product", productSchema);
 const Cart = mongoose.model("Cart", cartSchema);
 const User = mongoose.model("User", userSchema);
-<<<<<<< HEAD
-// const Employee = mongoose.model("Employee", employeeSchema);
-=======
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
 
 export { Product, Cart, User };

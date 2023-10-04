@@ -1,11 +1,7 @@
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import styles from "../css/Header.module.css";
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
-=======
 import { useState } from "react";
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
 import { useDispatch } from "react-redux";
 import { filterByInput, initProduct } from "../reducer/productSlice";
 import debounce from "../utils/debounce.js";

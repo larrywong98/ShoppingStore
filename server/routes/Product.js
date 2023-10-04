@@ -33,12 +33,6 @@ router.put(
   auth,
   upload.single("file"),
   async (req, res) => {
-<<<<<<< HEAD
-    // console.log(req.body);
-    // console.log(req.file);
-    // console.log(req.params.productId);
-=======
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
     try {
       let filter = { id: req.body.id };
       let update = {
@@ -61,11 +55,6 @@ router.put(
 );
 
 router.post("/image/upload", auth, upload.single("file"), (req, res) => {
-<<<<<<< HEAD
-  // console.log(req.body);
-  // console.log(req.file);
-=======
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
   res.json({ name: req.file.filename });
 });
 
@@ -78,14 +67,6 @@ router.get("/", async (req, res) => {
 router.delete("/:id", auth, async (req, res) => {
   try {
     const deletedDoc = await Product.findOneAndDelete({ id: req.params.id });
-<<<<<<< HEAD
-    // {$pull : {"someArray.0.someNestedArray" : {"name":"delete me"}}}
-    // const deletedAdded = await Cart.update({
-    //   $pull: { addedProducts: { $elemMatch: { $eq: req.params.id } } },
-    // });
-    // console.log(deletedAdded);
-=======
->>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
     res.json({ status: "ok" });
   } catch (err) {
     res.json({ status: "not ok" });
