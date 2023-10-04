@@ -43,6 +43,5 @@ const userSchema = new Schema(
 const Product = mongoose.model("Product", productSchema);
 const Cart = mongoose.model("Cart", cartSchema);
 const User = mongoose.model("User", userSchema);
-// const Employee = mongoose.model("Employee", employeeSchema);
 
 export { Product, Cart, User };

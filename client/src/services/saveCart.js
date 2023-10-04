@@ -12,10 +12,8 @@ const saveCart = async (cart) => {
     },
   });
   if (response.status === "ok") {
-    console.log("ok");
     return "ok";
   } else {
-    console.log("save cart failed");
     return "failed";
   }
 };

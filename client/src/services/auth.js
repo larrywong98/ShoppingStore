@@ -29,6 +29,7 @@ const signInRequest = async (dispatch, navigate) => {
       authorization: "Bearer " + localStorage.getItem("token"),
     },
   });
+
   if (response.status === "ok") {
     dispatch(
       signIn({
@@ -38,9 +39,7 @@ const signInRequest = async (dispatch, navigate) => {
       })
     );
     dispatch(loadCart());
-    navigate("/success", {
-      state: { message: "Login Successfully !!!" },
-    });
+    navigate("/success", { state: { message: "Login Successful" } });
     return "ok";
   } else if (response.status === "unauthorized") {
     return "unauthorized";

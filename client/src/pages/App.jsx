@@ -5,7 +5,7 @@ import UpdatePassword from "../components/UpdatePassword";
 import Products from "./Products";
 import ProductDetail from "./ProductDetail";
 import ProductModify from "./ProductModify";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "../components/ProtectedRoute";
 import Success from "./Success";
 import Error from "./Error";
 import {
@@ -65,7 +65,6 @@ const App = () => {
             </Route>
             <Route path="success" element={<Success />} />
             <Route path="error" element={<Error />} />
-            {/* <Route path="test" element={<Product />} /> */}
             <Route path="*" element={<Error />} />
           </Route>
         </Routes>

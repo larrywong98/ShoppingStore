@@ -7,7 +7,7 @@ import {
   InputAdornment,
   Button,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import validator from "validator";
@@ -34,7 +34,11 @@ const AuthForm = (props) => {
     setUserExist(false);
     setFirstLoad(true);
   };
-
+  useEffect(() => {
+    if (user.signedIn) {
+      navigate("/products");
+    }
+  }, []);
   const submit = async (e) => {
     e.preventDefault();
     setUserExist(false);

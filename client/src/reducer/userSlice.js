@@ -25,13 +25,9 @@ const userSlice = createSlice({
       };
       return state;
     },
-    signInStatus: (state, actions) => {
-      state.signedIn = actions.payload.status;
-      return state;
-    },
   },
 });
 
-export const { signIn, signOut, signInStatus } = userSlice.actions;
+export const { signIn, signOut } = userSlice.actions;
 
 export default userSlice.reducer;
