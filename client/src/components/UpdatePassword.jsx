@@ -11,10 +11,6 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 import validateEmail from "../utils/validateEmail";
-import { useDispatch } from "react-redux";
-import { setUpdatePwdName } from "../reducer/userSlice";
-import { generateMD5 } from "../utils/generateMD5";
-import md5 from "md5";
 
 // forget password page with email success page
 const UpdatePassword = () => {
@@ -23,31 +19,29 @@ const UpdatePassword = () => {
   const [error, setError] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const sendEmail = async (e) => {
     e.preventDefault();
+    setConfirmation(true);
     const response = await emailjs.sendForm(
       "service_1qbtjn6",
       "template_r80lvt9",
       e.target,
       "9956vAL6uIAW9zoeP"
     );
-    // console.log(response.text);
-    if (response.text === "OK") {
-      setConfirmation(true);
-    } else {
-      navigate("/error");
-    }
+
+    // if (response.text !== "OK") {
+    //   navigate("/error");
+    // }
   };
   const submit = async (e) => {
     e.preventDefault();
     if (!validateEmail(username)) {
       setUsername("");
+      setError(true);
       setFirstLoad(false);
       return;
     }
-    dispatch(setUpdatePwdName({ name: username }));
     sendEmail(e);
   };
   return (
@@ -203,7 +197,7 @@ const UpdatePassword = () => {
                       Email
                     </Typography>
                     <OutlinedInput
-                      error={error}
+                      error={username === "" ? error : false}
                       id="email"
                       name="email"
                       onChange={(e) => setUsername(e.target.value)}
@@ -216,9 +210,7 @@ const UpdatePassword = () => {
                     <input
                       name="reset_url"
                       style={{ display: "none" }}
-                      value={
-                        "http://127.0.0.1:3000/reset/" + md5(generateMD5())
-                      }
+                      value={"http://127.0.0.1:3000/reset/" + btoa(username)}
                       readOnly
                     />
                     <Box

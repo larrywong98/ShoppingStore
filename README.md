@@ -29,6 +29,7 @@ npm i validator
 npm i lodash
 npm i redux-persist
 npm i @emailjs/browser
+npm i base-64
 
 server:
 npm i express

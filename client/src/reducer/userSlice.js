@@ -7,7 +7,6 @@ const userSlice = createSlice({
     userId: "",
     userName: "",
     admin: false,
-    updatePwdName: "",
   },
   reducers: {
     signIn: (state, actions) => {
@@ -26,13 +25,9 @@ const userSlice = createSlice({
       };
       return state;
     },
-    setUpdatePwdName: (state, action) => {
-      state.updatePwdName = action.payload.name;
-      return state;
-    },
   },
 });
 
-export const { signIn, signOut, setUpdatePwdName } = userSlice.actions;
+export const { signIn, signOut } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -8,17 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import resetPwd from "../services/resetPwd";
-import { useSelector } from "react-redux";
 
-// forget password page with email success page
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [firstLoad, setFirstLoad] = useState(true);
   const navigate = useNavigate();
-  const username = useSelector((state) => state.userReducer.updatePwdName);
+  const username = atob(useParams().id);
   const [pwdShow, setPwdShow] = useState(true);
   const submit = async (e) => {
     e.preventDefault();
