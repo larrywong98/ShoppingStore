@@ -40,7 +40,7 @@ const ResetPassword = () => {
         maxWidth="sm"
         sx={{
           width: { xs: "98%", md: "600px" },
-          height: { xs: "500px", md: "500px" },
+          height: { xs: "100%", md: "500px" },
           padding: "16px",
         }}
       >
@@ -48,7 +48,7 @@ const ResetPassword = () => {
           elevation={3}
           sx={{
             position: "relative",
-            height: { xs: "80%", md: "400px" },
+            height: { xs: "310px", md: "400px" },
           }}
         >
           <Box sx={{ position: "absolute", top: "3%", right: "4%" }}>
@@ -123,7 +123,7 @@ const ResetPassword = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   sx={{
-                    height: "56px",
+                    height: "48px",
                   }}
                   inputProps={{
                     style: { WebkitBoxShadow: "0 0 0 1000px white inset" },

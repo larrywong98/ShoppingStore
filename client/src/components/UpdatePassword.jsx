@@ -50,7 +50,7 @@ const UpdatePassword = () => {
         maxWidth="sm"
         sx={{
           width: { xs: "98%", md: "600px" },
-          height: { xs: "500px", md: "500px" },
+          height: { xs: "100%", md: "500px" },
           padding: "16px",
         }}
       >
@@ -58,7 +58,7 @@ const UpdatePassword = () => {
           elevation={3}
           sx={{
             position: "relative",
-            height: { xs: "80%", md: "400px" },
+            height: { xs: "310px", md: "400px" },
           }}
         >
           {confirmation ? (
@@ -190,7 +190,7 @@ const UpdatePassword = () => {
                       display: "flex",
                       flexDirection: "column",
                       width: "100%",
-                      marginTop: "42px",
+                      marginTop: "20px",
                     }}
                   >
                     <Typography variant="p" sx={{ fontSize: "16px" }}>
@@ -202,7 +202,7 @@ const UpdatePassword = () => {
                       name="email"
                       onChange={(e) => setUsername(e.target.value)}
                       value={username}
-                      sx={{ height: "56px" }}
+                      sx={{ height: { xs: "48px", md: "56px" } }}
                       inputProps={{
                         style: { WebkitBoxShadow: "0 0 0 1000px white inset" },
                       }}
