@@ -9,9 +9,6 @@ const AnimatedCheckIcon = ({ initial = true, isVisible }) => {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
-        // width="100px"
-        // height="100px"
-        // color="#5048e5"
         viewBox="0 0 24 24"
         strokeWidth="3"
         stroke="currentColor"
