@@ -28,14 +28,23 @@ const CartComp = () => {
     [(state) => state, (state, currentId) => currentId],
     (items, currentId) => {
       const currentProduct = items.find((item) => item.id === currentId);
-      return {
-        imgPath:
-          currentProduct?.imgPath ||
-          "http://127.0.0.1:4000/resources/unavailable.png",
-        desp: currentProduct?.desp || "Item is unavailable",
-        price: currentProduct?.price || 0,
-        volume: currentProduct?.volume || 0,
-      };
+      if (currentProduct.volume === 0) {
+        return {
+          imgPath: currentProduct?.imgPath,
+          desp: "Item out of stock",
+          price: 0,
+          volume: 0,
+        };
+      } else {
+        return {
+          imgPath:
+            currentProduct?.imgPath ||
+            "http://127.0.0.1:4000/resources/unavailable.png",
+          desp: currentProduct?.desp || "Item is unavailable",
+          price: currentProduct?.price || 0,
+          volume: currentProduct?.volume || 0,
+        };
+      }
     }
   );
 
