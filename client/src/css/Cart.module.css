@@ -69,12 +69,17 @@
   display: flex;
   justify-content: space-between;
 }
+.red {
+  color: red;
+}
 .cart-product-name-price p {
   margin: 0;
 }
+.purple {
+  color: #5048e5;
+}
 .cart-product-name-price span {
   margin: 0;
-  color: #5048e5;
   font-size: 20px;
   margin-right: 5px;
 }

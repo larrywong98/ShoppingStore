@@ -396,7 +396,7 @@ const ProductModify = (props) => {
                 </div>
                 <div className={styles["product-btn-wrap"]}>
                   <button className={styles["add-product"]} type="submit">
-                    Edit Product
+                    Update Product
                   </button>
                   <button
                     className={styles["delete-product"]}

@@ -154,8 +154,24 @@ const CartComp = () => {
                 />
                 <div className={styles["cart-product-info"]}>
                   <div className={styles["cart-product-name-price"]}>
-                    <p>{getProductInfo(products, current.id).desp}</p>
-                    <span>${getProductInfo(products, current.id).price}</span>
+                    <p
+                      className={
+                        getProductInfo(products, current.id).volume === 0
+                          ? styles["red"]
+                          : ""
+                      }
+                    >
+                      {getProductInfo(products, current.id).desp}
+                    </p>
+                    <span
+                      className={
+                        getProductInfo(products, current.id).volume === 0
+                          ? styles["red"]
+                          : styles["purple"]
+                      }
+                    >
+                      ${getProductInfo(products, current.id).price}
+                    </span>
                   </div>
                   <div className={styles["cart-product-btn"]}>
                     <div className={styles["add-to-cart-wrap"]}>
