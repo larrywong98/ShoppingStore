@@ -16,6 +16,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+// default to local storage
 
 const rootReducer = combineReducers({
   productReducer,

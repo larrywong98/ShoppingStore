@@ -74,7 +74,7 @@ const Header = () => {
       <div className={styles["name-search"]}>
         <div className={styles["app-name"]}>
           <span className={styles["app-name-span"]}>
-            M<span className={styles["app-name-display"]}>anagement</span>
+            <span className={styles["app-name-display"]}>Management</span>
             <span className={styles["chuwa-display"]}>Chuwa</span>
           </span>
         </div>
