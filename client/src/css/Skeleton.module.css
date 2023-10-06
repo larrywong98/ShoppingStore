@@ -9,3 +9,5 @@
 .loading-animation {
   animation: skeleton-loading 0.8s linear infinite alternate;
 }
+
+.titleContent { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

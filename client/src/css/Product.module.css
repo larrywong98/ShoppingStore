@@ -9,24 +9,35 @@
   font-size: 14px;
   border: 1px solid #cccccc;
 }
+
 .product-info {
   width: 100%;
 }
+
 .product-info p {
   margin: 0;
   color: #6b7280;
 }
+
+.titleContent {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .product-info span {
   font-size: 16px;
   font-weight: bold;
   line-height: 24px;
 }
+
 .product-item-btn-group {
   height: 30px;
   display: flex;
   font-size: 10px;
   gap: 6px;
 }
+
 .add-to-cart-btn {
   width: 100%;
   height: 26px;
@@ -45,6 +56,7 @@
   text-decoration: none;
   font-size: 12px;
 }
+
 .edit-btn:hover {
   box-shadow: 0 0 4px 0px #413ca8;
   border: none;

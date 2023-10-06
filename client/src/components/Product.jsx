@@ -55,7 +55,7 @@ const Product = (props) => {
             onClick={() => toDetailPage(props.pageId, props.index)}
           />
           <div className={styles["product-info"]}>
-            <p>{props.desp}</p>
+            <p className={styles["titleContent"]}>{props.desp}</p>
             <span>${props.price.toFixed(2)}</span>
           </div>
 
