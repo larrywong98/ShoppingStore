@@ -82,7 +82,7 @@ const ProductDetail = (props) => {
               <div className={styles["product-detail-price-stock"]}>
                 <p>${currentProduct.price}</p>
                 {currentProduct.volume === 0 ? (
-                  <span>Out of Stock</span>
+                  <span className={styles["out-of-stock"]}>Out of Stock</span>
                 ) : (
                   <></>
                 )}

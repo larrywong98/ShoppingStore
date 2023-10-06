@@ -1,3 +1,6 @@
+.out-of-stock{
+  margin-left: 10%;
+}
 .product-detail-page {
   display: flex;
   flex-direction: column;
