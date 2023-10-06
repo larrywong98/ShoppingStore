@@ -72,7 +72,7 @@ const CartComp = () => {
   }, [subtotal, discountPrice, tax]);
 
   const checkDiscountCode = () => {
-    const discountCode = { percent90: "*0.8", coupon20: "-20" };
+    const discountCode = { percent80: "*0.8", coupon20: "-20" };
     if (!(discountText in discountCode)) return;
     let currentDiscount = discountCode[discountText];
     dispatch(setDiscount({ discount: currentDiscount }));

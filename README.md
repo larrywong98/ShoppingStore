@@ -31,7 +31,11 @@ npm i redux-persist
 <<<<<<< HEAD
 =======
 npm i @emailjs/browser
+<<<<<<< HEAD
 >>>>>>> bdf0ad10c5356daa06ba11c687831b4f678208e0
+=======
+npm i base-64
+>>>>>>> 9aa0b7c7fade82c333aadb17f898bd9d37b8f855
 
 server:
 npm i express

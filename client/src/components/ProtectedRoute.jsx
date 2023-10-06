@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children }) => {
   // reset link validation
   if (
     location.pathname.includes("reset") &&
-    location.pathname.split("/").slice(-1)[0].length === 32
+    location.pathname.split("/").slice(-1)[0].length >= 10
   ) {
     return <>{children}</>;
   }
