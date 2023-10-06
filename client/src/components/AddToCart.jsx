@@ -56,7 +56,6 @@ const AddToCart = (props) => {
         if (!isNumeric(showNumber)) return;
         inputNumber = Math.max(Math.min(parseInt(showNumber), props.volume), 0);
       }
-      // console.log(parseInt(showNumber), props.volume, inputNumber);
       setShowNumber(`${inputNumber}`);
       if (inputNumber === 0) {
         dispatch(removeProducts({ id: props.id }));
