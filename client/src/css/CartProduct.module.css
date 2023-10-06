@@ -42,3 +42,7 @@
   color: #6b7280;
   text-decoration: underline;
 }
+
+.cart-product-name-price .out-of-stock{
+  color: #ad190e
+}

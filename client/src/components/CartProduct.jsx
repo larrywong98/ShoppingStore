@@ -58,8 +58,8 @@ const CartProduct = (props) => {
       />
       <div className={styles["cart-product-info"]}>
         <div className={styles["cart-product-name-price"]}>
-          <p>{cartProduct.desp}</p>
-          <span>${cartProduct.price}</span>
+          {cartProduct.volume > 0 ? <p>cartProduct.desp</p> : <p className={styles["out-of-stock"]}>out of stock</p>}
+          {cartProduct.volume > 0 ? <span>${cartProduct.price}</span> : <span className={styles["out-of-stock"]}>0</span>}
         </div>
         <div className={styles["cart-product-btn"]}>
           <div className={styles["add-to-cart-wrap"]}>
@@ -68,7 +68,7 @@ const CartProduct = (props) => {
           <button onClick={() => remove(index)}>Remove</button>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
