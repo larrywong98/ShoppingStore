@@ -98,6 +98,10 @@ const AddToCart = (props) => {
             value={showNumber}
             maxLength="3"
             onChange={(e) => {
+              if (e.target.value === "") {
+                setShowNumber(e.target.value);
+                return;
+              }
               if (!isNumeric(e.target.value)) return;
               setShowNumber(e.target.value);
             }}
