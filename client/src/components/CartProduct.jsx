@@ -59,7 +59,7 @@ const CartProduct = (props) => {
       <div className={styles["cart-product-info"]}>
         <div className={styles["cart-product-name-price"]}>
           {cartProduct.volume > 0 ? (
-            <p>cartProduct.desp</p>
+            <p>{cartProduct.desp}</p>
           ) : (
             <p className={styles["out-of-stock"]}>out of stock</p>
           )}
