@@ -97,7 +97,10 @@ const AddToCart = (props) => {
             className={styles["edit-btn-showed-text"]}
             value={showNumber}
             maxLength="3"
-            onChange={(e) => setShowNumber(e.target.value)}
+            onChange={(e) => {
+              if (!isNumeric(e.target.value)) return;
+              setShowNumber(e.target.value);
+            }}
             onKeyUp={(e) => numberOnKeyUp(e)}
           />
           <button className={styles["add-one-btn"]} onClick={() => addOne()}>
