@@ -92,7 +92,6 @@ const AddToCart = (props) => {
               />
             </svg>
           </button>
-          {/* <span className={styles["add-btn-showed-text"]}>{numberInCart}</span> */}
           <input
             className={styles["edit-btn-showed-text"]}
             value={showNumber}
