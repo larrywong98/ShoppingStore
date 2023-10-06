@@ -1,4 +1,4 @@
-.out-of-stock{
+.out-of-stock {
   margin-left: 10%;
 }
 .product-detail-page {
@@ -191,5 +191,17 @@
     justify-content: space-between;
     height: 40px;
     gap: 20px;
+  }
+}
+
+@media only screen and (min-width: 1350px) {
+  .product-detail-page {
+    align-items: center;
+  }
+  .product-detail-page-header {
+    width: 1350px;
+  }
+  .product-detail-content {
+    width: 1350px;
   }
 }

@@ -11,6 +11,7 @@ import AddToCart from "./AddToCart";
 import { createSelector } from "@reduxjs/toolkit";
 import { useMemo, useState } from "react";
 import checkoutCart from "../services/checkoutCart";
+import CartProduct from "./CartProduct";
 
 const CartComp = () => {
   const navigate = useNavigate();
@@ -24,29 +25,31 @@ const CartComp = () => {
   const [discountText, setDiscountText] = useState("");
 
   // use cart id to find product info
-  const getProductInfo = createSelector(
-    [(state) => state, (state, currentId) => currentId],
-    (items, currentId) => {
-      const currentProduct = items.find((item) => item.id === currentId);
-      if (currentProduct.volume === 0) {
-        return {
-          imgPath: currentProduct?.imgPath,
-          desp: "Item out of stock",
-          price: 0,
-          volume: 0,
-        };
-      } else {
-        return {
-          imgPath:
-            currentProduct?.imgPath ||
-            "http://127.0.0.1:4000/resources/unavailable.png",
-          desp: currentProduct?.desp || "Item is unavailable",
-          price: currentProduct?.price || 0,
-          volume: currentProduct?.volume || 0,
-        };
-      }
-    }
-  );
+  // const getProductInfo = createSelector(
+  //   [(state) => state, (state, currentId) => currentId],
+  //   (items, currentId) => {
+  //     const currentProduct = items.find((item) => item.id === currentId);
+  //     if (currentProduct.volume === 0) {
+  //       return {
+  //         imgPath:
+  //           currentProduct?.imgPath ||
+  //           "http://127.0.0.1:4000/resources/unavailable.png",
+  //         desp: "Item out of stock",
+  //         price: 0,
+  //         volume: 0,
+  //       };
+  //     } else {
+  //       return {
+  //         imgPath:
+  //           currentProduct?.imgPath ||
+  //           "http://127.0.0.1:4000/resources/unavailable.png",
+  //         desp: currentProduct?.desp || "Item is unavailable",
+  //         price: currentProduct?.price || 0,
+  //         volume: currentProduct?.volume || 0,
+  //       };
+  //     }
+  //   }
+  // );
 
   const calculateSubtotal = createSelector(
     [(state) => state, (state, cart) => cart],
@@ -145,45 +148,46 @@ const CartComp = () => {
         <div className={styles["cart-content"]}>
           <div className={styles["cart-products-list"]}>
             {cart.map((current, index) => (
-              <div className={styles["cart-product"]} key={index}>
-                <img
-                  src={getProductInfo(products, current.id).imgPath}
-                  style={{ width: "120px", height: "120px" }}
-                  onClick={() => toDetailsPage(current.id)}
-                  alt=""
-                />
-                <div className={styles["cart-product-info"]}>
-                  <div className={styles["cart-product-name-price"]}>
-                    <p
-                      className={
-                        getProductInfo(products, current.id).volume === 0
-                          ? styles["red"]
-                          : ""
-                      }
-                    >
-                      {getProductInfo(products, current.id).desp}
-                    </p>
-                    <span
-                      className={
-                        getProductInfo(products, current.id).volume === 0
-                          ? styles["red"]
-                          : styles["purple"]
-                      }
-                    >
-                      ${getProductInfo(products, current.id).price}
-                    </span>
-                  </div>
-                  <div className={styles["cart-product-btn"]}>
-                    <div className={styles["add-to-cart-wrap"]}>
-                      <AddToCart
-                        id={current.id}
-                        volume={getProductInfo(products, current.id).volume}
-                      />
-                    </div>
-                    <button onClick={() => remove(index)}>Remove</button>
-                  </div>
-                </div>
-              </div>
+              <CartProduct current={current} index={index} />
+              // <div className={styles["cart-product"]} key={index}>
+              //   <img
+              //     src={getProductInfo(products, current.id).imgPath}
+              //     style={{ width: "120px", height: "120px" }}
+              //     onClick={() => toDetailsPage(current.id)}
+              //     alt=""
+              //   />
+              //   <div className={styles["cart-product-info"]}>
+              //     <div className={styles["cart-product-name-price"]}>
+              //       <p
+              //         className={
+              //           getProductInfo(products, current.id).volume === 0
+              //             ? styles["red"]
+              //             : ""
+              //         }
+              //       >
+              //         {getProductInfo(products, current.id).desp}
+              //       </p>
+              //       <span
+              //         className={
+              //           getProductInfo(products, current.id).volume === 0
+              //             ? styles["red"]
+              //             : styles["purple"]
+              //         }
+              //       >
+              //         ${getProductInfo(products, current.id).price}
+              //       </span>
+              //     </div>
+              //     <div className={styles["cart-product-btn"]}>
+              //       <div className={styles["add-to-cart-wrap"]}>
+              //         <AddToCart
+              //           id={current.id}
+              //           volume={getProductInfo(products, current.id).volume}
+              //         />
+              //       </div>
+              //       <button onClick={() => remove(index)}>Remove</button>
+              //     </div>
+              //   </div>
+              // </div>
             ))}
           </div>
 

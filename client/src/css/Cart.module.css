@@ -52,7 +52,7 @@
   height: 510px;
   overflow-y: scroll;
 }
-.cart-product {
+/* .cart-product {
   display: flex;
   gap: 10px;
 }
@@ -100,7 +100,7 @@
   border: none;
   color: #6b7280;
   text-decoration: underline;
-}
+} */
 .cart-discount {
   margin-top: 20px;
 }

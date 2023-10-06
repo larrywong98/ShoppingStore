@@ -118,6 +118,7 @@
   margin-left: 60px;
   width: 90%;
   min-height: 400px;
+  max-width: 1350px;
   border-radius: 5px;
   gap: 19px;
   display: flex;
@@ -232,5 +233,16 @@
     justify-content: center;
     margin: 0;
     height: fit-content;
+  }
+}
+@media only screen and (min-width: 1350px) {
+  .product-page {
+    align-items: center;
+  }
+  .product-page-header {
+    width: 1350px;
+  }
+  .pagination-wrap {
+    width: 1350px;
   }
 }

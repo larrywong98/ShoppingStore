@@ -78,7 +78,6 @@ const cartSlice = createSlice({
         return product;
       });
       state.cartQuantity += action.payload.added;
-      // }
       state.cart = newCart;
       return state;
     },
